@@ -8,27 +8,40 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellReference;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URL;
+import java.nio.file.Path;
 import java.util.Map;
 
 import static org.junit.Assert.*;
 
 public class XLSXParserTest {
 
+    // how to create a tmp directory using junit
+    // https://junit.org/junit4/javadoc/latest/index.html
+    @Rule
+    public TemporaryFolder tempFolder = new TemporaryFolder();
+
     private File testFile;
     private final String sheetName = "Sheet1";
 
     @Before
     public void setUp() throws IOException {
+        // input source file
         ClassLoader classLoader = getClass().getClassLoader();
         testFile = new File(classLoader.getResource("files/test.xlsx").getFile());
+
+        // output source file
+        File outputFile = tempFolder.newFile("output.xlsx");
         Workbook workbook = new XSSFWorkbook();
-        OutputStream fileOutputStream = new FileOutputStream("/home/lemon/Desktop/test.xlsx");
+        OutputStream fileOutputStream = new FileOutputStream(outputFile);
         Sheet sheet = workbook.createSheet("new sheet");
 
         Row row1 = sheet.createRow(0);
@@ -40,9 +53,9 @@ public class XLSXParserTest {
 
         workbook.write(fileOutputStream);
         fileOutputStream.close();
-        System.out.println("Done");
     }
 
+    // Here we are not testing our own code
     @Test
     public void getCellValueWithCellReference() throws IOException, InvalidFormatException {
         XLSXSheetData sheetData = new XLSXSheetData(testFile, sheetName);
@@ -50,6 +63,7 @@ public class XLSXParserTest {
         assertEquals(dataFromSheet.get(new CellReference("B1")), "Useless Project");
     }
 
+    // Here we are not testing our own code
     @Test
     public void getCellValueWithString() throws IOException, InvalidFormatException {
         XLSXSheetData sheetData = new XLSXSheetData(testFile, sheetName);
