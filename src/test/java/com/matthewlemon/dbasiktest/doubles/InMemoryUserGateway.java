@@ -14,4 +14,13 @@ public class InMemoryUserGateway implements com.matthewlemon.dbasiktest.gateways
         users.add(user);
         return user;
     }
+
+    @Override
+    public boolean userExists(User user) {
+        if (users.contains(user)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
