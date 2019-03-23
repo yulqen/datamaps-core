@@ -1,4 +1,4 @@
-package parser;
+package com.matthewlemon.dbasiktest.parser;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
-class XLSXSheetData {
+public class XLSXSheetData {
 
     private HashMap<CellReference,String> hm = new HashMap<>();
     private HashMap<String, String> hmStringsAsKeys = new HashMap<>();

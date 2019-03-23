@@ -1,4 +1,4 @@
-package fixtures;
+package com.matthewlemon.dbasiktest.fixtures;
 
 public class AdditionCheck {
 
