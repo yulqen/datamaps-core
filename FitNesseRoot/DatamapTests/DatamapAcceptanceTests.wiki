@@ -5,8 +5,18 @@ Test
 |scenario|given user _|user|
 |add user|@user            |
 
+|scenario|and given datamap name _ | datamapname |
+|set datamap name| @datamapname|
+
+|scenario | with user _ logged in | user |
+|login user | @user |
+
+|scenario|then user _ can create datamap _| user,datamapName|
+|create | @user | datamap | @datapName |
+
+
 |script | datamap mechanics    |
 |given user U                  |
+|and given datamap name D |
 |with user U logged in         |
-|then user U can create datamap|
-|with name |!NewDatamap          |
+|then user U can create datamap D|

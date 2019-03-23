@@ -15,5 +15,14 @@ public class DatamapMechanics {
         return true;
     }
 
+    public void setDatamapName(String datamapName) {
+    }
+
+    public void loginUser(String username) {
+    }
+
+    public void createDatamap(String user, String name) {
+    }
+
 
 }
