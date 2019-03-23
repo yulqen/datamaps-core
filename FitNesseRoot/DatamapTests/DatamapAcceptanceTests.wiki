@@ -1,0 +1,12 @@
+---
+Test
+---
+
+|scenario|given user _|user|
+|add user|@user            |
+
+|script | datamap mechanics    |
+|given user U                  |
+|with user U logged in         |
+|then user U can create datamap|
+|with name |!NewDatamap          |

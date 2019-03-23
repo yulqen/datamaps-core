@@ -1,0 +1,25 @@
+---
+Test
+---
+!1 Tests for testing fitnesse
+!2 Basic calculations
+
+Here we are doing some basic tests to get used to wiring up fitness and fixtures. We start with some basic calculation
+tests to get us rolling.
+
+
+|addition check        |
+|first|second|addition?|
+|1    |2     |3        |
+|2    |2     |4        |
+|3    |3     |6        |
+
+|multiply check        |
+|first|second|multiply?|
+|1    |10    |10       |
+|2    |20    |40       |
+|3    |3     |9        |
+
+
+// we don't need these
+!contents -R2 -g -p -f -h
