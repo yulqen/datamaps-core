@@ -12,17 +12,17 @@ public class DatamapMechanics {
 
     public boolean addUser(String username) {
         Context.userGateway.save(new User(username));
-        return true;
-    }
-
-    public void setDatamapName(String datamapName) {
+        return false;
     }
 
     public void loginUser(String username) {
     }
 
-    public void createDatamap(String user, String name) {
+    public boolean createDatamap(String name) {
+        return false;
     }
 
-
+    public boolean datamapExists(String name) {
+        return false;
+    }
 }
