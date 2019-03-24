@@ -1,8 +1,10 @@
 package com.matthewlemon.dbasiktest.gateways;
 
+import com.matthewlemon.dbasiktest.entities.Datamap;
+
 public interface DatamapGateway {
 
-    void create(String datamapName);
+    Datamap create(String datamapName);
 
     boolean getDatamap(String datamapName);
 }

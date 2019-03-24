@@ -1,12 +1,14 @@
 package com.matthewlemon.dbasiktest.doubles;
 
+import com.matthewlemon.dbasiktest.entities.Datamap;
 import com.matthewlemon.dbasiktest.gateways.DatamapGateway;
 
 public class InMemoryDatamapGateway implements DatamapGateway {
 
     @Override
-    public void create(String datamapName) {
-
+    public Datamap create(String datamapName) {
+        Datamap datamap = new Datamap(datamapName);
+        return datamap;
     }
 
     @Override

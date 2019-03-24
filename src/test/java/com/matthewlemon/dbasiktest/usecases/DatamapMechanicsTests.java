@@ -2,6 +2,7 @@ package com.matthewlemon.dbasiktest.usecases;
 
 import com.matthewlemon.dbasiktest.Context;
 import com.matthewlemon.dbasiktest.TestSetup;
+import com.matthewlemon.dbasiktest.entities.Datamap;
 import com.matthewlemon.dbasiktest.entities.User;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,8 +19,8 @@ public class DatamapMechanicsTests {
     @Test
     public void canCreateNewDatamap() {
         String datamapName = "Test Datamap";
-        Context.datamapGateway.create(datamapName);
-        assertTrue(Context.datamapGateway.getDatamap(datamapName));
+        Datamap datamap = Context.datamapGateway.create(datamapName);
+        assertEquals(datamap.getName(), "Test Datamap");
     }
 
     @Test
