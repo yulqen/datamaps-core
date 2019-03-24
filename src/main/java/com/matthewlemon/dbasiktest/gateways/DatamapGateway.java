@@ -7,4 +7,8 @@ public interface DatamapGateway {
     Datamap create(String datamapName);
 
     boolean getDatamap(String datamapName);
+
+    boolean datamapExists(String datamapName);
+
+    int datamapCount();
 }

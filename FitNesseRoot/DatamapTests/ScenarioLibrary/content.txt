@@ -11,7 +11,7 @@
 |scenario|can create datamap _| datamapName|
 |create datamap | @datamapName |
 |ensure | datamap exists | @datamapName|
-|check | datamap rows | @datamapName| 0 |
+|check | datamap count | @datamapName| 0 |
 
 
 #|scenario|given no codecasts|
