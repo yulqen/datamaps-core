@@ -1,11 +1,12 @@
 package com.matthewlemon.dbasiktest.doubles;
 
 import com.matthewlemon.dbasiktest.entities.User;
+import com.matthewlemon.dbasiktest.gateways.UserGateway;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class InMemoryUserGateway implements com.matthewlemon.dbasiktest.gateways.UserGateway {
+public class InMemoryUserGateway implements UserGateway {
 
     private List<User> users = new ArrayList<>();
 
@@ -17,10 +18,6 @@ public class InMemoryUserGateway implements com.matthewlemon.dbasiktest.gateways
 
     @Override
     public boolean userExists(User user) {
-        if (users.contains(user)) {
-            return true;
-        } else {
-            return false;
-        }
+        return users.contains(user);
     }
 }

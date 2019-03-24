@@ -3,6 +3,4 @@ Test
 ---
 
 |script | datamap mechanics    |
-|given user U                  |
-|with user U logged in         |
-|then user can create datamap|
+|can create datamap|

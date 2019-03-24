@@ -1,4 +1,4 @@
-package com.matthewlemon.dbasiktest.usecases.DatamapMechanicsUseCase;
+package com.matthewlemon.dbasiktest.usecases;
 
 import com.matthewlemon.dbasiktest.Context;
 import com.matthewlemon.dbasiktest.TestSetup;
@@ -13,6 +13,13 @@ public class DatamapMechanicsTests {
     @Before
     public void setUp() {
         TestSetup.setupContext();
+    }
+
+    @Test
+    public void canCreateNewDatamap() {
+        String datamapName = "Test Datamap";
+        Context.datamapGateway.create(datamapName);
+        assertTrue(Context.datamapGateway.getDatamap(datamapName));
     }
 
     @Test

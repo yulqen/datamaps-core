@@ -1,24 +1,22 @@
 package com.matthewlemon.dbasiktest.fixtures;
 
-import com.matthewlemon.dbasiktest.Context;
 import com.matthewlemon.dbasiktest.TestSetup;
-import com.matthewlemon.dbasiktest.entities.User;
+import com.matthewlemon.dbasiktest.usecases.DatamapMechanicsUseCase;
 
 public class DatamapMechanics {
+
+    private DatamapMechanicsUseCase usecase = new DatamapMechanicsUseCase();
 
     public DatamapMechanics() {
         TestSetup.setupContext();
     }
 
-    public boolean addUser(String username) {
-        Context.userGateway.save(new User(username));
-        return false;
-    }
-
-    public void loginUser(String username) {
+    public int datamapRows(String name) {
+        return 0;
     }
 
     public boolean createDatamap(String name) {
+        usecase.createDatamap(name);
         return false;
     }
 

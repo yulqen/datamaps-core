@@ -2,15 +2,16 @@
 # these are all taken from CleanCoders example.
 # These lines are invoked elsewhere - giving the downward arrow I so crave!
 
-|scenario|given user _|user|
-|add user|@user            |
+#|scenario|given user _|user|
+#|add user|@user            |
+#
+#|scenario | with user _ logged in | user |
+#|login user | @user |
 
-|scenario | with user _ logged in | user |
-|login user | @user |
-
-|scenario|then user can create datamap _| datamapName|
+|scenario|can create datamap _| datamapName|
 |create datamap | @datamapName |
 |ensure | datamap exists | @datamapName|
+|check | datamap rows | @datamapName| 0 |
 
 
 #|scenario|given no codecasts|
