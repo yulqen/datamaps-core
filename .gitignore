@@ -12,3 +12,12 @@ target
 .DS_Store
 .lein-failures
 dbasiktest.iml~origin_master
+FitNesseRoot/FrontPage/
+FitNesseRoot/PageFooter/
+FitNesseRoot/PageHeader/
+FitNesseRoot/PlugIns/
+FitNesseRoot/RecentChanges.wiki
+FitNesseRoot/TemplateLibrary/
+FitNesseRoot/content.txt
+FitNesseRoot/properties
+FitNesseRoot/properties.xml
