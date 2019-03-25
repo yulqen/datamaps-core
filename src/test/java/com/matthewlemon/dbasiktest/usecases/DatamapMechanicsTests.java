@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 public class DatamapMechanicsTests {
 
@@ -19,6 +20,7 @@ public class DatamapMechanicsTests {
         TestSetup.setupContext();
         useCase = new DatamapMechanicsUseCase();
         datamapName = "Test Datamap";
+        mockedDatamap = mock(Datamap.class);
     }
 
     @Test
