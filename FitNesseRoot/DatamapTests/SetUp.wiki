@@ -1,5 +1,5 @@
 |import  |
-|com.matthewlemon.dbasiktest.fixtures|
+|com.matthewlemon.dbasiktest.fitnessefixtures|
 
 
 #|Fixture setup|

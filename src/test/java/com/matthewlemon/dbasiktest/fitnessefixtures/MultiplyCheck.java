@@ -1,4 +1,4 @@
-package com.matthewlemon.dbasiktest.fixtures;
+package com.matthewlemon.dbasiktest.fitnessefixtures;
 
 public class MultiplyCheck {
 

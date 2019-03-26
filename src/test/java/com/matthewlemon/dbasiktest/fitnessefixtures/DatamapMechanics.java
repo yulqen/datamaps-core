@@ -1,4 +1,4 @@
-package com.matthewlemon.dbasiktest.fixtures;
+package com.matthewlemon.dbasiktest.fitnessefixtures;
 
 import com.matthewlemon.dbasiktest.TestSetup;
 import com.matthewlemon.dbasiktest.entities.Datamap;
