@@ -3,13 +3,11 @@ package com.matthewlemon.dbasiktest.usecases;
 import com.matthewlemon.dbasiktest.Context;
 import com.matthewlemon.dbasiktest.TestSetup;
 import com.matthewlemon.dbasiktest.entities.Datamap;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
 
 public class CreateableDatamapUseCaseShould {
 
@@ -43,7 +41,7 @@ public class CreateableDatamapUseCaseShould {
     @Test
     public void findDatamapWithName() {
         testDatamap = useCase.createDatamap(TITLE);
-        Datamap returnedDatamap = Context.datamapGateway.getDatamapWithName("Test Datamap");
+        Datamap returnedDatamap = Context.datamapGateway.getDatamap("Test Datamap");
         assertThat(returnedDatamap.getName(), is(TITLE));
     }
 

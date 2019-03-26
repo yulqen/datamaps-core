@@ -18,11 +18,11 @@ public class CreateableDatamapUseCase {
     }
 
     public int getLineCountFromDatamap(String datamapName) {
-        Datamap datamap = Context.datamapGateway.getDatamapWithName(datamapName);
+        Datamap datamap = Context.datamapGateway.getDatamap(datamapName);
         return datamap.getDatamapLines().size();
     }
 
     public Datamap getDatamap(String datamapName) {
-        return Context.datamapGateway.getDatamapWithName(datamapName);
+        return Context.datamapGateway.getDatamap(datamapName);
     }
 }

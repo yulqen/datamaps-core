@@ -3,7 +3,6 @@ package com.matthewlemon.dbasiktest.gateway;
 import com.matthewlemon.dbasiktest.TestSetup;
 import com.matthewlemon.dbasiktest.doubles.InMemoryDatamapGateway;
 import com.matthewlemon.dbasiktest.entities.DatamapLine;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -33,7 +32,7 @@ public class InMemoryDatamapShould {
         gateway.createDatamap("Test Datamap");
         gateway.addLineToDatamap("Test Datamap",
                 "Test Key", "Sheet 1", "B1");
-        gateway.getDatamapWithName("Test Datamap");
+        gateway.getDatamap("Test Datamap");
         List<DatamapLine> datamaplines = gateway.getDataLinesFor("Test Datamap");
         assertEquals(datamaplines.get(0).getKey(), "Test Key");
     }

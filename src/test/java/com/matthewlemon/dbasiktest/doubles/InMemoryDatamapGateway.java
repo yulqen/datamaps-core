@@ -18,11 +18,6 @@ public class InMemoryDatamapGateway implements DatamapGateway {
     }
 
     @Override
-    public boolean getDatamap(String datamapName) {
-        return false;
-    }
-
-    @Override
     public boolean datamapExists(String datamapName) {
         for (Datamap dataMap : dataMaps) {
             if (dataMap.getName().equals(datamapName)) {
@@ -40,27 +35,25 @@ public class InMemoryDatamapGateway implements DatamapGateway {
     @Override
     public void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef) {
         DatamapLine datamapLine = new DatamapLine(key, sheetName, cellRef);
-        Datamap datamap = getDatamapWithName(datamapName);
+        Datamap datamap = getDatamap(datamapName);
         datamap.addDatamapLine(datamapLine);
     }
 
     @Override
-    public Datamap getDatamapWithName(String datamapName) {
-        try {
-            for (Datamap datamap : dataMaps) {
-                if (datamap.getName().equals(datamapName)) {
-                    return datamap;
-                }
+    public Datamap getDatamap(String datamapName) {
+        Datamap nullDm = null;
+        for (Datamap datamap : dataMaps) {
+            if (datamap.getName().equals(datamapName)) {
+                return datamap;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-        return null;
+        // TODO we shold test this
+        return nullDm;
     }
 
     @Override
     public List<DatamapLine> getDataLinesFor(String datamapName) {
-        Datamap datamap = getDatamapWithName(datamapName);
+        Datamap datamap = getDatamap(datamapName);
         return datamap.getDatamapLines();
     }
 }

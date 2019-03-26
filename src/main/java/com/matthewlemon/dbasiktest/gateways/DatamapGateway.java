@@ -8,15 +8,13 @@ public interface DatamapGateway {
 
     Datamap createDatamap(String datamapName);
 
-    boolean getDatamap(String datamapName);
-
     boolean datamapExists(String datamapName);
 
     int datamapCount();
 
     void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef);
 
-    Datamap getDatamapWithName(String test_datamap);
+    Datamap getDatamap(String test_datamap);
 
     List getDataLinesFor(String datamapName);
 }
