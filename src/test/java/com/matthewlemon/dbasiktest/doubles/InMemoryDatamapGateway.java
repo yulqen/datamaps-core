@@ -1,6 +1,7 @@
 package com.matthewlemon.dbasiktest.doubles;
 
 import com.matthewlemon.dbasiktest.entities.Datamap;
+import com.matthewlemon.dbasiktest.entities.DatamapLine;
 import com.matthewlemon.dbasiktest.gateways.DatamapGateway;
 
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ public class InMemoryDatamapGateway implements DatamapGateway {
     private List<Datamap> dataMaps = new ArrayList<>();
 
     @Override
-    public Datamap create(String datamapName) {
+    public Datamap createDatamap(String datamapName) {
         dataMaps.add(new Datamap(datamapName));
         return new Datamap(datamapName);
     }
@@ -38,7 +39,9 @@ public class InMemoryDatamapGateway implements DatamapGateway {
 
     @Override
     public void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef) {
-        //TODO we need to implement this
+        DatamapLine datamapLine = new DatamapLine(key, sheetName, cellRef);
+        Datamap datamap = getDatamapWithName(datamapName);
+        datamap.addDatamapLine(datamapLine);
     }
 
     @Override
@@ -53,5 +56,11 @@ public class InMemoryDatamapGateway implements DatamapGateway {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public List<DatamapLine> getDataLinesFor(String datamapName) {
+        Datamap datamap = getDatamapWithName(datamapName);
+        return datamap.getDatamapLines();
     }
 }

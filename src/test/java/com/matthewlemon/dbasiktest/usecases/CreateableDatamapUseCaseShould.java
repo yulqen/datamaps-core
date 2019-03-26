@@ -4,7 +4,6 @@ import com.matthewlemon.dbasiktest.Context;
 import com.matthewlemon.dbasiktest.TestSetup;
 import com.matthewlemon.dbasiktest.entities.Datamap;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -24,8 +23,7 @@ public class CreateableDatamapUseCaseShould {
     }
 
     @Test
-    @Ignore
-    public void addLineToDatamap() {
+    public void canGetCountOfLinesInDatamap() {
         CreateableDatamapUseCase useCase = new CreateableDatamapUseCase();
         useCase.createDatamap("Test Datamap");
         useCase.addLineToDatamap("Test Datamap", "Key 1", "Sheet 1", "A2");

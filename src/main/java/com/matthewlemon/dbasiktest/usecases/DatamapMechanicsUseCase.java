@@ -6,7 +6,7 @@ import com.matthewlemon.dbasiktest.entities.Datamap;
 public class DatamapMechanicsUseCase {
 
     public Datamap createDatamap(String datamapName) {
-        Datamap datamap = Context.datamapGateway.create(datamapName);
+        Datamap datamap = Context.datamapGateway.createDatamap(datamapName);
         return datamap;
     }
 

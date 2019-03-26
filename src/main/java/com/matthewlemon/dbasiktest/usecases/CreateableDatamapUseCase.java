@@ -6,7 +6,7 @@ import com.matthewlemon.dbasiktest.entities.Datamap;
 public class CreateableDatamapUseCase {
 
     public Datamap createDatamap(String datamapName) {
-        Datamap datamap = Context.datamapGateway.create(datamapName);
+        Datamap datamap = Context.datamapGateway.createDatamap(datamapName);
         return datamap;
     }
 
@@ -15,7 +15,8 @@ public class CreateableDatamapUseCase {
         Context.datamapGateway.addLineToDatamap(datamapName, key, sheetName, cellRef);
     }
 
-    public int getLineCountFromDatamap(String test_datamap) {
-        return 0;
+    public int getLineCountFromDatamap(String datamapName) {
+        Datamap datamap = Context.datamapGateway.getDatamapWithName(datamapName);
+        return datamap.getDatamapLines().size();
     }
 }

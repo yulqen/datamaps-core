@@ -22,7 +22,7 @@ import static org.junit.Assert.*;
 
 public class XLSXParserTest {
 
-    // how to create a tmp directory using junit
+    // how to createDatamap a tmp directory using junit
     // https://junit.org/junit4/javadoc/latest/index.html
     @Rule
     public TemporaryFolder tempFolder = new TemporaryFolder();
