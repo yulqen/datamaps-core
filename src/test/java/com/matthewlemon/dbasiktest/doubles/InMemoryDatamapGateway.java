@@ -35,4 +35,23 @@ public class InMemoryDatamapGateway implements DatamapGateway {
     public int datamapCount() {
         return dataMaps.size();
     }
+
+    @Override
+    public void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef) {
+        //TODO we need to implement this
+    }
+
+    @Override
+    public Datamap getDatamapWithName(String datamapName) {
+        try {
+            for (Datamap datamap : dataMaps) {
+                if (datamap.getName().equals(datamapName)) {
+                    return datamap;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
