@@ -5,9 +5,11 @@ import com.matthewlemon.dbasiktest.entities.Datamap;
 
 public class CreateableDatamapUseCase {
 
+
+
     public Datamap createDatamap(String datamapName) {
         Datamap datamap = Context.datamapGateway.createDatamap(datamapName);
-        return datamap;
+         return datamap;
     }
 
     public void addLineToDatamap(String datamapName, String key,
@@ -18,5 +20,9 @@ public class CreateableDatamapUseCase {
     public int getLineCountFromDatamap(String datamapName) {
         Datamap datamap = Context.datamapGateway.getDatamapWithName(datamapName);
         return datamap.getDatamapLines().size();
+    }
+
+    public Datamap getDatamap(String datamapName) {
+        return Context.datamapGateway.getDatamapWithName(datamapName);
     }
 }

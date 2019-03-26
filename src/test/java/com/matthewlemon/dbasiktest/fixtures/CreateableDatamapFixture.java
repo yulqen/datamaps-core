@@ -1,5 +1,6 @@
 package com.matthewlemon.dbasiktest.fixtures;
 
+import com.matthewlemon.dbasiktest.TestSetup;
 import com.matthewlemon.dbasiktest.entities.Datamap;
 import com.matthewlemon.dbasiktest.entities.DatamapLine;
 import com.matthewlemon.dbasiktest.usecases.CreateableDatamapUseCase;
@@ -12,10 +13,11 @@ public class CreateableDatamapFixture {
 
     public void setUpFixture() {
         this.useCase = new CreateableDatamapUseCase();
+        TestSetup.setupContext();
     }
 
     public void userCreatesDatamapWithName(String datamapName) {
-        CreateableDatamapUseCase useCase = new CreateableDatamapUseCase();
+        useCase.createDatamap(datamapName);
     }
 
     public void userAddsSingleLineOfDataToDatamap(String datamapName, String key, String sheetName, String cellRef) {
@@ -23,10 +25,11 @@ public class CreateableDatamapFixture {
     }
 
     public List<DatamapLine> userCanGetListOfLinesFromDatamap(String datamapName) {
-        return null;
+        Datamap datamap = useCase.getDatamap(datamapName);
+        return datamap.getDatamapLines();
     }
 
     public int canCheckCountOfLinesInDatamap(String datamapName) {
-        return 0;
+        return this.useCase.getLineCountFromDatamap(datamapName);
     }
 }
