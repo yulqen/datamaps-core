@@ -8,7 +8,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class CreateableDatamap {
+public class SimpleCreateableDatamapAT {
 
     @Test
     public void userCanCreateDatamap() {

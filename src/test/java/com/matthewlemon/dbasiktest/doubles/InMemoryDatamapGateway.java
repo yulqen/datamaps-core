@@ -1,5 +1,6 @@
 package com.matthewlemon.dbasiktest.doubles;
 
+import com.matthewlemon.dbasiktest.entities.CSVFile;
 import com.matthewlemon.dbasiktest.entities.Datamap;
 import com.matthewlemon.dbasiktest.entities.DatamapLine;
 import com.matthewlemon.dbasiktest.gateways.DatamapGateway;
@@ -55,5 +56,10 @@ public class InMemoryDatamapGateway implements DatamapGateway {
     public List<DatamapLine> getDataLinesFor(String datamapName) {
         Datamap datamap = getDatamap(datamapName);
         return datamap.getDatamapLines();
+    }
+
+    @Override
+    public void addDataToDatamapWithCSV(String datamapName, CSVFile csvFile) {
+
     }
 }

@@ -1,6 +1,7 @@
 package com.matthewlemon.dbasiktest.fixtures;
 
 import com.matthewlemon.dbasiktest.TestSetup;
+import com.matthewlemon.dbasiktest.entities.CSVFile;
 import com.matthewlemon.dbasiktest.entities.Datamap;
 import com.matthewlemon.dbasiktest.entities.DatamapLine;
 import com.matthewlemon.dbasiktest.usecases.CreateableDatamapUseCase;
@@ -32,4 +33,8 @@ public class CreateableDatamapFixture {
     public int canCheckCountOfLinesInDatamap(String datamapName) {
         return this.useCase.getLineCountFromDatamap(datamapName);
     }
+
+//    public void userAddsDataToDatamapUsingCSV(String datamapName) {
+//        useCase.addCSVDataToDatamap(datamapName);
+//    }
 }

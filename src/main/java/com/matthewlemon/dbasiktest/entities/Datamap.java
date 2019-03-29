@@ -5,16 +5,20 @@ import java.util.List;
 
 public class Datamap {
 
-    List<DatamapLine> datamapLines = new ArrayList<>();
-
     private String datamapName;
 
     public Datamap(String datamapName) {
         this.datamapName = datamapName;
     }
 
+    List<DatamapLine> datamapLines = new ArrayList<>();
+
     public String getName() {
         return datamapName;
+    }
+
+    public List<DatamapLine> getDatamapLines() {
+        return datamapLines;
     }
 
     public void setName(String datamapName) {
@@ -23,9 +27,5 @@ public class Datamap {
 
     public void addDatamapLine(DatamapLine datamapLine) {
         datamapLines.add(datamapLine);
-    }
-
-    public List<DatamapLine> getDatamapLines() {
-        return datamapLines;
     }
 }
