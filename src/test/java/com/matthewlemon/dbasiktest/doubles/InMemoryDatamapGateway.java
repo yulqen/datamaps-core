@@ -58,8 +58,14 @@ public class InMemoryDatamapGateway implements DatamapGateway {
         return datamap.getDatamapLines();
     }
 
+    public List<DatamapLine> getDataLinesFor(Datamap datamap) {
+        return datamap.getDatamapLines();
+    }
+
     @Override
     public void addDataToDatamapWithCSV(String datamapName, CSVFile csvFile) {
-
+        Datamap datamap = getDatamap(datamapName);
+        datamap.readCSV(csvFile.getFile());
+        dataMaps.add(datamap);
     }
 }

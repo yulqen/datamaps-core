@@ -11,15 +11,13 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.nullable;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 
 
@@ -28,7 +26,6 @@ public class InMemoryDatamapShould {
 
     @Mock
     private CSVFile csvFile;
-    private final String COMMA_DELIMITER = ",";
 
     @Test
     public void setUp() {
@@ -57,42 +54,34 @@ public class InMemoryDatamapShould {
     }
 
     @Test
-    @Ignore("Cannot run until we have CSVFile.getData() running.")
-    public void addDataToDatamapWithCSV() {
+    public void useGatewayToAddToDatamapWithCSV() {
         List<String> data = new ArrayList<>();
-        data.add("Test Key");
-        data.add("Test Sheet");
-        data.add("Test CellRef");
+        data.add("Test Key 1");
+        data.add("Test Sheet 1");
+        data.add("Test CellRef 1");
 
-        DatamapLine dml = new DatamapLine("Test Key", "Test Sheet",
-                "Test CellRef");
+        File testFile = new File("/home/lemon/Desktop/test.csv");
 
-        when(csvFile.getData()).thenReturn(data);
+        DatamapLine dml = new DatamapLine("Test Key 1", "Test Sheet 1",
+                "Test CellRef 1");
+
+        when(csvFile.getFile()).thenReturn(testFile);
 
         InMemoryDatamapGateway gateway = new InMemoryDatamapGateway();
 
         Datamap datamap = gateway.createDatamap("Test Datamap");
         gateway.addDataToDatamapWithCSV("Test Datamap", csvFile);
-        gateway.getDataLinesFor("Test Datamap");
-        assertEquals(datamap.getDatamapLines().get(0).getKey(), dml.getKey());
+        assertEquals(gateway.getDatamap("Test Datamap")
+                .getDatamapLines().get(0).getKey(), dml.getKey());
     }
 
     @Test
-    public void yieldDataFromCSVFile() throws IOException {
+    public void datamapCanReadCSV() throws IOException {
         File testFile = new File("/home/lemon/Desktop/test.csv");
-        BufferedReader br = null;
-        Scanner scanner = null;
-        try {
-            scanner = new Scanner(testFile);
-            scanner.useDelimiter(COMMA_DELIMITER);
-            while (scanner.hasNext()) {
-                System.out.println(scanner.next() + "   ");
-            }
-        } catch (FileNotFoundException fe) {
-            fe.printStackTrace();
-        } finally {
-            scanner.close();
-        }
-
+        Datamap datamap = new Datamap("Test Datamap");
+        datamap.readCSV(testFile);
+        assertEquals(datamap.getDatamapLines().get(0).getKey(), "Test Key 1");
+        assertEquals(datamap.getDatamapLines().get(1).getKey(), "Test Key 2");
     }
+
 }

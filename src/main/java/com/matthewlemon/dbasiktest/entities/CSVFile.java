@@ -1,12 +1,12 @@
 package com.matthewlemon.dbasiktest.entities;
 
-import java.util.List;
+import java.io.File;
 
 public class CSVFile {
     public CSVFile(String s) {
     }
 
-    public List<String> getData() {
+    public File getFile() {
         return null;
     }
 }

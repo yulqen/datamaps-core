@@ -1,11 +1,15 @@
 package com.matthewlemon.dbasiktest.entities;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Datamap {
 
     private String datamapName;
+    private final String COMMA_DELIMITER = ",";
 
     public Datamap(String datamapName) {
         this.datamapName = datamapName;
@@ -27,5 +31,21 @@ public class Datamap {
 
     public void addDatamapLine(DatamapLine datamapLine) {
         datamapLines.add(datamapLine);
+    }
+
+    public void readCSV(File testFile) {
+        BufferedReader br;
+        try {
+            String line;
+            br = new BufferedReader(new FileReader(testFile));
+            while ((line = br.readLine()) != null) {
+                String[] parsedLine = line.split(COMMA_DELIMITER);
+                DatamapLine dml = new DatamapLine(
+                        parsedLine[0], parsedLine[1], parsedLine[2]);
+                this.addDatamapLine(dml);
+            }
+        } catch (Exception ee) {
+            ee.printStackTrace();
+        }
     }
 }
