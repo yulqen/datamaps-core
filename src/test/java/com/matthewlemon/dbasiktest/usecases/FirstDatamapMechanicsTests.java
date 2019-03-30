@@ -6,8 +6,8 @@ import com.matthewlemon.dbasiktest.entities.Datamap;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class FirstDatamapMechanicsTests {
 

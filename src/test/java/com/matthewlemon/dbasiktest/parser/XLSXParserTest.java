@@ -8,6 +8,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellReference;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -20,6 +21,7 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
+@Ignore("Not using this at the moment.")
 public class XLSXParserTest {
 
     // how to createDatamap a tmp directory using junit
