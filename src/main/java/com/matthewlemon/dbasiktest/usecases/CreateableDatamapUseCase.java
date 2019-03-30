@@ -27,8 +27,6 @@ public class CreateableDatamapUseCase {
     }
 
     public void addCSVDataToDatamap(String datamapName, CSVFile csvFile) {
-        // TODO we need a method in the gateway to add DatamapLine
-        //  objects by CSV file
         Context.datamapGateway.addDataToDatamapWithCSV(datamapName, csvFile);
     }
 }

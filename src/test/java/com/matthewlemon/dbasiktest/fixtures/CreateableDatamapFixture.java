@@ -34,7 +34,7 @@ public class CreateableDatamapFixture {
         return this.useCase.getLineCountFromDatamap(datamapName);
     }
 
-//    public void userAddsDataToDatamapUsingCSV(String datamapName) {
-//        useCase.addCSVDataToDatamap(datamapName);
-//    }
+    public void userAddsDataToDatamapUsingCSV(String datamapName, CSVFile csvFile) {
+        useCase.addCSVDataToDatamap(datamapName, csvFile);
+    }
 }
