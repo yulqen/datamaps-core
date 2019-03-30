@@ -20,4 +20,6 @@ public interface DatamapGateway {
     List getDataLinesFor(String datamapName);
 
     void addDataToDatamapWithCSV(String datamapName, CSVFile csvFile);
+
+    void deleteAllLinesIn(String test_datamap);
 }

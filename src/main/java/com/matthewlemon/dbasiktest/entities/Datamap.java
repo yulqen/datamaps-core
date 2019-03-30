@@ -48,4 +48,8 @@ public class Datamap {
             ee.printStackTrace();
         }
     }
+
+    public void deleteAllLines() {
+        datamapLines.clear();
+    }
 }

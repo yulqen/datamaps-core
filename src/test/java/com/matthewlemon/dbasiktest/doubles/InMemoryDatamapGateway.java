@@ -68,4 +68,10 @@ public class InMemoryDatamapGateway implements DatamapGateway {
         datamap.readCSV(csvFile.getFile());
         dataMaps.add(datamap);
     }
+
+    @Override
+    public void deleteAllLinesIn(String datamapName) {
+        Datamap datamap = new Datamap(datamapName);
+        datamap.deleteAllLines();
+    }
 }
