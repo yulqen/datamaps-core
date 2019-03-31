@@ -3,10 +3,11 @@ package com.matthewlemon.dbasiktest.usecases;
 import com.matthewlemon.dbasiktest.Context;
 import com.matthewlemon.dbasiktest.entities.CSVFile;
 import com.matthewlemon.dbasiktest.entities.Datamap;
+import com.matthewlemon.dbasiktest.exceptions.DuplicateDatamapException;
 
 public class CreateableDatamapUseCase {
 
-    public Datamap createDatamap(String datamapName) {
+    public Datamap createDatamap(String datamapName) throws DuplicateDatamapException {
         Datamap datamap = Context.datamapGateway.createDatamap(datamapName);
          return datamap;
     }

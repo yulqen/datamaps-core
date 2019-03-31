@@ -4,6 +4,7 @@ import com.matthewlemon.dbasiktest.TestSetup;
 import com.matthewlemon.dbasiktest.entities.CSVFile;
 import com.matthewlemon.dbasiktest.entities.Datamap;
 import com.matthewlemon.dbasiktest.entities.DatamapLine;
+import com.matthewlemon.dbasiktest.exceptions.DuplicateDatamapException;
 import com.matthewlemon.dbasiktest.usecases.CreateableDatamapUseCase;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class CreateableDatamapFixture {
         TestSetup.setupContext();
     }
 
-    public void userCreatesDatamapWithName(String datamapName) {
+    public void userCreatesDatamapWithName(String datamapName) throws DuplicateDatamapException {
         useCase.createDatamap(datamapName);
     }
 

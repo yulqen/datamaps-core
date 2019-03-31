@@ -3,6 +3,7 @@ package com.matthewlemon.dbasiktest.doubles;
 import com.matthewlemon.dbasiktest.entities.CSVFile;
 import com.matthewlemon.dbasiktest.entities.Datamap;
 import com.matthewlemon.dbasiktest.entities.DatamapLine;
+import com.matthewlemon.dbasiktest.exceptions.DuplicateDatamapException;
 import com.matthewlemon.dbasiktest.gateways.DatamapGateway;
 
 import java.util.ArrayList;
@@ -13,7 +14,12 @@ public class InMemoryDatamapGateway implements DatamapGateway {
     private List<Datamap> dataMaps = new ArrayList<>();
 
     @Override
-    public Datamap createDatamap(String datamapName) {
+    public Datamap createDatamap(String datamapName) throws DuplicateDatamapException {
+    	for (Datamap datamap : dataMaps) {
+			if (datamap.getName() == datamapName) {
+				throw new DuplicateDatamapException("There is already a Datamap with the name " + datamapName);
+			}
+		}
         dataMaps.add(new Datamap(datamapName));
         return new Datamap(datamapName);
     }

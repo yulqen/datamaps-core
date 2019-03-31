@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.matthewlemon.dbasiktest.entities.CSVFile;
+import com.matthewlemon.dbasiktest.exceptions.DuplicateDatamapException;
 import com.matthewlemon.dbasiktest.fixtures.CreateableDatamapFixture;
 
 public class CreateAndAddDatamapWithCSVAT {
@@ -21,7 +22,7 @@ public class CreateAndAddDatamapWithCSVAT {
 	}
 
 	@Test
-	public void userCanCreateDatamapUsingCSVForDatamapLines() {
+	public void userCanCreateDatamapUsingCSVForDatamapLines() throws DuplicateDatamapException {
 		CreateableDatamapFixture fixture = new CreateableDatamapFixture();
 		fixture.setUpFixture();
 		fixture.userCreatesDatamapWithName("Test Datamap");

@@ -1,5 +1,9 @@
 ## Todo
 
+### Datamap
+
+* We need to implement the concept of an id, or ensure that the name is unique. (Ensured that adding a Datamap with an existing name raises an exception **DONE!**)
+
 ### Import objects
 
 * Implement `FileImporter` interface and implement `CSVImporter` and

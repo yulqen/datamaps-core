@@ -1,6 +1,7 @@
 package com.matthewlemon.dbasiktest.usecases;
 
 import com.matthewlemon.dbasiktest.entities.DatamapLine;
+import com.matthewlemon.dbasiktest.exceptions.DuplicateDatamapException;
 import com.matthewlemon.dbasiktest.fixtures.CreateableDatamapFixture;
 import org.junit.Test;
 
@@ -11,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 public class SimpleCreateableDatamapAT {
 
     @Test
-    public void userCanCreateDatamap() {
+    public void userCanCreateDatamap() throws DuplicateDatamapException {
         CreateableDatamapFixture fixture = new CreateableDatamapFixture();
         fixture.setUpFixture();
         fixture.userCreatesDatamapWithName("Test Datamap");

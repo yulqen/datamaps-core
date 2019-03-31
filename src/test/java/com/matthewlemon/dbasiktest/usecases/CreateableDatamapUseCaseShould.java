@@ -3,6 +3,8 @@ package com.matthewlemon.dbasiktest.usecases;
 import com.matthewlemon.dbasiktest.Context;
 import com.matthewlemon.dbasiktest.TestSetup;
 import com.matthewlemon.dbasiktest.entities.Datamap;
+import com.matthewlemon.dbasiktest.exceptions.DuplicateDatamapException;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,13 +27,13 @@ public class CreateableDatamapUseCaseShould {
     }
 
     @Test
-    public void datamapIsCreated() {
+    public void datamapIsCreated() throws DuplicateDatamapException {
         testDatamap = useCase.createDatamap(TITLE);
         assertThat((testDatamap).getName(), is(TITLE));
     }
 
     @Test
-    public void canGetCountOfLinesInDatamap() {
+    public void canGetCountOfLinesInDatamap() throws DuplicateDatamapException {
         testDatamap = useCase.createDatamap(TITLE);
         useCase.addLineToDatamap(TITLE, "Key 1", "Sheet 1", "A2");
         int lineCount = useCase.getLineCountFromDatamap(TITLE);
@@ -39,10 +41,9 @@ public class CreateableDatamapUseCaseShould {
     }
 
     @Test
-    public void findDatamapWithName() {
+    public void findDatamapWithName() throws DuplicateDatamapException {
         testDatamap = useCase.createDatamap(TITLE);
         Datamap returnedDatamap = Context.datamapGateway.getDatamap("Test Datamap");
         assertThat(returnedDatamap.getName(), is(TITLE));
     }
-
 }

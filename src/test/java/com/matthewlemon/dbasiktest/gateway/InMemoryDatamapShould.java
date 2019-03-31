@@ -1,6 +1,6 @@
 package com.matthewlemon.dbasiktest.gateway;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,6 +16,7 @@ import com.matthewlemon.dbasiktest.doubles.InMemoryDatamapGateway;
 import com.matthewlemon.dbasiktest.entities.CSVFile;
 import com.matthewlemon.dbasiktest.entities.Datamap;
 import com.matthewlemon.dbasiktest.entities.DatamapLine;
+import com.matthewlemon.dbasiktest.exceptions.DuplicateDatamapException;
 
 public class InMemoryDatamapShould {
 
@@ -29,7 +30,7 @@ public class InMemoryDatamapShould {
     }
 
     @Before
-    public void setUp() {
+    public void setUp() throws DuplicateDatamapException {
     	ClassLoader classLoader = getClass().getClassLoader();
         testFile = new File(classLoader.getResource("files/test.csv")
         		.getFile());
@@ -68,4 +69,10 @@ public class InMemoryDatamapShould {
         assertEquals(datamap.getDataKeyForLine(0), "Test Key 1");
         assertEquals(datamap.getDataKeyForLine(1), "Test Key 2");
     }
+    
+    @Test(expected=DuplicateDatamapException.class)
+	public void rejectDatamapWithSameName() throws Exception {
+		Datamap datamap = gateway.createDatamap("Test Datamap");
+		Datamap datamap2 = gateway.createDatamap("Test Datamap");
+	}
 }
