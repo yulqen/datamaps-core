@@ -16,7 +16,9 @@ public class CreateAndAddDatamapWithCSVAT {
 
     @Before
     public void setUp() {
-        testFile = new File("/home/lemon/Desktop/test.csv");
+    	ClassLoader classLoader = getClass().getClassLoader();
+        testFile = new File(classLoader.getResource("files/test.csv")
+        		.getFile());
         csvFile = new CSVFile(testFile);
     }
 
