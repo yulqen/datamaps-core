@@ -17,18 +17,16 @@ import static org.mockito.Mockito.when;
 public class CreateAndAddDatamapWithCSVAT {
 
     private static File testFile;
-
-    @Mock
     private CSVFile csvFile;
 
     @Before
     public void setUp() {
         testFile = new File("/home/lemon/Desktop/test.csv");
+        csvFile = new CSVFile(testFile);
     }
 
     @Test
     public void userCanCreateDatamapUsingCSVForDatamapLines() {
-        when(csvFile.getFile()).thenReturn(testFile);
         CreateableDatamapFixture fixture = new CreateableDatamapFixture();
         fixture.setUpFixture();
         fixture.userCreatesDatamapWithName("Test Datamap");

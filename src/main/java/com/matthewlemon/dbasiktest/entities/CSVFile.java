@@ -4,13 +4,18 @@ import java.io.File;
 
 public class CSVFile {
 
-    public CSVFile () {
+    private File file;
+
+	public CSVFile(String filePath) {
+		File tmpfile = new File(filePath);
+		file = tmpfile.getAbsoluteFile();
     }
 
-    public CSVFile(String s) {
+    public CSVFile(File fileName) {
+    	file = fileName;
     }
 
     public File getFile() {
-        return null;
+    	return file;
     }
 }

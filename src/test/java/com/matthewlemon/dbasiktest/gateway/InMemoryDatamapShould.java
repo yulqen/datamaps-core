@@ -26,8 +26,6 @@ public class InMemoryDatamapShould {
 
     private static InMemoryDatamapGateway gateway;
     private static File testFile;
-
-    @Mock
     private static CSVFile csvFile;
 
     @BeforeClass
@@ -40,6 +38,7 @@ public class InMemoryDatamapShould {
     	ClassLoader classLoader = getClass().getClassLoader();
         testFile = new File(classLoader.getResource("files/test.csv")
         		.getFile());
+        csvFile = new CSVFile(testFile);
         gateway = new InMemoryDatamapGateway();
         gateway.createDatamap("Test Datamap");
     }
@@ -63,9 +62,6 @@ public class InMemoryDatamapShould {
     public void useGatewayToAddToDatamapWithCSV() {
         DatamapLine dml = new DatamapLine("Test Key 1", "Test Sheet 1",
                 "Test CellRef 1");
-
-        when(csvFile.getFile()).thenReturn(testFile);
-
         gateway.addDataToDatamapWithCSV("Test Datamap", csvFile);
         assertEquals(gateway.getDatamap("Test Datamap")
                 .getDatamapLines().get(0).getKey(), dml.getKey());
