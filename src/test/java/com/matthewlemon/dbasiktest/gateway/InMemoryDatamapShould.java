@@ -33,12 +33,13 @@ public class InMemoryDatamapShould {
     @BeforeClass
     public static void setUpClass() {
         TestSetup.setupContext();
-        csvFile = new CSVFile("test.csv");
     }
 
     @Before
     public void setUp() {
-        testFile = new File("/home/lemon/Desktop/test.csv");
+    	ClassLoader classLoader = getClass().getClassLoader();
+        testFile = new File(classLoader.getResource("files/test.csv")
+        		.getFile());
         gateway = new InMemoryDatamapGateway();
         gateway.createDatamap("Test Datamap");
     }
@@ -72,7 +73,6 @@ public class InMemoryDatamapShould {
 
     @Test
     public void addDataToDatamapFromCSV() throws IOException {
-        File testFile = new File("/home/lemon/Desktop/test.csv");
         Datamap datamap = gateway.getDatamap("Test Datamap");
         datamap.readCSV(testFile);
         assertEquals(datamap.getDatamapLines().get(0).getKey(), "Test Key 1");
