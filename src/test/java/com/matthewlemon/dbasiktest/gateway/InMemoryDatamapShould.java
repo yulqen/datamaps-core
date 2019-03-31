@@ -52,7 +52,6 @@ public class InMemoryDatamapShould {
         // manual delete of that line
     }
 
-
     @Test
     public void useGatewayToAddToDatamapWithCSV() {
         DatamapLine dml = new DatamapLine("Test Key 1", "Test Sheet 1",
@@ -66,7 +65,7 @@ public class InMemoryDatamapShould {
     public void addDataToDatamapFromCSV() throws IOException {
         Datamap datamap = gateway.getDatamap("Test Datamap");
         datamap.readCSV(testFile);
-        assertEquals(datamap.getDatamapLines().get(0).getKey(), "Test Key 1");
-        assertEquals(datamap.getDatamapLines().get(1).getKey(), "Test Key 2");
+        assertEquals(datamap.getDataKeyForLine(0), "Test Key 1");
+        assertEquals(datamap.getDataKeyForLine(1), "Test Key 2");
     }
 }

@@ -52,4 +52,8 @@ public class Datamap {
     public void deleteAllLines() {
         datamapLines.clear();
     }
+
+	public String getDataKeyForLine(int index) {
+		return datamapLines.get(index).getKey();
+	}
 }
