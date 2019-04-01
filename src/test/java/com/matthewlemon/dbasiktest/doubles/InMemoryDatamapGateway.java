@@ -1,15 +1,14 @@
 package com.matthewlemon.dbasiktest.doubles;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.matthewlemon.dbasiktest.entities.CSVFile;
 import com.matthewlemon.dbasiktest.entities.Datamap;
 import com.matthewlemon.dbasiktest.entities.DatamapLine;
 import com.matthewlemon.dbasiktest.exceptions.DuplicateDatamapException;
 import com.matthewlemon.dbasiktest.gateways.DatamapGateway;
-import com.matthewlemon.dbasiktest.gateways.DatamapTextType;
 import com.matthewlemon.dbasiktest.gateways.DatamapType;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class InMemoryDatamapGateway implements DatamapGateway {
 
