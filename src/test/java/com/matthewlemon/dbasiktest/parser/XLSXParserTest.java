@@ -52,6 +52,7 @@ public class XLSXParserTest {
         r1c2.setCellValue("Crumpton Colliery");
 
         workbook.write(fileOutputStream);
+        workbook.close();
         fileOutputStream.close();
     }
 

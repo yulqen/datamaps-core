@@ -6,11 +6,19 @@ public class DatamapLine {
     private String sheetName;
     private String cellRef;
 
-    public DatamapLine(String key, String sheetName, String cellRef) {
+	public DatamapLine(String key, String sheetName, String cellRef) {
         this.key = key;
         this.sheetName = sheetName;
         this.cellRef = cellRef;
     }
+
+    public String getSheetName() {
+		return sheetName;
+	}
+
+	public String getCellRef() {
+		return cellRef;
+	}
 
     public String getKey() {
         return this.key;

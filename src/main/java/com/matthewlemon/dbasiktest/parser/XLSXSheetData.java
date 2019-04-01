@@ -27,6 +27,7 @@ public class XLSXSheetData {
                 this.hmStringsAsKeys.put(cellRef.formatAsString(), formatter.formatCellValue(cell));
             }
         }
+        workbook.close();
     }
 
     private static void readXLSXFileSheet(File filePath, String sheetName) throws IOException, InvalidFormatException {
@@ -44,6 +45,7 @@ public class XLSXSheetData {
                 System.out.println(text);
             }
         }
+        workbook.close();
     }
 
     HashMap getDataMapHash() {

@@ -72,7 +72,9 @@ public class InMemoryDatamapShould {
     
     @Test(expected=DuplicateDatamapException.class)
 	public void rejectDatamapWithSameName() throws Exception {
+		@SuppressWarnings("unused")
 		Datamap datamap = gateway.createDatamap("Test Datamap");
+		@SuppressWarnings("unused")
 		Datamap datamap2 = gateway.createDatamap("Test Datamap");
 	}
 }

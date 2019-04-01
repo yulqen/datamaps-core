@@ -2,6 +2,7 @@
 
 ### Datamap
 
+* Implement typing system within Datamap (both in text in the CSV importer and via the API).
 * We need to implement the concept of an id, or ensure that the name is unique. (Ensured that adding a Datamap with an existing name raises an exception **DONE!**)
 
 ### Import objects
