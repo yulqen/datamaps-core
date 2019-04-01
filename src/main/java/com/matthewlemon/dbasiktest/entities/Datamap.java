@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.matthewlemon.dbasiktest.gateways.DatamapTextType;
+
 public class Datamap {
 
     private String datamapName;
@@ -41,7 +43,7 @@ public class Datamap {
             while ((line = br.readLine()) != null) {
                 String[] parsedLine = line.split(COMMA_DELIMITER);
                 DatamapLine dml = new DatamapLine(
-                        parsedLine[0], parsedLine[1], parsedLine[2]);
+                        parsedLine[0], parsedLine[1], parsedLine[2], new DatamapTextType());
                 this.addDatamapLine(dml);
             }
         } catch (Exception ee) {

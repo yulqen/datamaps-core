@@ -17,6 +17,7 @@ import com.matthewlemon.dbasiktest.entities.CSVFile;
 import com.matthewlemon.dbasiktest.entities.Datamap;
 import com.matthewlemon.dbasiktest.entities.DatamapLine;
 import com.matthewlemon.dbasiktest.exceptions.DuplicateDatamapException;
+import com.matthewlemon.dbasiktest.gateways.DatamapTextType;
 
 public class InMemoryDatamapShould {
 
@@ -47,16 +48,16 @@ public class InMemoryDatamapShould {
     @Test
     public void addLineToDatamap() {
         gateway.addLineToDatamap("Test Datamap",
-                "Test Key", "Sheet 1", "B1");
+                "Test Key", "Sheet 1", "B1", new DatamapTextType());
         List<DatamapLine> datamaplines = gateway.getDataLinesFor("Test Datamap");
         assertEquals(datamaplines.get(0).getKey(), "Test Key");
         // manual delete of that line
     }
 
-    @Test
+	@Test
     public void useGatewayToAddToDatamapWithCSV() {
         DatamapLine dml = new DatamapLine("Test Key 1", "Test Sheet 1",
-                "Test CellRef 1");
+                "Test CellRef 1", new DatamapTextType());
         gateway.addDataToDatamapWithCSV("Test Datamap", csvFile);
         assertEquals(gateway.getDatamap("Test Datamap")
                 .getDatamapLines().get(0).getKey(), dml.getKey());

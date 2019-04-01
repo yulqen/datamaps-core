@@ -4,6 +4,7 @@ import com.matthewlemon.dbasiktest.Context;
 import com.matthewlemon.dbasiktest.entities.CSVFile;
 import com.matthewlemon.dbasiktest.entities.Datamap;
 import com.matthewlemon.dbasiktest.exceptions.DuplicateDatamapException;
+import com.matthewlemon.dbasiktest.gateways.DatamapType;
 
 public class CreateableDatamapUseCase {
 
@@ -13,8 +14,8 @@ public class CreateableDatamapUseCase {
     }
 
     public void addLineToDatamap(String datamapName, String key,
-                                 String sheetName, String cellRef) {
-        Context.datamapGateway.addLineToDatamap(datamapName, key, sheetName, cellRef);
+                                 String sheetName, String cellRef, DatamapType type) {
+        Context.datamapGateway.addLineToDatamap(datamapName, key, sheetName, cellRef, type);
     }
 
 

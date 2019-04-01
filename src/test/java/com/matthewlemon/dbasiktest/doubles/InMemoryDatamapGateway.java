@@ -5,6 +5,8 @@ import com.matthewlemon.dbasiktest.entities.Datamap;
 import com.matthewlemon.dbasiktest.entities.DatamapLine;
 import com.matthewlemon.dbasiktest.exceptions.DuplicateDatamapException;
 import com.matthewlemon.dbasiktest.gateways.DatamapGateway;
+import com.matthewlemon.dbasiktest.gateways.DatamapTextType;
+import com.matthewlemon.dbasiktest.gateways.DatamapType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,8 +42,8 @@ public class InMemoryDatamapGateway implements DatamapGateway {
     }
 
     @Override
-    public void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef) {
-        DatamapLine datamapLine = new DatamapLine(key, sheetName, cellRef);
+    public void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef, DatamapType type) {
+        DatamapLine datamapLine = new DatamapLine(key, sheetName, cellRef, type);
         Datamap datamap = getDatamap(datamapName);
         datamap.addDatamapLine(datamapLine);
     }

@@ -17,11 +17,12 @@ public interface DatamapGateway {
 
     Datamap getDatamap(String test_datamap);
 
-    void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef);
-
     List<DatamapLine> getDataLinesFor(String datamapName);
 
     void addDataToDatamapWithCSV(String datamapName, CSVFile csvFile);
 
     void deleteAllLinesIn(String test_datamap);
+
+	void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef,
+			DatamapType type);
 }
