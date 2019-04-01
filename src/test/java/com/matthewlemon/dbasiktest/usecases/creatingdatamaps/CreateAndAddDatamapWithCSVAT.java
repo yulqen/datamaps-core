@@ -1,4 +1,4 @@
-package com.matthewlemon.dbasiktest.usecases;
+package com.matthewlemon.dbasiktest.usecases.creatingdatamaps;
 
 import java.io.File;
 

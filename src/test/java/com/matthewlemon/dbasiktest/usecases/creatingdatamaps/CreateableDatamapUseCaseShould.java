@@ -1,9 +1,10 @@
-package com.matthewlemon.dbasiktest.usecases;
+package com.matthewlemon.dbasiktest.usecases.creatingdatamaps;
 
 import com.matthewlemon.dbasiktest.Context;
 import com.matthewlemon.dbasiktest.TestSetup;
 import com.matthewlemon.dbasiktest.entities.Datamap;
 import com.matthewlemon.dbasiktest.exceptions.DuplicateDatamapException;
+import com.matthewlemon.dbasiktest.usecases.CreateableDatamapUseCase;
 
 import org.junit.Before;
 import org.junit.Test;

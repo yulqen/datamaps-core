@@ -1,4 +1,4 @@
-package com.matthewlemon.dbasiktest.usecases;
+package com.matthewlemon.dbasiktest.usecases.creatingdatamaps;
 
 import com.matthewlemon.dbasiktest.entities.DatamapLine;
 import com.matthewlemon.dbasiktest.exceptions.DuplicateDatamapException;
@@ -16,6 +16,8 @@ public class SimpleCreateableDatamapAT {
         CreateableDatamapFixture fixture = new CreateableDatamapFixture();
         fixture.setUpFixture();
         fixture.userCreatesDatamapWithName("Test Datamap");
+        // this is what we want, but cannot do this just now
+//        fixture.userAddsSingleLineOfDataToDatamap("Test Datamap", "Test Key 1", "Sheet 1", "B1", DatamapType(TEXT));
         fixture.userAddsSingleLineOfDataToDatamap("Test Datamap", "Test Key 1", "Sheet 1", "B1");
         fixture.userAddsSingleLineOfDataToDatamap("Test Datamap", "Test Key 2", "Sheet 1", "B2");
         assertEquals(fixture.canCheckCountOfLinesInDatamap("Test Datamap"), 2);
