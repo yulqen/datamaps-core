@@ -20,7 +20,7 @@ public class ExcelParserAcceptanceTest {
 	@Before
 	public void setUp() {
 		ClassLoader classLoader = getClass().getClassLoader();
-		testFile = new File(classLoader.getResource("files/test_populated_file.xslx").getFile());
+		testFile = new File(classLoader.getResource("files/test_populated_template.xlsx").getFile());
 		csvFile = new CSVFile(testFile);
 	}
 
