@@ -23,7 +23,6 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-@Ignore("Not using this at the moment.")
 public class XLSXParserTest {
 
     // how to createDatamap a tmp directory using junit

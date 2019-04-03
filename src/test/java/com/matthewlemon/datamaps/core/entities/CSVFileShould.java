@@ -1,6 +1,6 @@
 package com.matthewlemon.datamaps.core.entities;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 

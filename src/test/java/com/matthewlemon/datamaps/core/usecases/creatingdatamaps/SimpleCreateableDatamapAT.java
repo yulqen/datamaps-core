@@ -13,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 
 public class SimpleCreateableDatamapAT {
 
-    @Test
+	@Test
     public void userCanCreateDatamap() throws DuplicateDatamapException {
         CreateableDatamapFixture fixture = new CreateableDatamapFixture();
         fixture.setUpFixture();

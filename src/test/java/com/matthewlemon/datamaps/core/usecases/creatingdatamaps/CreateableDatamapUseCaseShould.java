@@ -22,9 +22,7 @@ public class CreateableDatamapUseCaseShould {
     @Before
     public void setUp() {
         TestSetup.setupContext();
-
         TITLE = "Test Datamap";
-
         useCase = new CreateableDatamapUseCase();
     }
 
