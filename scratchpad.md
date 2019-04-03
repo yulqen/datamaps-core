@@ -1,5 +1,10 @@
 ## Todo
 
+### New Acceptance Test
+
+* AT for the whole trip
+* Needs to include Return and Template objects, and implement the DatamapType system.
+
 ### Datamap
 
 * Implement typing system within Datamap (both in text in the CSV importer and via the API).
