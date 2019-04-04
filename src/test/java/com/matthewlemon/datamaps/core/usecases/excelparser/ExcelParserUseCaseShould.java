@@ -36,7 +36,8 @@ public class ExcelParserUseCaseShould {
 	
 	@Test
 	public void getDataFromPopulatedTemplate() throws Exception {
-		PopulatedTemplate template = new PopulatedTemplate(testFile);
+		useCase = new ExcelParserUseCase();
+		PopulatedTemplate template = useCase.createPopulatedTemplate(testFile);
 		assertEquals(template.getValue("A1"), "Test Key 1");
 		assertEquals(template.getValue("B1"), "Test Value 1");
 	}

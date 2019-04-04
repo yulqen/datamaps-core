@@ -10,8 +10,7 @@ import com.matthewlemon.datamaps.core.entities.PopulatedTemplate;
 public class ExcelParserUseCase {
 
 	public PopulatedTemplate createPopulatedTemplate(File file) throws InvalidFormatException, IOException {
-		PopulatedTemplate template = new PopulatedTemplate();
-		template.importDataFrom(file);
+		PopulatedTemplate template = new PopulatedTemplate(file);
 		return template;
 	}
 
