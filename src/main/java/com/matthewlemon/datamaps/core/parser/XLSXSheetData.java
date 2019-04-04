@@ -14,7 +14,7 @@ public class XLSXSheetData {
     private HashMap<CellReference,String> hm = new HashMap<>();
     private HashMap<String, String> hmStringsAsKeys = new HashMap<>();
 
-    XLSXSheetData(File filePath, String sheetName) throws IOException, InvalidFormatException {
+    public XLSXSheetData(File filePath, String sheetName) throws IOException, InvalidFormatException {
 
         File f = new File(String.valueOf(filePath));
         Workbook workbook = new XSSFWorkbook(f);
@@ -48,11 +48,11 @@ public class XLSXSheetData {
         workbook.close();
     }
 
-    HashMap getDataMapHash() {
+    public HashMap getDataMapHash() {
         return this.hm;
     }
 
-    HashMap getDataMapHash_StringsAsKeys() {
+    public HashMap getDataMapHash_StringsAsKeys() {
         return this.hmStringsAsKeys;
     }
 }
