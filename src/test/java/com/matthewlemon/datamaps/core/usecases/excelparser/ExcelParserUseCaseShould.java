@@ -1,11 +1,12 @@
 package com.matthewlemon.datamaps.core.usecases.excelparser;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.matthewlemon.datamaps.core.entities.PopulatedTemplate;
@@ -28,9 +29,15 @@ public class ExcelParserUseCaseShould {
 	}
 	
 	@Test
-	public void useGatewayToImportDataIntoBlankTemplate() throws Exception {
-		PopulatedTemplate template = new PopulatedTemplate();
-		template.importDataFrom(testFile);
+	public void useGatewayToImportDataIntoBlankTemplateWithConstructor() throws Exception {
+		PopulatedTemplate template = new PopulatedTemplate(testFile);
 		assertTrue(template.hasData());
+	}
+	
+	@Test
+	public void getDataFromPopulatedTemplate() throws Exception {
+		PopulatedTemplate template = new PopulatedTemplate(testFile);
+		assertEquals(template.getValue("A1"), "Test Key 1");
+		assertEquals(template.getValue("B1"), "Test Value 1");
 	}
 }

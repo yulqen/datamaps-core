@@ -15,8 +15,19 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import com.matthewlemon.datamaps.core.parser.XLSXSheetData;
 
 public class PopulatedTemplate {
-
+	
 	List<HashMap> sheetData = new ArrayList<HashMap>();
+
+	public List<HashMap> getSheetData() {
+		return sheetData;
+	}
+
+	public PopulatedTemplate() {
+	}
+
+	public PopulatedTemplate(File file) throws InvalidFormatException, IOException {
+		this.importDataFrom(file);
+	}
 
 	public boolean hasData() {
 		if (sheetData.size() > 0) {
@@ -32,7 +43,11 @@ public class PopulatedTemplate {
 		for (Sheet sheet : workbook) {
 			String sheetName = sheet.getSheetName();
 			XLSXSheetData data = new XLSXSheetData(filename, sheetName);
-			sheetData.add(data.getDataMapHash());
+			sheetData.add(data.getDataMapHashStringsAsKeys());
 		}
+	}
+
+	public String getValue(String cellRef) {
+		return (String) sheetData.get(0).get(cellRef);
 	}
 }

@@ -66,7 +66,7 @@ public class XLSXParserTest {
     @Test
     public void getCellValueWithString() throws IOException, InvalidFormatException {
         XLSXSheetData sheetData = new XLSXSheetData(testFile, sheetName);
-        Map dataFromSheet = sheetData.getDataMapHash_StringsAsKeys();
+        Map dataFromSheet = sheetData.getDataMapHashStringsAsKeys();
         assertEquals(dataFromSheet.get("B1"), "Useless Project");
     }
 }

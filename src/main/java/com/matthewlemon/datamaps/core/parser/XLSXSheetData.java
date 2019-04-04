@@ -52,7 +52,7 @@ public class XLSXSheetData {
         return this.hm;
     }
 
-    public HashMap getDataMapHash_StringsAsKeys() {
+    public HashMap getDataMapHashStringsAsKeys() {
         return this.hmStringsAsKeys;
     }
 }
