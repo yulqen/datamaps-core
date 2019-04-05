@@ -30,6 +30,6 @@ public class PopulatedTemplateGatewayShould {
 	@Test
 	public void sheetDataFromXLSXFileIsMapofMap() throws Exception {
 		PopulatedTemplate template = gateway.createPopulatedTemplate(testFile);
+		assertEquals(template.getValue("A1"), "Test Key 1");
 	}
-
 }
