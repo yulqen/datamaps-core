@@ -55,7 +55,6 @@ public class InMemoryDatamapGateway implements DatamapGateway {
                 return datamap;
             }
         }
-        // TODO we should test this
         return nullDm;
     }
 

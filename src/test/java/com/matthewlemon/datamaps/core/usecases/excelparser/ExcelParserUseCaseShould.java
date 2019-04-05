@@ -1,6 +1,7 @@
 package com.matthewlemon.datamaps.core.usecases.excelparser;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.io.File;
 
@@ -26,15 +27,24 @@ public class ExcelParserUseCaseShould {
 	public void getDataFromPopulatedTemplate() throws Exception {
 		PopulatedTemplate template = useCase.createPopulatedTemplate(testFile);
 		//TODO we don't want to be matching on strings here necessarily
-		assertEquals(template.getValue("A1"), "Test Key 1");
-		assertEquals(template.getValue("B1"), "Test Value 1");
-		assertEquals(template.getValue("A2"), "Test Key 2");
-		assertEquals(template.getValue("B2"), "Test Value 2");
+		assertEquals(template.getValue("Test Sheet 1", "A1"), "Test Key 1");
+		assertEquals(template.getValue("Test Sheet 1", "B1"), "Test Value 1");
+		assertEquals(template.getValue("Test Sheet 1", "A2"), "Test Key 2");
+		assertEquals(template.getValue("Test Sheet 1", "B2"), "Test Value 2");
 	}
 	
 	@Test(expected=EmptyCellException.class)
 	public void nonExistentCellThrowsException() throws Exception {
 		PopulatedTemplate template = useCase.createPopulatedTemplate(testFile);
-		assertNull(template.getValue("T10"));
+		assertNull(template.getValue("Test Sheet 1", "T10"));
+	}
+	
+	@Test
+	public void sheetDataIsAMapOfMaps() throws Exception {
+		PopulatedTemplate template = useCase.createPopulatedTemplate(testFile);
+		assertEquals(template.getValue("Test Sheet 1", "A1"), "Test Key 1");
+		assertEquals(template.getValue("Test Sheet 1", "A2"), "Test Key 2");
+		assertEquals(template.getValue("Test Sheet 1", "B1"), "Test Value 1");
+		assertEquals(template.getValue("Test Sheet 1", "B2"), "Test Value 2");
 	}
 }

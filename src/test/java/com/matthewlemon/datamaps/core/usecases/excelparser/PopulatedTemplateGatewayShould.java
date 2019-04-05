@@ -1,6 +1,6 @@
 package com.matthewlemon.datamaps.core.usecases.excelparser;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 
@@ -14,7 +14,6 @@ import com.matthewlemon.datamaps.core.gateways.PopulatedTemplateGateway;
 
 public class PopulatedTemplateGatewayShould {
 	
-	private ExcelParserUseCase useCase;
 	private File testFile;
 	private ImportFileGateway gateway;
 
@@ -23,13 +22,13 @@ public class PopulatedTemplateGatewayShould {
 		TestSetup.setupContext();
 		ClassLoader classLoader = getClass().getClassLoader();
 		testFile = new File(classLoader.getResource("files/test_populated_template.xlsx").getFile());
-		useCase = new ExcelParserUseCase();
+		new ExcelParserUseCase();
 		gateway = new PopulatedTemplateGateway();
 	}
 	
 	@Test
 	public void sheetDataFromXLSXFileIsMapofMap() throws Exception {
 		PopulatedTemplate template = gateway.createPopulatedTemplate(testFile);
-		assertEquals(template.getValue("A1"), "Test Key 1");
+		assertEquals(template.getValue("Test Sheet 1", "A1"), "Test Key 1");
 	}
 }

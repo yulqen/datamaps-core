@@ -2,10 +2,6 @@ package com.matthewlemon.datamaps.core.gateways;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -40,7 +36,7 @@ public class PopulatedTemplateGateway implements ImportFileGateway {
 			throws IOException, InvalidFormatException {
 		XLSXSheetData data;
 		data = new XLSXSheetData(file, sheetName);
-		template.sheetData.add(data.getDataMapHashStringsAsKeys());
+		template.setSheetData(sheetName, data.getDataMapHashStringsAsKeys());
 	}
 
 	@Override
