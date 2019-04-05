@@ -6,7 +6,9 @@ import static org.junit.Assert.assertNull;
 import java.io.File;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import com.matthewlemon.datamaps.core.entities.PopulatedTemplate;
 import com.matthewlemon.datamaps.core.exceptions.EmptyCellException;
@@ -15,6 +17,9 @@ public class ExcelParserUseCaseShould {
 
 	private File testFile;
 	private ExcelParserUseCase useCase;
+	
+	@Rule
+	public ExpectedException thrown = ExpectedException.none();
 
 	@Before
 	public void setUp() {
@@ -33,8 +38,10 @@ public class ExcelParserUseCaseShould {
 		assertEquals(template.getValue("Test Sheet 1", "B2"), "Test Value 2");
 	}
 	
-	@Test(expected=EmptyCellException.class)
+	@Test
 	public void nonExistentCellThrowsException() throws Exception {
+		thrown.expect(EmptyCellException.class);
+		thrown.expectMessage("That cell does not have a value in it!");
 		PopulatedTemplate template = useCase.createPopulatedTemplate(testFile);
 		assertNull(template.getValue("Test Sheet 1", "T10"));
 	}

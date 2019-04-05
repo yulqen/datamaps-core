@@ -17,7 +17,7 @@ public class PopulatedTemplate {
 		try {
 			value = sheetData.get(sheetName).get(cellRef).toString();
 		} catch (NullPointerException e) {
-			throw new EmptyCellException("That cell does have a value in it!");
+			throw new EmptyCellException("That cell does not have a value in it!");
 		}
 		return value; 
 	}
