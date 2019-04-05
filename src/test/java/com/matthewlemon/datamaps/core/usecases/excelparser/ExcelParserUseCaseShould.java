@@ -1,7 +1,6 @@
 package com.matthewlemon.datamaps.core.usecases.excelparser;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 import java.io.File;
 
@@ -11,7 +10,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import com.matthewlemon.datamaps.core.entities.PopulatedTemplate;
-import com.matthewlemon.datamaps.core.exceptions.EmptyCellException;
+import com.matthewlemon.datamaps.core.exceptions.ExcelParserException;
 
 public class ExcelParserUseCaseShould {
 
@@ -40,10 +39,10 @@ public class ExcelParserUseCaseShould {
 	
 	@Test
 	public void nonExistentCellThrowsException() throws Exception {
-		thrown.expect(EmptyCellException.class);
-		thrown.expectMessage("That cell does not have a value in it!");
+		thrown.expect(ExcelParserException.class);
+		thrown.expectMessage("Sheet name: Test Sheet 1 and cell reference T10 does not exist.");
 		PopulatedTemplate populatedTemplate = useCase.createPopulatedTemplate(file);
-		assertNull(populatedTemplate.getValue("Test Sheet 1", "T10"));
+		assertEquals(populatedTemplate.getValue("Test Sheet 1", "T10"), "Meaningless value");
 	}
 	
 	@Test
@@ -53,5 +52,13 @@ public class ExcelParserUseCaseShould {
 		assertEquals(populatedTemplate.getValue("Test Sheet 1", "A2"), "Test Key 2");
 		assertEquals(populatedTemplate.getValue("Test Sheet 1", "B1"), "Test Value 1");
 		assertEquals(populatedTemplate.getValue("Test Sheet 1", "B2"), "Test Value 2");
+	}
+	
+	@Test
+	public void nonExistentSheetThrowsException() throws Exception {
+		thrown.expect(ExcelParserException.class);
+		thrown.expectMessage("Sheet name: Test Sheet 2 and cell reference A1 does not exist.");
+		PopulatedTemplate populatedTemplate = useCase.createPopulatedTemplate(file);
+		assertEquals(populatedTemplate.getValue("Test Sheet 2", "A1"), "Test Key 1");
 	}
 }

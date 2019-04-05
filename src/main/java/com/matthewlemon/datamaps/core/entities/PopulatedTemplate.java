@@ -2,7 +2,7 @@ package com.matthewlemon.datamaps.core.entities;
 
 import java.util.HashMap;
 
-import com.matthewlemon.datamaps.core.exceptions.EmptyCellException;
+import com.matthewlemon.datamaps.core.exceptions.ExcelParserException;
 
 public class PopulatedTemplate {
 	
@@ -12,12 +12,14 @@ public class PopulatedTemplate {
 		return sheetData;
 	}
 
-	public String getValue(String sheetName, String cellRef) throws EmptyCellException {
+	public String getValue(String sheetName, String cellRef) throws ExcelParserException {
 		String value;
 		try {
 			value = sheetData.get(sheetName).get(cellRef).toString();
 		} catch (NullPointerException e) {
-			throw new EmptyCellException("That cell does not have a value in it!");
+			throw new ExcelParserException(
+					"Sheet name: " + sheetName + 
+					" and cell reference " + cellRef + " does not exist.");
 		}
 		return value; 
 	}
