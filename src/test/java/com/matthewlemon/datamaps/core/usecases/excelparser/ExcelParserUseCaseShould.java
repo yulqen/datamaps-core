@@ -15,7 +15,7 @@ import com.matthewlemon.datamaps.core.exceptions.EmptyCellException;
 
 public class ExcelParserUseCaseShould {
 
-	private File testFile;
+	private File file;
 	private ExcelParserUseCase useCase;
 	
 	@Rule
@@ -25,33 +25,33 @@ public class ExcelParserUseCaseShould {
 	public void setUp() {
 		ClassLoader classLoader = getClass().getClassLoader();
 		useCase = new ExcelParserUseCase();
-		testFile = new File(classLoader.getResource("files/test_populated_template.xlsx").getFile());
+		file = new File(classLoader.getResource("files/test_populated_template.xlsx").getFile());
 	}
 	
 	@Test
 	public void getDataFromPopulatedTemplate() throws Exception {
-		PopulatedTemplate template = useCase.createPopulatedTemplate(testFile);
+		PopulatedTemplate populatedTemplate = useCase.createPopulatedTemplate(file);
 		//TODO we don't want to be matching on strings here necessarily
-		assertEquals(template.getValue("Test Sheet 1", "A1"), "Test Key 1");
-		assertEquals(template.getValue("Test Sheet 1", "B1"), "Test Value 1");
-		assertEquals(template.getValue("Test Sheet 1", "A2"), "Test Key 2");
-		assertEquals(template.getValue("Test Sheet 1", "B2"), "Test Value 2");
+		assertEquals(populatedTemplate.getValue("Test Sheet 1", "A1"), "Test Key 1");
+		assertEquals(populatedTemplate.getValue("Test Sheet 1", "B1"), "Test Value 1");
+		assertEquals(populatedTemplate.getValue("Test Sheet 1", "A2"), "Test Key 2");
+		assertEquals(populatedTemplate.getValue("Test Sheet 1", "B2"), "Test Value 2");
 	}
 	
 	@Test
 	public void nonExistentCellThrowsException() throws Exception {
 		thrown.expect(EmptyCellException.class);
 		thrown.expectMessage("That cell does not have a value in it!");
-		PopulatedTemplate template = useCase.createPopulatedTemplate(testFile);
-		assertNull(template.getValue("Test Sheet 1", "T10"));
+		PopulatedTemplate populatedTemplate = useCase.createPopulatedTemplate(file);
+		assertNull(populatedTemplate.getValue("Test Sheet 1", "T10"));
 	}
 	
 	@Test
 	public void sheetDataIsAMapOfMaps() throws Exception {
-		PopulatedTemplate template = useCase.createPopulatedTemplate(testFile);
-		assertEquals(template.getValue("Test Sheet 1", "A1"), "Test Key 1");
-		assertEquals(template.getValue("Test Sheet 1", "A2"), "Test Key 2");
-		assertEquals(template.getValue("Test Sheet 1", "B1"), "Test Value 1");
-		assertEquals(template.getValue("Test Sheet 1", "B2"), "Test Value 2");
+		PopulatedTemplate populatedTemplate = useCase.createPopulatedTemplate(file);
+		assertEquals(populatedTemplate.getValue("Test Sheet 1", "A1"), "Test Key 1");
+		assertEquals(populatedTemplate.getValue("Test Sheet 1", "A2"), "Test Key 2");
+		assertEquals(populatedTemplate.getValue("Test Sheet 1", "B1"), "Test Value 1");
+		assertEquals(populatedTemplate.getValue("Test Sheet 1", "B2"), "Test Value 2");
 	}
 }
