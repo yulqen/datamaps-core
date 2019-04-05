@@ -22,10 +22,7 @@ public class ExcelParserFixture {
 
 	public boolean createablePopulatedTemplate(File testFile) throws InvalidFormatException, IOException {
 		PopulatedTemplate populatedTemplate = useCase.createPopulatedTemplate(testFile);
-		if (populatedTemplate.hasData()) {
-			return true;
-		}
-		else return false;
+		return true;
 	}
 
 	public Datamap userCreatesDatamapWithName(String string) {

@@ -25,18 +25,6 @@ public class ExcelParserUseCaseShould {
 	}
 	
 	@Test
-	public void createEmptyPopulatedTemplateObject() throws Exception {
-		PopulatedTemplate template = new PopulatedTemplate();
-		assertFalse(template.hasData());
-	}
-	
-	@Test
-	public void useGatewayToImportDataIntoBlankTemplateWithConstructor() throws Exception {
-		PopulatedTemplate template = new PopulatedTemplate(testFile);
-		assertTrue(template.hasData());
-	}
-	
-	@Test
 	public void getDataFromPopulatedTemplate() throws Exception {
 		PopulatedTemplate template = useCase.createPopulatedTemplate(testFile);
 		//TODO we don't want to be matching on strings here necessarily
