@@ -35,6 +35,9 @@ public class ExcelParserUseCaseShould {
 		assertEquals(populatedTemplate.getValue("Test Sheet 1", "B1"), "Test Value 1");
 		assertEquals(populatedTemplate.getValue("Test Sheet 1", "A2"), "Test Key 2");
 		assertEquals(populatedTemplate.getValue("Test Sheet 1", "B2"), "Test Value 2");
+		assertEquals(populatedTemplate.getValue("Test Sheet 2", "D6"), "Random Value");
+		// TODO - this needs to be the proper type, not a string
+		assertEquals(populatedTemplate.getValue("Test Sheet 2", "D9"), "234");
 	}
 	
 	@Test
