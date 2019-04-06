@@ -22,7 +22,6 @@ public class PopulatedTemplateGatewayShould {
 		TestSetup.setupContext();
 		ClassLoader classLoader = getClass().getClassLoader();
 		testFile = new File(classLoader.getResource("files/test_populated_template.xlsx").getFile());
-		new ExcelParserUseCase();
 		gateway = new PopulatedTemplateGateway();
 	}
 	
