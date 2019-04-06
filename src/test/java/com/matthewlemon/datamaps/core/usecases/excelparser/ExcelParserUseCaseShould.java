@@ -60,8 +60,8 @@ public class ExcelParserUseCaseShould {
 	@Test
 	public void nonExistentSheetThrowsException() throws Exception {
 		thrown.expect(ExcelParserException.class);
-		thrown.expectMessage("Sheet name: Test Sheet 2 and cell reference A1 does not exist.");
+		thrown.expectMessage("Sheet name: Test Sheet 3 and cell reference A1 does not exist.");
 		PopulatedTemplate populatedTemplate = useCase.createPopulatedTemplate(file);
-		assertEquals(populatedTemplate.getValue("Test Sheet 2", "A1"), "Test Key 1");
+		assertEquals(populatedTemplate.getValue("Test Sheet 3", "A1"), "Test Key 1");
 	}
 }

@@ -15,6 +15,9 @@ public class PopulatedTemplate {
 	public String getValue(String sheetName, String cellRef) throws ExcelParserException {
 		String value;
 		try {
+			// TODO - we need to pass in a validator object here which checks
+			// the value against the Rules in the Validator: type, other rules, etc
+			// before passing it on
 			value = sheetData.get(sheetName).get(cellRef).toString();
 		} catch (NullPointerException e) {
 			throw new ExcelParserException(
