@@ -2,6 +2,7 @@ package com.matthewlemon.datamaps.core.parser;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellAddress;
 import org.apache.poi.ss.util.CellReference;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -11,7 +12,7 @@ import java.util.HashMap;
 
 public class XLSXSheetData {
 
-    private HashMap<CellReference,String> dataCellRefAsKey = new HashMap<>();
+    private HashMap<CellAddress,String> dataCellRefAsKey = new HashMap<>();
     private HashMap<String, String> dataStringAsKey = new HashMap<>();
 
     public XLSXSheetData(File filePath, String sheetName) throws IOException, InvalidFormatException {
@@ -22,7 +23,7 @@ public class XLSXSheetData {
         Sheet sheet = workbook.getSheet(sheetName);
         for (Row row : sheet) {
             for (Cell cell : row) {
-                CellReference cellRef = new CellReference(row.getRowNum(), cell.getColumnIndex());
+                CellAddress cellRef = new CellAddress(row.getRowNum(), cell.getColumnIndex());
                 this.dataCellRefAsKey.put(cellRef, formatter.formatCellValue(cell));
                 this.dataStringAsKey.put(cellRef.formatAsString(), formatter.formatCellValue(cell));
             }
@@ -37,7 +38,7 @@ public class XLSXSheetData {
         Sheet sheet = workbook.getSheet(sheetName);
         for (Row row : sheet) {
             for (Cell cell : row) {
-                CellReference cellRef = new CellReference(row.getRowNum(), cell.getColumnIndex());
+                CellAddress cellRef = new CellAddress(row.getRowNum(), cell.getColumnIndex());
                 System.out.print(cellRef.formatAsString());
                 System.out.print(" - ");
 

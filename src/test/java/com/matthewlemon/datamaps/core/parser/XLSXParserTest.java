@@ -13,6 +13,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellAddress;
 import org.apache.poi.ss.util.CellReference;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.Before;
@@ -56,10 +57,10 @@ public class XLSXParserTest {
 
     // Here we are not testing our own code
     @Test
-    public void getCellValueWithCellReference() throws IOException, InvalidFormatException {
+    public void getCellValueWithCellAddress() throws IOException, InvalidFormatException {
         XLSXSheetData sheetData = new XLSXSheetData(testFile, sheetName);
         Map dataFromSheet = sheetData.getDataMapHash();
-        assertEquals(dataFromSheet.get(new CellReference("B1")), "Useless Project");
+        assertEquals(dataFromSheet.get(new CellAddress("B1")), "Useless Project");
     }
 
     // Here we are not testing our own code
