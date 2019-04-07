@@ -1,13 +1,9 @@
 ## Todo
 
-### Datamap
-
-* Implement typing system within Datamap (both in text in the CSV importer and via the API).
-
-### Import objects
+* Type-checking system
 
 * Implement `FileImporter` interface and implement `CSVImporter` and
-  `XLSX Importer` classes from it.
+  `XLSX Importer` classes from it. These are currently started in the guise of `ImportFileGateway`.
 * In `DatamapGateway` there are methods that deal with the `Datamap`
   (`createDatamap`, `getDatamap`, etc), and methods that deal with
   adding lines to the `Datamap` (`addLineToDatamap`,

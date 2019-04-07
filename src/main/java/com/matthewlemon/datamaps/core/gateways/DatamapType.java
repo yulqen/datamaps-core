@@ -1,9 +1,8 @@
 package com.matthewlemon.datamaps.core.gateways;
 
+import com.matthewlemon.datamaps.core.exceptions.ExcelParsedValueException;
+
 public abstract class DatamapType {
 
-	// This class is supposed to represent the type of data the user expects
-	// the datamap to represent.
-	
-	public DatamapType() {}
+	public abstract Object convert(String value) throws ExcelParsedValueException;
 }

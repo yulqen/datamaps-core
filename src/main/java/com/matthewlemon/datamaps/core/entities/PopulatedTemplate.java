@@ -2,7 +2,10 @@ package com.matthewlemon.datamaps.core.entities;
 
 import java.util.HashMap;
 
+import com.matthewlemon.datamaps.core.exceptions.ExcelParsedValueException;
 import com.matthewlemon.datamaps.core.exceptions.ExcelParserException;
+import com.matthewlemon.datamaps.core.gateways.DatamapType;
+import com.matthewlemon.datamaps.core.validation.Validator;
 
 public class PopulatedTemplate {
 	
@@ -12,13 +15,15 @@ public class PopulatedTemplate {
 		return sheetData;
 	}
 
+	public Object getValue(String sheetName, String cellRef, Validator validator) throws ExcelParsedValueException {
+		String value = sheetData.get(sheetName).get(cellRef).toString();
+		DatamapType type = validator.getType();
+		return type.convert(value);
+	}
+
 	public String getValue(String sheetName, String cellRef) throws ExcelParserException {
-		
 		String value;
 		try {
-			// TODO - we need to pass in a validator object here which checks
-			// the value against the Rules in the Validator: type, other rules, etc
-			// before passing it on
 			value = sheetData.get(sheetName).get(cellRef).toString();
 		} catch (NullPointerException e) {
 			throw new ExcelParserException(
