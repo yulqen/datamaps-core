@@ -11,8 +11,8 @@ import java.util.HashMap;
 
 public class XLSXSheetData {
 
-    private HashMap<CellReference,String> hm = new HashMap<>();
-    private HashMap<String, String> hmStringsAsKeys = new HashMap<>();
+    private HashMap<CellReference,String> dataCellRefAsKey = new HashMap<>();
+    private HashMap<String, String> dataStringAsKey = new HashMap<>();
 
     public XLSXSheetData(File filePath, String sheetName) throws IOException, InvalidFormatException {
 
@@ -23,8 +23,8 @@ public class XLSXSheetData {
         for (Row row : sheet) {
             for (Cell cell : row) {
                 CellReference cellRef = new CellReference(row.getRowNum(), cell.getColumnIndex());
-                this.hm.put(cellRef, formatter.formatCellValue(cell));
-                this.hmStringsAsKeys.put(cellRef.formatAsString(), formatter.formatCellValue(cell));
+                this.dataCellRefAsKey.put(cellRef, formatter.formatCellValue(cell));
+                this.dataStringAsKey.put(cellRef.formatAsString(), formatter.formatCellValue(cell));
             }
         }
         workbook.close();
@@ -49,11 +49,11 @@ public class XLSXSheetData {
     }
 
     public HashMap getDataMapHash() {
-        return this.hm;
+        return this.dataCellRefAsKey;
     }
 
     public HashMap getDataMapHashStringsAsKeys() {
-        return this.hmStringsAsKeys;
+        return this.dataStringAsKey;
     }
 }
 
