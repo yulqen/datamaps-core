@@ -5,7 +5,7 @@ import java.io.File;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ExcelParserTests {
+public class ValidatorShould {
 
 	private static final String TEST_FILE_XLSX = "/home/lemon/Desktop/test_populated_template.xlsx";
 	
