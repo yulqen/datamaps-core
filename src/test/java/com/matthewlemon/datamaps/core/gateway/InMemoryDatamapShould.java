@@ -17,7 +17,7 @@ import com.matthewlemon.datamaps.core.entities.CSVFile;
 import com.matthewlemon.datamaps.core.entities.Datamap;
 import com.matthewlemon.datamaps.core.entities.DatamapLine;
 import com.matthewlemon.datamaps.core.exceptions.DuplicateDatamapException;
-import com.matthewlemon.datamaps.core.gateways.DatamapTextType;
+import com.matthewlemon.datamaps.core.parser.DatamapType;
 
 public class InMemoryDatamapShould {
 
@@ -48,7 +48,7 @@ public class InMemoryDatamapShould {
     @Test
     public void addLineToDatamap() {
         gateway.addLineToDatamap("Test Datamap",
-                "Test Key", "Sheet 1", "B1", new DatamapTextType());
+                "Test Key", "Sheet 1", "B1", new DatamapType());
         List<DatamapLine> datamaplines = gateway.getDataLinesFor("Test Datamap");
         assertEquals(datamaplines.get(0).getKey(), "Test Key");
         // manual delete of that line
@@ -57,7 +57,7 @@ public class InMemoryDatamapShould {
 	@Test
     public void useGatewayToAddToDatamapWithCSV() {
         DatamapLine dml = new DatamapLine("Test Key 1", "Test Sheet 1",
-                "Test CellRef 1", new DatamapTextType());
+                "Test CellRef 1", new DatamapType());
         gateway.addDataToDatamapWithCSV("Test Datamap", csvFile);
         assertEquals(gateway.getDatamap("Test Datamap")
                 .getDatamapLines().get(0).getKey(), dml.getKey());

@@ -4,7 +4,7 @@ import com.matthewlemon.datamaps.core.Context;
 import com.matthewlemon.datamaps.core.TestSetup;
 import com.matthewlemon.datamaps.core.entities.Datamap;
 import com.matthewlemon.datamaps.core.exceptions.DuplicateDatamapException;
-import com.matthewlemon.datamaps.core.gateways.DatamapTextType;
+import com.matthewlemon.datamaps.core.parser.DatamapType;
 import com.matthewlemon.datamaps.core.usecases.CreateableDatamapUseCase;
 
 import org.junit.Before;
@@ -35,7 +35,7 @@ public class CreateableDatamapUseCaseShould {
     @Test
     public void canGetCountOfLinesInDatamap() throws DuplicateDatamapException {
         testDatamap = useCase.createDatamap(TITLE);
-        useCase.addLineToDatamap(TITLE, "Key 1", "Sheet 1", "A2", new DatamapTextType());
+        useCase.addLineToDatamap(TITLE, "Key 1", "Sheet 1", "A2", new DatamapType());
         int lineCount = useCase.getLineCountFromDatamap(TITLE);
         assertThat(lineCount, is(1));
     }

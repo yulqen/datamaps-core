@@ -8,7 +8,7 @@ import com.matthewlemon.datamaps.core.entities.Datamap;
 import com.matthewlemon.datamaps.core.entities.DatamapLine;
 import com.matthewlemon.datamaps.core.exceptions.DuplicateDatamapException;
 import com.matthewlemon.datamaps.core.gateways.DatamapGateway;
-import com.matthewlemon.datamaps.core.gateways.DatamapType;
+import com.matthewlemon.datamaps.core.parser.DatamapType;
 
 public class InMemoryDatamapGateway implements DatamapGateway {
 

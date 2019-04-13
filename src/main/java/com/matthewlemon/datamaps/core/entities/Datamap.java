@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.matthewlemon.datamaps.core.gateways.DatamapTextType;
+import com.matthewlemon.datamaps.core.parser.DatamapType;
 
 public class Datamap {
 
@@ -43,7 +43,7 @@ public class Datamap {
             while ((line = br.readLine()) != null) {
                 String[] parsedLine = line.split(COMMA_DELIMITER);
                 DatamapLine dml = new DatamapLine(
-                        parsedLine[0], parsedLine[1], parsedLine[2], new DatamapTextType());
+                        parsedLine[0], parsedLine[1], parsedLine[2], new DatamapType());
                 this.addDatamapLine(dml);
             }
         } catch (Exception ee) {

@@ -4,7 +4,7 @@ import com.matthewlemon.datamaps.core.Context;
 import com.matthewlemon.datamaps.core.entities.CSVFile;
 import com.matthewlemon.datamaps.core.entities.Datamap;
 import com.matthewlemon.datamaps.core.exceptions.DuplicateDatamapException;
-import com.matthewlemon.datamaps.core.gateways.DatamapType;
+import com.matthewlemon.datamaps.core.parser.DatamapType;
 
 public class CreateableDatamapUseCase {
 

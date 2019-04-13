@@ -1,6 +1,6 @@
 package com.matthewlemon.datamaps.core.entities;
 
-import com.matthewlemon.datamaps.core.gateways.DatamapType;
+import com.matthewlemon.datamaps.core.parser.DatamapType;
 
 public class DatamapLine {
 

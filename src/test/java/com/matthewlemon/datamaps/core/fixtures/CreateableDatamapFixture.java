@@ -5,7 +5,7 @@ import com.matthewlemon.datamaps.core.entities.CSVFile;
 import com.matthewlemon.datamaps.core.entities.Datamap;
 import com.matthewlemon.datamaps.core.entities.DatamapLine;
 import com.matthewlemon.datamaps.core.exceptions.DuplicateDatamapException;
-import com.matthewlemon.datamaps.core.gateways.DatamapType;
+import com.matthewlemon.datamaps.core.parser.DatamapType;
 import com.matthewlemon.datamaps.core.usecases.CreateableDatamapUseCase;
 
 import java.util.List;
