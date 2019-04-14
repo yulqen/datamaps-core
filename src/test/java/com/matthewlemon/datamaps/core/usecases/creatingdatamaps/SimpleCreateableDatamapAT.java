@@ -18,8 +18,6 @@ public class SimpleCreateableDatamapAT {
         CreateableDatamapFixture fixture = new CreateableDatamapFixture();
         fixture.setUpFixture();
         fixture.userCreatesDatamapWithName("Test Datamap");
-        // this is what we want, but cannot do this just now
-//        fixture.userAddsSingleLineOfDataToDatamap("Test Datamap", "Test Key 1", "Sheet 1", "B1", DatamapType(TEXT));
         fixture.userAddsSingleLineOfDataToDatamap("Test Datamap", "Test Key 1", "Sheet 1", "B1", new DatamapType());
         fixture.userAddsSingleLineOfDataToDatamap("Test Datamap", "Test Key 2", "Sheet 1", "B2", new DatamapType());
         assertEquals(fixture.canCheckCountOfLinesInDatamap("Test Datamap"), 2);
