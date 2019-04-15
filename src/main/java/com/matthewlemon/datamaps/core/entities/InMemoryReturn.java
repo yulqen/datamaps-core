@@ -16,10 +16,6 @@ public class InMemoryReturn {
 		return data;
 	}
 
-	public void setData(HashMap<String, HashMap<String, DatamapValue<?>>> data) {
-		this.data = data;
-	}
-
 	public DatamapValue<?> getCellValue(String sheetName, String cellRef) {
 		return data.get(sheetName).get(cellRef);
 	}
