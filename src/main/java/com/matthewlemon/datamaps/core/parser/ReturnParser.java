@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
@@ -27,7 +28,7 @@ public class ReturnParser {
 		return this.returnObj;
 	}
 
-	public void write(File testFile) throws EncryptedDocumentException, IOException {
+	public void parse(File testFile) throws EncryptedDocumentException, IOException {
 		parseWorkbook(testFile);
 	}
 	
@@ -38,7 +39,7 @@ public class ReturnParser {
 	}
 
 	private void parseWorkbookToMapWithEvaluator(Workbook workbook, FormulaEvaluator evaluator) {
-//		DataFormatter formatter = new DataFormatter();
+		DataFormatter formatter = new DataFormatter();
 		for (Sheet sheet : workbook) {
 			HashMap<String, DatamapValue<?>> sheetData = new HashMap<>();
 			for (Row row : sheet) {
@@ -54,12 +55,13 @@ public class ReturnParser {
 						break;
 					case NUMERIC:
 						// TODO: We are only able to handle/convert to doubles here
-						DatamapValue<?> valNumeric = new DatamapValue<Double>(cell.getNumericCellValue());
 						// TODO: We need to fix how dates strings are handled here
 						if (DateUtil.isCellDateFormatted(cell)) {
-							sheetData.put(cell.getAddress().formatAsString(), valNumeric);
+							DatamapValue<?> valDateOrNumeric = new DatamapValue<String>(formatter.formatCellValue(cell));
+							sheetData.put(cell.getAddress().formatAsString(), valDateOrNumeric);
 						} else {
-							sheetData.put(cell.getAddress().formatAsString(), valNumeric);
+							DatamapValue<?> valDateOrNumeric = new DatamapValue<Double>(cell.getNumericCellValue());
+							sheetData.put(cell.getAddress().formatAsString(), valDateOrNumeric);
 						}
 						break;
 					case FORMULA:
