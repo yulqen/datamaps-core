@@ -27,9 +27,9 @@ public class ExcelParserTest {
 	@Test
 	public void checkHashStructure() throws Exception {
 		DatamapValue<Boolean> value = new DatamapValue<Boolean>(true);
-		assertEquals(value.getValue(), true);
+		assertEquals(true, value.getValue());
 		DatamapValue<String> str = new DatamapValue<String>("Tosser");
-		assertEquals(str.getValue(), "Tosser");
+		assertEquals("Tosser", str.getValue());
 	}
 	
 	@Test
@@ -43,10 +43,11 @@ public class ExcelParserTest {
 	public void canGetValuesFromCellsInParsedSpreadsheet() throws EncryptedDocumentException, IOException {
 		ReturnParser parser = new ReturnParser();
 		parser.write(testFile);
-		assertEquals(parser.getReturn().getCellValue("Test Sheet 1", "B1").getValue(), "Test Value 1");
-		assertEquals(parser.getReturn().getCellValue("Test Sheet 1", "C10").getValue(), 12.1);
-		assertEquals(parser.getReturn().getCellValue("Test Sheet 1", "B10").getValue(), 12.0);
+		assertEquals("Test Value 1", parser.getReturn().getCellValue("Test Sheet 1", "B1").getValue());
+		assertEquals(12.1, parser.getReturn().getCellValue("Test Sheet 1", "C10").getValue());
+		assertEquals(12.0, parser.getReturn().getCellValue("Test Sheet 1", "B10").getValue());
 		// We use the delta parameter to account for rounding and cast the initial result to a double here
-		assertEquals((Double) parser.getReturn().getCellValue("Test Sheet 1", "C13").getValue(), 1436.65, 0.1);
+		assertEquals(1436.65, (Double) parser.getReturn().getCellValue("Test Sheet 1", "C13").getValue(), 0.1);
+		assertEquals("Formula Result", parser.getReturn().getCellValue("Test Sheet 1",  "C15").getValue());
 	}
 }

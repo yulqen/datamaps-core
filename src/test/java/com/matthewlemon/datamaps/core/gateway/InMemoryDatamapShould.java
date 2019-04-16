@@ -50,7 +50,7 @@ public class InMemoryDatamapShould {
         gateway.addLineToDatamap("Test Datamap",
                 "Test Key", "Sheet 1", "B1", new DatamapType());
         List<DatamapLine> datamaplines = gateway.getDataLinesFor("Test Datamap");
-        assertEquals(datamaplines.get(0).getKey(), "Test Key");
+        assertEquals("Test Key", datamaplines.get(0).getKey());
         // manual delete of that line
     }
 
@@ -59,16 +59,16 @@ public class InMemoryDatamapShould {
         DatamapLine dml = new DatamapLine("Test Key 1", "Test Sheet 1",
                 "Test CellRef 1", new DatamapType());
         gateway.addDataToDatamapWithCSV("Test Datamap", csvFile);
-        assertEquals(gateway.getDatamap("Test Datamap")
-                .getDatamapLines().get(0).getKey(), dml.getKey());
+        assertEquals(dml.getKey(), gateway.getDatamap("Test Datamap")
+                .getDatamapLines().get(0).getKey());
     }
 
     @Test
     public void addDataToDatamapFromCSV() throws IOException {
         Datamap datamap = gateway.getDatamap("Test Datamap");
         datamap.readCSV(testFile);
-        assertEquals(datamap.getDataKeyForLine(0), "Test Key 1");
-        assertEquals(datamap.getDataKeyForLine(1), "Test Key 2");
+        assertEquals("Test Key 1", datamap.getDataKeyForLine(0));
+        assertEquals("Test Key 2", datamap.getDataKeyForLine(1));
     }
     
     @Test(expected=DuplicateDatamapException.class)
