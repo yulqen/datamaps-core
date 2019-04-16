@@ -68,26 +68,30 @@ public class ReturnParser {
 						}
 						break;
 					case FORMULA:
-						try {
-							// Assume we have a numeric cell value
-							double value = evaluator.evaluate(cell).getNumberValue();
-							DatamapValue<?> formulaResult = new DatamapValue<Double>(value);
-							sheetData.put(cell.getAddress().formatAsString(), formulaResult);
+						switch(evaluator.evaluateFormulaCell(cell)) {
+						case BOOLEAN:
+							DatamapValue<?> valFuncBool = new DatamapValue<Boolean>(cell.getBooleanCellValue());
+							sheetData.put(cell.getAddress().formatAsString(), valFuncBool);
 							break;
-						} catch (Exception e) {
-							// we have a string or a boolean
-							try {
-								String value = evaluator.evaluate(cell).getStringValue();
-								DatamapValue<?> formulaResult = new DatamapValue<String>(value);
-								sheetData.put(cell.getAddress().formatAsString(), formulaResult);
-								break;
-							} catch (Exception e2) {
-								Boolean value = evaluator.evaluate(cell).getBooleanValue();
-								DatamapValue<?> formulaResult = new DatamapValue<Boolean>(value);
-								sheetData.put(cell.getAddress().formatAsString(), formulaResult);
-								break;
-							}
+						case STRING:
+							DatamapValue<?> valFuncString = new DatamapValue<String>(cell.getStringCellValue());
+							sheetData.put(cell.getAddress().formatAsString(), valFuncString);
+							break;
+						case NUMERIC:
+							DatamapValue<?> valNumericString = new DatamapValue<Double>(cell.getNumericCellValue());
+							sheetData.put(cell.getAddress().formatAsString(), valNumericString);
+							break;
+						case ERROR:
+							break;
+						case FORMULA:
+							break;
+						case BLANK:
+							break;
+						default:
+							break;
 						}
+					case ERROR:
+						break;
 					case BLANK:
 						break;
 					default:
