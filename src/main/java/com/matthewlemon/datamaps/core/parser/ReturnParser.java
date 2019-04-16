@@ -68,9 +68,26 @@ public class ReturnParser {
 						}
 						break;
 					case FORMULA:
-						DatamapValue<?> formulaResult = new DatamapValue<Double>(evaluator.evaluate(cell).getNumberValue());
-						sheetData.put(cell.getAddress().formatAsString(), formulaResult);
-						break;
+						try {
+							// Assume we have a numeric cell value
+							double value = evaluator.evaluate(cell).getNumberValue();
+							DatamapValue<?> formulaResult = new DatamapValue<Double>(value);
+							sheetData.put(cell.getAddress().formatAsString(), formulaResult);
+							break;
+						} catch (Exception e) {
+							// we have a string or a boolean
+							try {
+								String value = evaluator.evaluate(cell).getStringValue();
+								DatamapValue<?> formulaResult = new DatamapValue<String>(value);
+								sheetData.put(cell.getAddress().formatAsString(), formulaResult);
+								break;
+							} catch (Exception e2) {
+								Boolean value = evaluator.evaluate(cell).getBooleanValue();
+								DatamapValue<?> formulaResult = new DatamapValue<Boolean>(value);
+								sheetData.put(cell.getAddress().formatAsString(), formulaResult);
+								break;
+							}
+						}
 					case BLANK:
 						break;
 					default:
