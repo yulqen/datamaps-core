@@ -10,7 +10,9 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import com.matthewlemon.datamaps.core.TestSetup;
 import com.matthewlemon.datamaps.core.doubles.InMemoryDatamapGateway;
@@ -48,6 +50,9 @@ public class InMemoryDatamapShould {
         gateway.deleteAllLinesIn("Test Datamap");
     }
 
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+    
     @Test
     public void addLineToDatamap() throws DatamapNotFoundException {
         gateway.addLineToDatamap("Test Datamap",
@@ -84,6 +89,7 @@ public class InMemoryDatamapShould {
     
     @Test
 	public void canGetSingleDatamapLineByQueryingItsSheetAndKeyValues() throws DuplicateDatamapException, DatamapNotFoundException, DatamapLineNotFoundException {
+    	@SuppressWarnings("unused")
         Datamap datamap = gateway.createDatamap("Test Datamap 2"); // reate a new Datamap object
 		gateway.addLineToDatamap("Test Datamap 2", "Test Key 1", "Test Sheet 1", "B1");
 		gateway.addLineToDatamap("Test Datamap 2", "Test Key 2", "Test Sheet 1", "B2");
@@ -92,4 +98,12 @@ public class InMemoryDatamapShould {
 		assertEquals("Test Sheet 1", dml.getSheetName());
 		assertEquals("B1", dml.getCellRef());
 	}
+
+    @Test
+	public void throwExceptionWhenDatamapDoesntExist() throws Exception {
+    	thrown.expect(DatamapNotFoundException.class);
+    	thrown.expectMessage("Datamap Test Datamap No Exist cannot be found.");
+    	Datamap datamap = gateway.getDatamap("Test Datamap No Exist");
+	}
+
 }
