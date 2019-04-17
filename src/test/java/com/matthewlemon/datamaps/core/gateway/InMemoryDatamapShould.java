@@ -17,6 +17,8 @@ import com.matthewlemon.datamaps.core.doubles.InMemoryDatamapGateway;
 import com.matthewlemon.datamaps.core.entities.CSVFile;
 import com.matthewlemon.datamaps.core.entities.Datamap;
 import com.matthewlemon.datamaps.core.entities.DatamapLine;
+import com.matthewlemon.datamaps.core.exceptions.DatamapLineNotFoundException;
+import com.matthewlemon.datamaps.core.exceptions.DatamapNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.DuplicateDatamapException;
 import com.matthewlemon.datamaps.core.parser.DatamapType;
 
@@ -47,7 +49,7 @@ public class InMemoryDatamapShould {
     }
 
     @Test
-    public void addLineToDatamap() {
+    public void addLineToDatamap() throws DatamapNotFoundException {
         gateway.addLineToDatamap("Test Datamap",
                 "Test Key", "Sheet 1", "B1", new DatamapType());
         List<DatamapLine> datamaplines = gateway.getDataLinesFor("Test Datamap");
@@ -56,7 +58,7 @@ public class InMemoryDatamapShould {
     }
 
 	@Test
-    public void useGatewayToAddToDatamapWithCSV() {
+    public void useGatewayToAddToDatamapWithCSV() throws DatamapNotFoundException {
         DatamapLine dml = new DatamapLine("Test Key 1", "Test Sheet 1",
                 "Test CellRef 1", new DatamapType());
         gateway.addDataToDatamapWithCSV("Test Datamap", csvFile);
@@ -65,7 +67,7 @@ public class InMemoryDatamapShould {
     }
 
     @Test
-    public void addDataToDatamapFromCSV() throws IOException {
+    public void addDataToDatamapFromCSV() throws IOException, DatamapNotFoundException {
         Datamap datamap = gateway.getDatamap("Test Datamap");
         datamap.readCSV(testFile);
         assertEquals("Test Key 1", datamap.getDataKeyForLine(0));
@@ -81,7 +83,7 @@ public class InMemoryDatamapShould {
 	}
     
     @Test
-	public void canGetSingleDatamapLineByQueryingItsSheetAndKeyValues() throws Exception {
+	public void canGetSingleDatamapLineByQueryingItsSheetAndKeyValues() throws DuplicateDatamapException, DatamapNotFoundException, DatamapLineNotFoundException {
         Datamap datamap = gateway.createDatamap("Test Datamap 2"); // reate a new Datamap object
 		gateway.addLineToDatamap("Test Datamap 2", "Test Key 1", "Test Sheet 1", "B1");
 		gateway.addLineToDatamap("Test Datamap 2", "Test Key 2", "Test Sheet 1", "B2");

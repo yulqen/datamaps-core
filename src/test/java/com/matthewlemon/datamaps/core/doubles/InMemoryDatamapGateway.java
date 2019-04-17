@@ -7,6 +7,7 @@ import com.matthewlemon.datamaps.core.entities.CSVFile;
 import com.matthewlemon.datamaps.core.entities.Datamap;
 import com.matthewlemon.datamaps.core.entities.DatamapLine;
 import com.matthewlemon.datamaps.core.exceptions.DatamapLineNotFoundException;
+import com.matthewlemon.datamaps.core.exceptions.DatamapNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.DuplicateDatamapException;
 import com.matthewlemon.datamaps.core.gateways.DatamapGateway;
 import com.matthewlemon.datamaps.core.parser.DatamapType;
@@ -42,32 +43,31 @@ public class InMemoryDatamapGateway implements DatamapGateway {
     }
 
     @Override
-    public void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef, DatamapType type) {
+    public void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef, DatamapType type) throws DatamapNotFoundException {
         DatamapLine datamapLine = new DatamapLine(key, sheetName, cellRef, type);
         Datamap datamap = getDatamap(datamapName);
         datamap.addDatamapLine(datamapLine);
     }
 
     @Override
-	public void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef) {
+	public void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef) throws DatamapNotFoundException {
         DatamapLine datamapLine = new DatamapLine(key, sheetName, cellRef);
         Datamap datamap = getDatamap(datamapName);
         datamap.addDatamapLine(datamapLine);
 	}
 
     @Override
-    public Datamap getDatamap(String datamapName) {
-        Datamap nullDm = null;
+    public Datamap getDatamap(String datamapName) throws DatamapNotFoundException {
         for (Datamap datamap : dataMaps) {
             if (datamap.getName().equals(datamapName)) {
                 return datamap;
             }
         }
-        return nullDm;
+        throw new DatamapNotFoundException("Datamap " + datamapName + " cannot be found.");
     }
 
     @Override
-    public List<DatamapLine> getDataLinesFor(String datamapName) {
+    public List<DatamapLine> getDataLinesFor(String datamapName) throws DatamapNotFoundException {
         Datamap datamap = getDatamap(datamapName);
         return datamap.getDatamapLines();
     }
@@ -77,7 +77,7 @@ public class InMemoryDatamapGateway implements DatamapGateway {
     }
 
     @Override
-    public void addDataToDatamapWithCSV(String datamapName, CSVFile csvFile) {
+    public void addDataToDatamapWithCSV(String datamapName, CSVFile csvFile) throws DatamapNotFoundException {
         Datamap datamap = getDatamap(datamapName);
         datamap.readCSV(csvFile.getFile());
         dataMaps.add(datamap);
@@ -91,7 +91,7 @@ public class InMemoryDatamapGateway implements DatamapGateway {
     }
 
     @Override
-	public DatamapLine getDatamapLineFrom(String datamapName, String key) throws DatamapLineNotFoundException {
+	public DatamapLine getDatamapLineFrom(String datamapName, String key) throws DatamapLineNotFoundException, DatamapNotFoundException {
     	Datamap datamap = getDatamap(datamapName);
     	for (DatamapLine datamapLine : datamap.getDatamapLines()) {
     		if (datamapLine.getKey().equals(key)) {

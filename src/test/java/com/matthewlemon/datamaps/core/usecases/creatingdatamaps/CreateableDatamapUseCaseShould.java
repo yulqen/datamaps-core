@@ -3,6 +3,7 @@ package com.matthewlemon.datamaps.core.usecases.creatingdatamaps;
 import com.matthewlemon.datamaps.core.Context;
 import com.matthewlemon.datamaps.core.TestSetup;
 import com.matthewlemon.datamaps.core.entities.Datamap;
+import com.matthewlemon.datamaps.core.exceptions.DatamapNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.DuplicateDatamapException;
 import com.matthewlemon.datamaps.core.parser.DatamapType;
 import com.matthewlemon.datamaps.core.usecases.CreateableDatamapUseCase;
@@ -33,7 +34,7 @@ public class CreateableDatamapUseCaseShould {
     }
 
     @Test
-    public void canGetCountOfLinesInDatamap() throws DuplicateDatamapException {
+    public void canGetCountOfLinesInDatamap() throws DuplicateDatamapException, DatamapNotFoundException {
         testDatamap = useCase.createDatamap(TITLE);
         useCase.addLineToDatamap(TITLE, "Key 1", "Sheet 1", "A2", new DatamapType());
         int lineCount = useCase.getLineCountFromDatamap(TITLE);
@@ -41,7 +42,7 @@ public class CreateableDatamapUseCaseShould {
     }
 
     @Test
-    public void findDatamapWithName() throws DuplicateDatamapException {
+    public void findDatamapWithName() throws DuplicateDatamapException, DatamapNotFoundException {
         testDatamap = useCase.createDatamap(TITLE);
         Datamap returnedDatamap = Context.datamapGateway.getDatamap("Test Datamap");
         assertThat(returnedDatamap.getName(), is(TITLE));

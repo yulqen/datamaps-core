@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.matthewlemon.datamaps.core.entities.CSVFile;
+import com.matthewlemon.datamaps.core.exceptions.DatamapNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.DuplicateDatamapException;
 import com.matthewlemon.datamaps.core.fixtures.CreateableDatamapFixture;
 
@@ -22,7 +23,7 @@ public class CreateAndAddDatamapWithCSVAT {
 	}
 
 	@Test
-	public void userCanCreateDatamapUsingCSVForDatamapLines() throws DuplicateDatamapException {
+	public void userCanCreateDatamapUsingCSVForDatamapLines() throws DuplicateDatamapException, DatamapNotFoundException {
 		CreateableDatamapFixture fixture = new CreateableDatamapFixture();
 		fixture.setUpFixture();
 		fixture.userCreatesDatamapWithName("Test Datamap");

@@ -1,6 +1,7 @@
 package com.matthewlemon.datamaps.core.usecases.creatingdatamaps;
 
 import com.matthewlemon.datamaps.core.entities.DatamapLine;
+import com.matthewlemon.datamaps.core.exceptions.DatamapNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.DuplicateDatamapException;
 import com.matthewlemon.datamaps.core.fixtures.CreateableDatamapFixture;
 import com.matthewlemon.datamaps.core.parser.DatamapType;
@@ -14,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 public class SimpleCreateableDatamapAT {
 
 	@Test
-    public void userCanCreateDatamap() throws DuplicateDatamapException {
+    public void userCanCreateDatamap() throws DuplicateDatamapException, DatamapNotFoundException {
         CreateableDatamapFixture fixture = new CreateableDatamapFixture();
         fixture.setUpFixture();
         fixture.userCreatesDatamapWithName("Test Datamap");
