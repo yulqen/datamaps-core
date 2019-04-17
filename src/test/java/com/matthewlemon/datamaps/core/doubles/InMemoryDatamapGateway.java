@@ -57,6 +57,13 @@ public class InMemoryDatamapGateway implements DatamapGateway {
 	}
 
     @Override
+	public void addDataToDatamapWithCSV(String datamapName, CSVFile csvFile) throws DatamapNotFoundException {
+	    Datamap datamap = getDatamap(datamapName);
+	    datamap.readCSV(csvFile.getFile());
+	    dataMaps.add(datamap);
+	}
+
+	@Override
     public Datamap getDatamap(String datamapName) throws DatamapNotFoundException {
         for (Datamap datamap : dataMaps) {
             if (datamap.getName().equals(datamapName)) {
@@ -77,27 +84,19 @@ public class InMemoryDatamapGateway implements DatamapGateway {
     }
 
     @Override
-    public void addDataToDatamapWithCSV(String datamapName, CSVFile csvFile) throws DatamapNotFoundException {
-        Datamap datamap = getDatamap(datamapName);
-        datamap.readCSV(csvFile.getFile());
-        dataMaps.add(datamap);
-    }
+	public DatamapLine getDatamapLineFrom(String datamapName, String key) throws DatamapLineNotFoundException, DatamapNotFoundException {
+		Datamap datamap = getDatamap(datamapName);
+		for (DatamapLine datamapLine : datamap.getDatamapLines()) {
+			if (datamapLine.getKey().equals(key)) {
+				return datamapLine;
+			}
+		}
+		throw new DatamapLineNotFoundException("Cannot find datamapline with key of " + key);
+	}
 
-
-    @Override
+	@Override
     public void deleteAllLinesIn(String datamapName) {
         Datamap datamap = new Datamap(datamapName);
         datamap.deleteAllLines();
     }
-
-    @Override
-	public DatamapLine getDatamapLineFrom(String datamapName, String key) throws DatamapLineNotFoundException, DatamapNotFoundException {
-    	Datamap datamap = getDatamap(datamapName);
-    	for (DatamapLine datamapLine : datamap.getDatamapLines()) {
-    		if (datamapLine.getKey().equals(key)) {
-				return datamapLine;
-			}
-		}
-    	throw new DatamapLineNotFoundException("Cannot find datamapline with key of " + key);
-	}
 }

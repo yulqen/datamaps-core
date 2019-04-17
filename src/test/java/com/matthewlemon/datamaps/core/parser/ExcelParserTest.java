@@ -65,9 +65,8 @@ public class ExcelParserTest {
 		gateway.createDatamap("Test Datamap");
 		gateway.addLineToDatamap("Test Datamap", "Test Key 1", "Test Sheet 1", "B1");
 		gateway.addLineToDatamap("Test Datamap", "Test Key 2", "Test Sheet 1", "B2");
-		datamapLines = gateway.getDataLinesFor("Test Datamap");
-		DatamapLine dml = datamapLines.get(0);
-		DatamapLine dml1 = datamapLines.get(1);
+		DatamapLine dml = gateway.getDatamapLineFrom("Test Datamap", "Test Key 1");
+		DatamapLine dml1 = gateway.getDatamapLineFrom("Test Datamap", "Test Key 2");
 
 		ReturnParser parser = new ReturnParser();
 		parser.parse(testFile);

@@ -52,11 +52,12 @@ public class InMemoryDatamapShould {
 	public ExpectedException thrown = ExpectedException.none();
 
 	@Test
-	public void addLineToDatamap() throws DatamapNotFoundException {
+	public void addLineToDatamap() throws DatamapNotFoundException, DatamapLineNotFoundException {
 		gateway.addLineToDatamap("Test Datamap", "Test Key", "Sheet 1", "B1", new DatamapType());
 		List<DatamapLine> datamaplines = gateway.getDataLinesFor("Test Datamap");
 		assertEquals("Test Key", datamaplines.get(0).getKey());
-		// manual delete of that line
+		// alternative way of getting the key:
+		assertEquals("Test Key", gateway.getDatamapLineFrom("Test Datamap", "Test Key").getKey());
 	}
 
 	@Test
@@ -102,5 +103,4 @@ public class InMemoryDatamapShould {
 		@SuppressWarnings("unused")
 		Datamap datamap = gateway.getDatamap("Test Datamap No Exist");
 	}
-
 }
