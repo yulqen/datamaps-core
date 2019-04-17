@@ -24,6 +24,7 @@ public interface DatamapGateway {
 
     void deleteAllLinesIn(String test_datamap);
 
-	void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef,
-			DatamapType type);
+	void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef, DatamapType type);
+
+	void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef);
 }

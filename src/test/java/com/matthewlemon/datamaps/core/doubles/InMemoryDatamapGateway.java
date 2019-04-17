@@ -48,6 +48,13 @@ public class InMemoryDatamapGateway implements DatamapGateway {
     }
 
     @Override
+	public void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef) {
+        DatamapLine datamapLine = new DatamapLine(key, sheetName, cellRef);
+        Datamap datamap = getDatamap(datamapName);
+        datamap.addDatamapLine(datamapLine);
+	}
+
+    @Override
     public Datamap getDatamap(String datamapName) {
         Datamap nullDm = null;
         for (Datamap datamap : dataMaps) {
@@ -75,9 +82,11 @@ public class InMemoryDatamapGateway implements DatamapGateway {
         dataMaps.add(datamap);
     }
 
+
     @Override
     public void deleteAllLinesIn(String datamapName) {
         Datamap datamap = new Datamap(datamapName);
         datamap.deleteAllLines();
     }
+
 }

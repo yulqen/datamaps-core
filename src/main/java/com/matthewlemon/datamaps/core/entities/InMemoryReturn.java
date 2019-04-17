@@ -20,4 +20,8 @@ public class InMemoryReturn {
 		return data.get(sheetName).get(cellRef);
 	}
 
+	public DatamapValue<?> getCellValue(String sheetName, DatamapLine dml) {
+		return data.get(dml.getSheetName()).get(dml.getCellRef());
+	}
+
 }

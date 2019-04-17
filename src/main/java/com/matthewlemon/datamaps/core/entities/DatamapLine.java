@@ -20,7 +20,13 @@ public class DatamapLine {
         this.type = type;
     }
 
-    public String getSheetName() {
+    public DatamapLine(String key, String sheetName, String cellRef) {
+        this.key = key;
+        this.sheetName = sheetName;
+        this.cellRef = cellRef;
+	}
+
+	public String getSheetName() {
 		return sheetName;
 	}
 

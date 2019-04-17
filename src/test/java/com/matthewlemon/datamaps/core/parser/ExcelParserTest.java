@@ -5,17 +5,23 @@ import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.poi.EncryptedDocumentException;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.matthewlemon.datamaps.core.doubles.InMemoryDatamapGateway;
+import com.matthewlemon.datamaps.core.entities.Datamap;
+import com.matthewlemon.datamaps.core.entities.DatamapLine;
 import com.matthewlemon.datamaps.core.entities.InMemoryReturn;
 
 public class ExcelParserTest {
 
 	private File testFile;
+	private InMemoryDatamapGateway gateway;
 
 	@Before
 	public void setUp() throws Exception {
@@ -50,5 +56,23 @@ public class ExcelParserTest {
 		assertEquals(234.0, parser.getReturn().getCellValue("Test Sheet 2", "D9").getValue());
 		assertEquals("23/02/42", parser.getReturn().getCellValue("Test Sheet 2", "D10").getValue());
 		assertEquals("1 Jan 2019", parser.getReturn().getCellValue("Test Sheet 2", "D11").getValue());
+	}
+
+	@Test
+	public void canGetValuesFromCellsUsingLineFromDatamap() throws Exception {
+		List<DatamapLine> datamapLines = new ArrayList<>();
+		gateway = new InMemoryDatamapGateway();
+		gateway.createDatamap("Test Datamap");
+		gateway.addLineToDatamap("Test Datamap", "Test Key 1", "Test Sheet 1", "B1");
+		gateway.addLineToDatamap("Test Datamap", "Test Key 2", "Test Sheet 1", "B2");
+		datamapLines = gateway.getDataLinesFor("Test Datamap");
+		DatamapLine dml = datamapLines.get(0);
+		DatamapLine dml1 = datamapLines.get(1);
+
+		ReturnParser parser = new ReturnParser();
+		parser.parse(testFile);
+		assertEquals("Test Value 1", parser.getReturn().getCellValue("Test Sheet 1", dml).getValue());
+		assertEquals("Test Value 2", parser.getReturn().getCellValue("Test Sheet 1", dml1).getValue());
+
 	}
 }
