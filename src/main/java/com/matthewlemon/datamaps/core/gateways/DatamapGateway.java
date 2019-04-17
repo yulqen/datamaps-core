@@ -5,6 +5,7 @@ import java.util.List;
 import com.matthewlemon.datamaps.core.entities.CSVFile;
 import com.matthewlemon.datamaps.core.entities.Datamap;
 import com.matthewlemon.datamaps.core.entities.DatamapLine;
+import com.matthewlemon.datamaps.core.exceptions.DatamapLineNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.DuplicateDatamapException;
 import com.matthewlemon.datamaps.core.parser.DatamapType;
 
@@ -27,4 +28,6 @@ public interface DatamapGateway {
 	void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef, DatamapType type);
 
 	void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef);
+
+	DatamapLine getDatamapLineFrom(String datamapName, String key) throws DatamapLineNotFoundException;
 }

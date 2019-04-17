@@ -1,9 +1,10 @@
 package com.matthewlemon.datamaps.core.gateway;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.After;
@@ -77,5 +78,16 @@ public class InMemoryDatamapShould {
 		Datamap datamap = gateway.createDatamap("Test Datamap");
 		@SuppressWarnings("unused")
 		Datamap datamap2 = gateway.createDatamap("Test Datamap");
+	}
+    
+    @Test
+	public void canGetSingleDatamapLineByQueryingItsSheetAndKeyValues() throws Exception {
+        Datamap datamap = gateway.createDatamap("Test Datamap 2"); // reate a new Datamap object
+		gateway.addLineToDatamap("Test Datamap 2", "Test Key 1", "Test Sheet 1", "B1");
+		gateway.addLineToDatamap("Test Datamap 2", "Test Key 2", "Test Sheet 1", "B2");
+		DatamapLine dml = gateway.getDatamapLineFrom("Test Datamap 2", "Test Key 1");
+		assertEquals("Test Key 1", dml.getKey());
+		assertEquals("Test Sheet 1", dml.getSheetName());
+		assertEquals("B1", dml.getCellRef());
 	}
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import com.matthewlemon.datamaps.core.entities.CSVFile;
 import com.matthewlemon.datamaps.core.entities.Datamap;
 import com.matthewlemon.datamaps.core.entities.DatamapLine;
+import com.matthewlemon.datamaps.core.exceptions.DatamapLineNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.DuplicateDatamapException;
 import com.matthewlemon.datamaps.core.gateways.DatamapGateway;
 import com.matthewlemon.datamaps.core.parser.DatamapType;
@@ -89,4 +90,14 @@ public class InMemoryDatamapGateway implements DatamapGateway {
         datamap.deleteAllLines();
     }
 
+    @Override
+	public DatamapLine getDatamapLineFrom(String datamapName, String key) throws DatamapLineNotFoundException {
+    	Datamap datamap = getDatamap(datamapName);
+    	for (DatamapLine datamapLine : datamap.getDatamapLines()) {
+    		if (datamapLine.getKey().equals(key)) {
+				return datamapLine;
+			}
+		}
+    	throw new DatamapLineNotFoundException("Cannot find datamapline with key of " + key);
+	}
 }
