@@ -5,16 +5,13 @@ import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import org.apache.poi.EncryptedDocumentException;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.matthewlemon.datamaps.core.doubles.InMemoryDatamapGateway;
-import com.matthewlemon.datamaps.core.entities.Datamap;
 import com.matthewlemon.datamaps.core.entities.DatamapLine;
 import com.matthewlemon.datamaps.core.entities.InMemoryReturn;
 
@@ -48,19 +45,18 @@ public class ExcelParserTest {
 	public void canGetValuesFromCellsInParsedSpreadsheet() throws EncryptedDocumentException, IOException {
 		ReturnParser parser = new ReturnParser();
 		parser.parse(testFile);
-		assertEquals("Test Value 1", parser.getReturn().getCellValue("Test Sheet 1", "B1").getValue());
-		assertEquals(12.1, parser.getReturn().getCellValue("Test Sheet 1", "C10").getValue());
-		assertEquals(12.0, parser.getReturn().getCellValue("Test Sheet 1", "B10").getValue());
-		assertEquals(1436.65, (Double) parser.getReturn().getCellValue("Test Sheet 1", "C13").getValue(), 0.1);
-		assertEquals("Formula Result", parser.getReturn().getCellValue("Test Sheet 1", "C15").getValue());
-		assertEquals(234.0, parser.getReturn().getCellValue("Test Sheet 2", "D9").getValue());
-		assertEquals("23/02/42", parser.getReturn().getCellValue("Test Sheet 2", "D10").getValue());
-		assertEquals("1 Jan 2019", parser.getReturn().getCellValue("Test Sheet 2", "D11").getValue());
+		assertEquals("Test Value 1", parser.getCellValueFromSheet("Test Sheet 1", "B1"));
+		assertEquals(12.1, parser.getCellValueFromSheet("Test Sheet 1", "C10"));
+		assertEquals(12.0, parser.getCellValueFromSheet("Test Sheet 1", "B10"));
+		assertEquals(1436.65, (Double)parser.getCellValueFromSheet("Test Sheet 1", "C13"), 0.1);
+		assertEquals("Formula Result", parser.getCellValueFromSheet("Test Sheet 1", "C15"));
+		assertEquals(234.0, parser.getCellValueFromSheet("Test Sheet 2", "D9"));
+		assertEquals("23/02/42", parser.getCellValueFromSheet("Test Sheet 2", "D10"));
+		assertEquals("1 Jan 2019", parser.getCellValueFromSheet("Test Sheet 2", "D11"));
 	}
 
 	@Test
 	public void canGetValuesFromCellsUsingLineFromDatamap() throws Exception {
-		List<DatamapLine> datamapLines = new ArrayList<>();
 		gateway = new InMemoryDatamapGateway();
 		gateway.createDatamap("Test Datamap");
 		gateway.addLineToDatamap("Test Datamap", "Test Key 1", "Test Sheet 1", "B1");
@@ -70,8 +66,22 @@ public class ExcelParserTest {
 
 		ReturnParser parser = new ReturnParser();
 		parser.parse(testFile);
-		assertEquals("Test Value 1", parser.getReturn().getCellValue("Test Sheet 1", dml).getValue());
-		assertEquals("Test Value 2", parser.getReturn().getCellValue("Test Sheet 1", dml1).getValue());
+		assertEquals("Test Value 1", parser.getCellValueFromSheet("Test Sheet 1", dml));
+		assertEquals("Test Value 2", parser.getCellValueFromSheet("Test Sheet 1", dml1));
 
+	}
+
+	@Test
+	public void canGetValuesFromCellsUsingParserMethod() throws Exception {
+		gateway = new InMemoryDatamapGateway();
+		gateway.createDatamap("Test Datamap 3");
+		gateway.addLineToDatamap("Test Datamap 3", "Test Key 1", "Test Sheet 1", "B1");
+		DatamapLine dml = gateway.getDatamapLineFrom("Test Datamap 3", "Test Key 1");
+
+		ReturnParser parser = new ReturnParser();
+		parser.parse(testFile);
+		// two ways of getting the value
+		assertEquals("Test Value 1", parser.getCellValueFromSheet("Test Sheet 1", dml));
+		assertEquals("Test Value 1", parser.getCellValueFromSheet("Test Sheet 1", "B1"));
 	}
 }

@@ -14,6 +14,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
+import com.matthewlemon.datamaps.core.entities.DatamapLine;
 import com.matthewlemon.datamaps.core.entities.InMemoryReturn;
 
 public class ReturnParser {
@@ -99,5 +100,21 @@ public class ReturnParser {
 			}
 		returnObj.getData().put(sheet.getSheetName(), sheetData);
 		}
+	}
+
+//	public DatamapValue<?> getCellValueFromSheet(String sheetName, DatamapLine datamapLine) {
+//		return this.returnObj.getCellValue(sheetName, datamapLine);
+//	}
+
+//	public DatamapValue<?> getCellValueFromSheet(String sheetName, String cellRef) {
+//		return this.returnObj.getCellValue(sheetName, cellRef);
+//	}
+
+	public Object getCellValueFromSheet(String sheetName, DatamapLine datamapLine) {
+		return this.returnObj.getCellValue(sheetName, datamapLine).getValue();
+	}
+
+	public Object getCellValueFromSheet(String sheetName, String cellRef) {
+		return this.returnObj.getCellValue(sheetName, cellRef).getValue();
 	}
 }
