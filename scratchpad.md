@@ -13,6 +13,7 @@
 
 ### Done
 
+* Exceptions raised when parser cannot find data on a sheet/cell combination.
 * Ability to be able to get datamapline from datamp by querying the key name, rather than the index.
 * Implement name field in InMemoryReturn class.
 * Refactor ReturnParser so that you pass the return into the constructor.

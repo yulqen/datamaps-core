@@ -1,6 +1,7 @@
 package com.matthewlemon.datamaps.core.parser;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,23 +9,30 @@ import java.util.HashMap;
 
 import org.apache.poi.EncryptedDocumentException;
 import org.junit.Before;
-import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import com.matthewlemon.datamaps.core.doubles.InMemoryDatamapGateway;
 import com.matthewlemon.datamaps.core.entities.DatamapLine;
 import com.matthewlemon.datamaps.core.entities.InMemoryReturn;
+import com.matthewlemon.datamaps.core.exceptions.CellValueNotFoundException;
 
 public class ExcelParserTest {
 
 	private File testFile;
 	private InMemoryDatamapGateway gateway;
+	private InMemoryReturn myReturn;
 
 	@Before
 	public void setUp() throws Exception {
 		ClassLoader classLoader = getClass().getClassLoader();
 		testFile = new File(classLoader.getResource("files/test_populated_template.xlsx").getFile());
+		myReturn = new InMemoryReturn("Test Return");
 	}
+
+	@Rule
+	public ExpectedException thrown = ExpectedException.none();
 
 	@Test
 	public void checkHashStructure() throws Exception {
@@ -40,16 +48,16 @@ public class ExcelParserTest {
 		HashMap<?, ?> data = excelReturn.getData();
 		assertNotNull(data);
 	}
-	
+
 	@Test
-	public void canGetValuesFromCellsInParsedSpreadsheet() throws EncryptedDocumentException, IOException {
-		InMemoryReturn myReturn = new InMemoryReturn("Q1 Return");
-		ReturnParser parser = new ReturnParser(myReturn);
+	public void canGetValuesFromCellsInParsedSpreadsheet()
+			throws EncryptedDocumentException, IOException, CellValueNotFoundException {
+		ReturnParser parser = new ReturnParser(this.myReturn);
 		parser.parse(testFile);
 		assertEquals("Test Value 1", parser.getCellValueFromSheet("Test Sheet 1", "B1"));
 		assertEquals(12.1, parser.getCellValueFromSheet("Test Sheet 1", "C10"));
 		assertEquals(12.0, parser.getCellValueFromSheet("Test Sheet 1", "B10"));
-		assertEquals(1436.65, (Double)parser.getCellValueFromSheet("Test Sheet 1", "C13"), 0.1);
+		assertEquals(1436.65, (Double) parser.getCellValueFromSheet("Test Sheet 1", "C13"), 0.1);
 		assertEquals("Formula Result", parser.getCellValueFromSheet("Test Sheet 1", "C15"));
 		assertEquals(234.0, parser.getCellValueFromSheet("Test Sheet 2", "D9"));
 		assertEquals("23/02/42", parser.getCellValueFromSheet("Test Sheet 2", "D10"));
@@ -65,7 +73,7 @@ public class ExcelParserTest {
 		DatamapLine dml = gateway.getDatamapLineFrom("Test Datamap", "Test Key 1");
 		DatamapLine dml1 = gateway.getDatamapLineFrom("Test Datamap", "Test Key 2");
 
-		ReturnParser parser = new ReturnParser();
+		ReturnParser parser = new ReturnParser(this.myReturn);
 		parser.parse(testFile);
 		assertEquals("Test Value 1", parser.getCellValueFromSheet("Test Sheet 1", dml));
 		assertEquals("Test Value 2", parser.getCellValueFromSheet("Test Sheet 1", dml1));
@@ -73,16 +81,20 @@ public class ExcelParserTest {
 	}
 
 	@Test
-	public void canGetValuesFromCellsUsingParserMethod() throws Exception {
-		gateway = new InMemoryDatamapGateway();
-		gateway.createDatamap("Test Datamap 3");
-		gateway.addLineToDatamap("Test Datamap 3", "Test Key 1", "Test Sheet 1", "B1");
-		DatamapLine dml = gateway.getDatamapLineFrom("Test Datamap 3", "Test Key 1");
-
-		ReturnParser parser = new ReturnParser();
+	public void exceptionRaisedWhenParserCannotEvenGetSheet() throws Exception {
+		ReturnParser parser = new ReturnParser(this.myReturn);
 		parser.parse(testFile);
-		// two ways of getting the value
-		assertEquals("Test Value 1", parser.getCellValueFromSheet("Test Sheet 1", dml));
-		assertEquals("Test Value 1", parser.getCellValueFromSheet("Test Sheet 1", "B1"));
+		thrown.expect(CellValueNotFoundException.class);
+		thrown.expectMessage("Cannot find sheet Test Sheet 10");
+		assertEquals("Test Value 1", parser.getCellValueFromSheet("Test Sheet 10", "B1"));
+	}
+
+	@Test
+	public void exceptionRaisedWhenParserCannotGetValue() throws Exception {
+		ReturnParser parser = new ReturnParser(this.myReturn);
+		parser.parse(testFile);
+		thrown.expect(CellValueNotFoundException.class);
+		thrown.expectMessage("Cannot find a value on sheet Test Sheet 2 in cell B1");
+		assertEquals("Test Value 1", parser.getCellValueFromSheet("Test Sheet 2", "B1"));
 	}
 }

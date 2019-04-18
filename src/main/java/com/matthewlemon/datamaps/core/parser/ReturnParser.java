@@ -16,6 +16,7 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 import com.matthewlemon.datamaps.core.entities.DatamapLine;
 import com.matthewlemon.datamaps.core.entities.InMemoryReturn;
+import com.matthewlemon.datamaps.core.exceptions.CellValueNotFoundException;
 
 public class ReturnParser {
 	
@@ -114,11 +115,11 @@ public class ReturnParser {
 //		return this.returnObj.getCellValue(sheetName, cellRef);
 //	}
 
-	public Object getCellValueFromSheet(String sheetName, DatamapLine datamapLine) {
+	public Object getCellValueFromSheet(String sheetName, DatamapLine datamapLine) throws CellValueNotFoundException {
 		return this.returnObj.getCellValue(sheetName, datamapLine).getValue();
 	}
 
-	public Object getCellValueFromSheet(String sheetName, String cellRef) {
+	public Object getCellValueFromSheet(String sheetName, String cellRef) throws CellValueNotFoundException {
 		return this.returnObj.getCellValue(sheetName, cellRef).getValue();
 	}
 }
