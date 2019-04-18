@@ -7,8 +7,14 @@ import com.matthewlemon.datamaps.core.parser.DatamapValue;
 public class InMemoryReturn {
 
 	private HashMap<String, HashMap<String, DatamapValue<?>>> data;
+	private String name;
 	
 	public InMemoryReturn() {
+		this.data = new HashMap<String, HashMap<String,DatamapValue<?>>>();
+	}
+
+	public InMemoryReturn(String returnName) {
+		this.name = returnName;
 		this.data = new HashMap<String, HashMap<String,DatamapValue<?>>>();
 	}
 

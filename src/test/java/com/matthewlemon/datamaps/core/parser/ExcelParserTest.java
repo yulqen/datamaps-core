@@ -1,7 +1,6 @@
 package com.matthewlemon.datamaps.core.parser;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,6 +8,7 @@ import java.util.HashMap;
 
 import org.apache.poi.EncryptedDocumentException;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.matthewlemon.datamaps.core.doubles.InMemoryDatamapGateway;
@@ -40,10 +40,11 @@ public class ExcelParserTest {
 		HashMap<?, ?> data = excelReturn.getData();
 		assertNotNull(data);
 	}
-
+	
 	@Test
 	public void canGetValuesFromCellsInParsedSpreadsheet() throws EncryptedDocumentException, IOException {
-		ReturnParser parser = new ReturnParser();
+		InMemoryReturn myReturn = new InMemoryReturn("Q1 Return");
+		ReturnParser parser = new ReturnParser(myReturn);
 		parser.parse(testFile);
 		assertEquals("Test Value 1", parser.getCellValueFromSheet("Test Sheet 1", "B1"));
 		assertEquals(12.1, parser.getCellValueFromSheet("Test Sheet 1", "C10"));

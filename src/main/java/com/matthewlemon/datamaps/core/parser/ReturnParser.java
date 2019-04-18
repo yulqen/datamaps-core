@@ -25,6 +25,10 @@ public class ReturnParser {
 		this.returnObj = new InMemoryReturn();
 	}
 	
+	public ReturnParser(InMemoryReturn myReturn) {
+		this.returnObj = myReturn;
+	}
+
 	public InMemoryReturn getReturn() {
 		return this.returnObj;
 	}
