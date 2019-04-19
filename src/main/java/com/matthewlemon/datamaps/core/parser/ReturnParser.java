@@ -22,15 +22,15 @@ import com.matthewlemon.datamaps.core.exceptions.CellValueNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.IncorrectCellTypeException;
 
 public class ReturnParser {
-	
+
 	private InMemoryReturn returnObj;
 	@SuppressWarnings("unused")
 	private Datamap datamap;
-	
-	public ReturnParser()  {
+
+	public ReturnParser() {
 		this.returnObj = new InMemoryReturn();
 	}
-	
+
 	public ReturnParser(InMemoryReturn myReturn) {
 		this.returnObj = myReturn;
 	}
@@ -42,7 +42,7 @@ public class ReturnParser {
 	public void parse(File testFile) throws EncryptedDocumentException, IOException {
 		parseWorkbook(testFile);
 	}
-	
+
 	private void parseWorkbook(File sourceFile) throws EncryptedDocumentException, IOException {
 		Workbook workbook = WorkbookFactory.create(sourceFile);
 		FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
@@ -68,7 +68,8 @@ public class ReturnParser {
 						// TODO: We are only able to handle/convert to doubles here
 						// TODO: We need to fix how dates strings are handled here
 						if (DateUtil.isCellDateFormatted(cell)) {
-							DatamapValue<?> valDateOrNumeric = new DatamapValue<String>(formatter.formatCellValue(cell));
+							DatamapValue<?> valDateOrNumeric = new DatamapValue<String>(
+									formatter.formatCellValue(cell));
 							sheetData.put(cell.getAddress().formatAsString(), valDateOrNumeric);
 						} else {
 							DatamapValue<?> valDateOrNumeric = new DatamapValue<Double>(cell.getNumericCellValue());
@@ -76,7 +77,7 @@ public class ReturnParser {
 						}
 						break;
 					case FORMULA:
-						switch(evaluator.evaluateFormulaCell(cell)) {
+						switch (evaluator.evaluateFormulaCell(cell)) {
 						case BOOLEAN:
 							DatamapValue<?> valFuncBool = new DatamapValue<Boolean>(cell.getBooleanCellValue());
 							sheetData.put(cell.getAddress().formatAsString(), valFuncBool);
@@ -108,29 +109,28 @@ public class ReturnParser {
 					}
 				}
 			}
-		returnObj.getData().put(sheet.getSheetName(), sheetData);
+			returnObj.getData().put(sheet.getSheetName(), sheetData);
 		}
 	}
 
-//	public DatamapValue<?> getCellValueFromSheet(String sheetName, DatamapLine datamapLine) {
-//		return this.returnObj.getCellValue(sheetName, datamapLine);
-//	}
-
-//	public DatamapValue<?> getCellValueFromSheet(String sheetName, String cellRef) {
-//		return this.returnObj.getCellValue(sheetName, cellRef);
-//	}
-
-	public Object getCellValueFromSheet(String sheetName, DatamapLine datamapLine) throws CellValueNotFoundException, IncorrectCellTypeException {
+	public Object getCellValueFromSheetWithTypeChecking(String sheetName, DatamapLine datamapLine)
+			throws CellValueNotFoundException, IncorrectCellTypeException {
 		DatamapTypes enumType = datamapLine.getDatamapTypes();
+
 		Class<?> classDeclaredInDatamapLine = datamapLine.getDatamapTypes().getType();
 		Class<?> classOfCellValue = this.returnObj.getCellValue(sheetName, datamapLine).getType();
 		if (!classDeclaredInDatamapLine.equals(classOfCellValue)) {
-			throw new IncorrectCellTypeException("Value at cell " + datamapLine.getCellRef() + " on sheet " + sheetName + " is not a " +  enumType.name() + " type");
+			throw new IncorrectCellTypeException("Value at cell " + datamapLine.getCellRef() + " on sheet " + sheetName
+					+ " is not a " + enumType.name() + " type");
 		}
 		return this.returnObj.getCellValue(sheetName, datamapLine).getValue();
 	}
 
 	public Object getCellValueFromSheet(String sheetName, String cellRef) throws CellValueNotFoundException {
 		return this.returnObj.getCellValue(sheetName, cellRef).getValue();
+	}
+
+	public Object getCellValueFromSheet(String sheetName, DatamapLine datamapLine) throws CellValueNotFoundException {
+		return this.returnObj.getCellValue(sheetName, datamapLine.getCellRef()).getValue();
 	}
 }

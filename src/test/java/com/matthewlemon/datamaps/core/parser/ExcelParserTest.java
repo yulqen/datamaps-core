@@ -110,6 +110,6 @@ public class ExcelParserTest {
 		parser.parse(testFile);
 		thrown.expect(IncorrectCellTypeException.class);
 		thrown.expectMessage("Value at cell C10 on sheet Test Sheet 1 is not a TEXT type");
-		assertEquals(12.1, parser.getCellValueFromSheet("Test Sheet 1", dml));
+		assertEquals(12.1, parser.getCellValueFromSheetWithTypeChecking("Test Sheet 1", dml));
 	}
 }
