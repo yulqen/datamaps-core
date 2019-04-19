@@ -1,7 +1,6 @@
 package com.matthewlemon.datamaps.core.entities;
 
 import java.util.HashMap;
-import java.util.Objects;
 
 import com.matthewlemon.datamaps.core.exceptions.CellValueNotFoundException;
 import com.matthewlemon.datamaps.core.parser.DatamapValue;
@@ -9,6 +8,7 @@ import com.matthewlemon.datamaps.core.parser.DatamapValue;
 public class InMemoryReturn {
 
 	private HashMap<String, HashMap<String, DatamapValue<?>>> data;
+	@SuppressWarnings("unused")
 	private String name;
 
 	public InMemoryReturn() {

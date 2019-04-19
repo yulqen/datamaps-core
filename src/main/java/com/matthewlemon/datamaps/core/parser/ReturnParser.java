@@ -14,13 +14,18 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
+import com.matthewlemon.datamaps.core.entities.Datamap;
 import com.matthewlemon.datamaps.core.entities.DatamapLine;
+import com.matthewlemon.datamaps.core.entities.DatamapTypes;
 import com.matthewlemon.datamaps.core.entities.InMemoryReturn;
 import com.matthewlemon.datamaps.core.exceptions.CellValueNotFoundException;
+import com.matthewlemon.datamaps.core.exceptions.IncorrectCellTypeException;
 
 public class ReturnParser {
 	
 	private InMemoryReturn returnObj;
+	@SuppressWarnings("unused")
+	private Datamap datamap;
 	
 	public ReturnParser()  {
 		this.returnObj = new InMemoryReturn();
@@ -115,7 +120,13 @@ public class ReturnParser {
 //		return this.returnObj.getCellValue(sheetName, cellRef);
 //	}
 
-	public Object getCellValueFromSheet(String sheetName, DatamapLine datamapLine) throws CellValueNotFoundException {
+	public Object getCellValueFromSheet(String sheetName, DatamapLine datamapLine) throws CellValueNotFoundException, IncorrectCellTypeException {
+		DatamapTypes enumType = datamapLine.getDatamapTypes();
+		Class<?> classDeclaredInDatamapLine = datamapLine.getDatamapTypes().getType();
+		Class<?> classOfCellValue = this.returnObj.getCellValue(sheetName, datamapLine).getType();
+		if (!classDeclaredInDatamapLine.equals(classOfCellValue)) {
+			throw new IncorrectCellTypeException("Value at cell " + datamapLine.getCellRef() + " on sheet " + sheetName + " is not a " +  enumType.name() + " type");
+		}
 		return this.returnObj.getCellValue(sheetName, datamapLine).getValue();
 	}
 

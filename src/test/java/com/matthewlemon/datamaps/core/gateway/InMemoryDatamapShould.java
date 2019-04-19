@@ -18,6 +18,7 @@ import com.matthewlemon.datamaps.core.doubles.InMemoryDatamapGateway;
 import com.matthewlemon.datamaps.core.entities.CSVFile;
 import com.matthewlemon.datamaps.core.entities.Datamap;
 import com.matthewlemon.datamaps.core.entities.DatamapLine;
+import com.matthewlemon.datamaps.core.entities.DatamapTypes;
 import com.matthewlemon.datamaps.core.exceptions.DatamapLineNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.DatamapNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.DuplicateDatamapException;
@@ -57,6 +58,14 @@ public class InMemoryDatamapShould {
 		List<DatamapLine> datamaplines = gateway.getDataLinesFor("Test Datamap");
 		assertEquals("Test Key", datamaplines.get(0).getKey());
 		// alternative way of getting the key:
+		assertEquals("Test Key", gateway.getDatamapLineFrom("Test Datamap", "Test Key").getKey());
+	}
+
+	@Test
+	public void addLineToDatamapWithType() throws DatamapNotFoundException, DatamapLineNotFoundException {
+		gateway.addLineToDatamap("Test Datamap", "Test Key", "Sheet 1", "B1", DatamapTypes.TEXT);
+		List<DatamapLine> datamaplines = gateway.getDataLinesFor("Test Datamap");
+		assertEquals("Test Key", datamaplines.get(0).getKey());
 		assertEquals("Test Key", gateway.getDatamapLineFrom("Test Datamap", "Test Key").getKey());
 	}
 

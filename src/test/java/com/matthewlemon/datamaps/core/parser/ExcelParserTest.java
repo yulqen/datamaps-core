@@ -1,7 +1,6 @@
 package com.matthewlemon.datamaps.core.parser;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,8 +14,10 @@ import org.junit.rules.ExpectedException;
 
 import com.matthewlemon.datamaps.core.doubles.InMemoryDatamapGateway;
 import com.matthewlemon.datamaps.core.entities.DatamapLine;
+import com.matthewlemon.datamaps.core.entities.DatamapTypes;
 import com.matthewlemon.datamaps.core.entities.InMemoryReturn;
 import com.matthewlemon.datamaps.core.exceptions.CellValueNotFoundException;
+import com.matthewlemon.datamaps.core.exceptions.IncorrectCellTypeException;
 
 public class ExcelParserTest {
 
@@ -68,8 +69,8 @@ public class ExcelParserTest {
 	public void canGetValuesFromCellsUsingLineFromDatamap() throws Exception {
 		gateway = new InMemoryDatamapGateway();
 		gateway.createDatamap("Test Datamap");
-		gateway.addLineToDatamap("Test Datamap", "Test Key 1", "Test Sheet 1", "B1");
-		gateway.addLineToDatamap("Test Datamap", "Test Key 2", "Test Sheet 1", "B2");
+		gateway.addLineToDatamap("Test Datamap", "Test Key 1", "Test Sheet 1", "B1", DatamapTypes.TEXT);
+		gateway.addLineToDatamap("Test Datamap", "Test Key 2", "Test Sheet 1", "B2", DatamapTypes.TEXT);
 		DatamapLine dml = gateway.getDatamapLineFrom("Test Datamap", "Test Key 1");
 		DatamapLine dml1 = gateway.getDatamapLineFrom("Test Datamap", "Test Key 2");
 
@@ -96,5 +97,19 @@ public class ExcelParserTest {
 		thrown.expect(CellValueNotFoundException.class);
 		thrown.expectMessage("Cannot find a value on sheet Test Sheet 2 in cell B1");
 		assertEquals("Test Value 1", parser.getCellValueFromSheet("Test Sheet 2", "B1"));
+	}
+	
+	@Test
+	public void exceptionRaisedWhenValueInCellIsIncorrectTypeAccordingToDatamapLine() throws Exception {
+		gateway = new InMemoryDatamapGateway();
+		gateway.createDatamap("Test Datamap 4");
+		gateway.addLineToDatamap("Test Datamap 4", "Double Entered", "Test Sheet 1", "C10", DatamapTypes.TEXT);
+		DatamapLine dml = gateway.getDatamapLineFrom("Test Datamap 4", "Double Entered");
+		InMemoryReturn newReturn = new InMemoryReturn("Test New Return");
+		ReturnParser parser = new ReturnParser(newReturn);
+		parser.parse(testFile);
+		thrown.expect(IncorrectCellTypeException.class);
+		thrown.expectMessage("Value at cell C10 on sheet Test Sheet 1 is not a TEXT type");
+		assertEquals(12.1, parser.getCellValueFromSheet("Test Sheet 1", dml));
 	}
 }
