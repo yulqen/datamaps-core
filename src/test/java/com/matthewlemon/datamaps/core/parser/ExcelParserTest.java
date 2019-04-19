@@ -1,5 +1,7 @@
 package com.matthewlemon.datamaps.core.parser;
 
+import static com.matthewlemon.datamaps.core.entities.DatamapTypes.NUMERIC;
+import static com.matthewlemon.datamaps.core.entities.DatamapTypes.TEXT;
 import static org.junit.Assert.*;
 
 import java.io.File;
@@ -7,14 +9,15 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import org.apache.poi.EncryptedDocumentException;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import com.matthewlemon.datamaps.core.doubles.InMemoryDatamapGateway;
+import com.matthewlemon.datamaps.core.entities.Datamap;
 import com.matthewlemon.datamaps.core.entities.DatamapLine;
-import com.matthewlemon.datamaps.core.entities.DatamapTypes;
 import com.matthewlemon.datamaps.core.entities.InMemoryReturn;
 import com.matthewlemon.datamaps.core.exceptions.CellValueNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.IncorrectCellTypeException;
@@ -31,7 +34,7 @@ public class ExcelParserTest {
 		testFile = new File(classLoader.getResource("files/test_populated_template.xlsx").getFile());
 		myReturn = new InMemoryReturn("Test Return");
 	}
-
+	
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
 
@@ -69,8 +72,8 @@ public class ExcelParserTest {
 	public void canGetValuesFromCellsUsingLineFromDatamap() throws Exception {
 		gateway = new InMemoryDatamapGateway();
 		gateway.createDatamap("Test Datamap");
-		gateway.addLineToDatamap("Test Datamap", "Test Key 1", "Test Sheet 1", "B1", DatamapTypes.TEXT);
-		gateway.addLineToDatamap("Test Datamap", "Test Key 2", "Test Sheet 1", "B2", DatamapTypes.TEXT);
+		gateway.addLineToDatamap("Test Datamap", "Test Key 1", "Test Sheet 1", "B1", TEXT);
+		gateway.addLineToDatamap("Test Datamap", "Test Key 2", "Test Sheet 1", "B2", TEXT);
 		DatamapLine dml = gateway.getDatamapLineFrom("Test Datamap", "Test Key 1");
 		DatamapLine dml1 = gateway.getDatamapLineFrom("Test Datamap", "Test Key 2");
 
@@ -103,7 +106,7 @@ public class ExcelParserTest {
 	public void exceptionRaisedWhenValueInCellIsIncorrectTypeAccordingToDatamapLine() throws Exception {
 		gateway = new InMemoryDatamapGateway();
 		gateway.createDatamap("Test Datamap 4");
-		gateway.addLineToDatamap("Test Datamap 4", "Double Entered", "Test Sheet 1", "C10", DatamapTypes.TEXT);
+		gateway.addLineToDatamap("Test Datamap 4", "Double Entered", "Test Sheet 1", "C10", TEXT);
 		DatamapLine dml = gateway.getDatamapLineFrom("Test Datamap 4", "Double Entered");
 		InMemoryReturn newReturn = new InMemoryReturn("Test New Return");
 		ReturnParser parser = new ReturnParser(newReturn);
@@ -111,5 +114,29 @@ public class ExcelParserTest {
 		thrown.expect(IncorrectCellTypeException.class);
 		thrown.expectMessage("Value at cell C10 on sheet Test Sheet 1 is not a TEXT type");
 		assertEquals(12.1, parser.getCellValueFromSheetWithTypeChecking("Test Sheet 1", dml));
+	}
+	
+	@Test
+	public void parseToReturnUsingDatamap() throws Exception {
+		// THIS TEST DOES NOT HAVE ASSERTS!
+		gateway = new InMemoryDatamapGateway();
+		gateway.createDatamap("Test Datamap 5");
+		gateway.addLineToDatamap("Test Datamap 5", "Test Key 1", "Test Sheet 1", "B1", TEXT);
+		gateway.addLineToDatamap("Test Datamap 5", "Test Key 2", "Test Sheet 1", "B2", TEXT);
+		gateway.addLineToDatamap("Test Datamap 5", "Test Key 3", "Test Sheet 1", "B3", TEXT);
+		gateway.addLineToDatamap("Test Datamap 5", "The Double 12.0", "Test Sheet 1", "B10", NUMERIC);
+		gateway.addLineToDatamap("Test Datamap 5", "The Double 12.1", "Test Sheet 1", "C10", NUMERIC);
+		gateway.addLineToDatamap("Test Datamap 5", "Big Complicated Double", "Test Sheet 1", "C11", NUMERIC);
+		gateway.addLineToDatamap("Test Datamap 5", "Another Double", "Test Sheet 1", "C12", NUMERIC);
+		gateway.addLineToDatamap("Test Datamap 5", "Formula Result", "Test Sheet 1", "C13", NUMERIC);
+
+		gateway.addLineToDatamap("Test Datamap 5", "Random Value", "Test Sheet 2", "D6", TEXT);
+		gateway.addLineToDatamap("Test Datamap 5", "Random Key 2", "Test Sheet 2", "D9", NUMERIC);
+
+		InMemoryReturn newReturn = new InMemoryReturn("Test New Return");
+		ReturnParser parser = new ReturnParser(newReturn);
+		parser.parse(testFile);
+		Datamap datamap = gateway.getDatamap("Test Datamap 5");
+		parser.reportReturnValuesToSTDOUT(datamap);
 	}
 }

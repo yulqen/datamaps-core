@@ -1,8 +1,8 @@
 ### Todo
 
+* Do not halt when exception on datamapline value type is hit - store in a report!
 * Get rid of com.matthewlemon.datamaps.core.parser.DatamapType.
 * Make DatamapValue class a value object.
-* Check types returned from a parsed spreadsheet match what is in Datamap
 * Can we obtain integers from the parser, or must it be doubles?
 * Refactor InMemoryDatamapShould test.
 * Move functionality to excel parser usecase.
@@ -15,6 +15,7 @@
 
 ### Done
 
+* Check types returned from a parsed spreadsheet match what is in Datamap
 * Exceptions raised when parser cannot find data on a sheet/cell combination.
 * Ability to be able to get datamapline from datamp by querying the key name, rather than the index.
 * Implement name field in InMemoryReturn class.

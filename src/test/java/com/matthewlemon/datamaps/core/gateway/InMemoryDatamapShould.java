@@ -1,6 +1,6 @@
 package com.matthewlemon.datamaps.core.gateway;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -111,5 +111,17 @@ public class InMemoryDatamapShould {
 		thrown.expectMessage("Datamap Test Datamap No Exist cannot be found.");
 		@SuppressWarnings("unused")
 		Datamap datamap = gateway.getDatamap("Test Datamap No Exist");
+	}
+	
+	@Test
+	public void removeAllDatamaps() throws Exception {
+		@SuppressWarnings("unused")
+		Datamap datamap = gateway.createDatamap("Test Datamap 2");
+		// for good meaasure, we'll add a single line
+		gateway.addLineToDatamap("Test Datamap 2", "Key", "Sheet 1", "A10", DatamapTypes.TEXT);
+		gateway.deleteAllDatamaps();
+		thrown.expect(DatamapNotFoundException.class);
+		@SuppressWarnings("unused")
+		Datamap dm = gateway.getDatamap("Test Datamap 2");
 	}
 }

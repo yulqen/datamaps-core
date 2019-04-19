@@ -15,84 +15,88 @@ import com.matthewlemon.datamaps.core.parser.DatamapType;
 
 public class InMemoryDatamapGateway implements DatamapGateway {
 
-    private List<Datamap> dataMaps = new ArrayList<>();
+	private List<Datamap> dataMaps = new ArrayList<>();
 
-    @Override
-    public Datamap createDatamap(String datamapName) throws DuplicateDatamapException {
-    	for (Datamap datamap : dataMaps) {
+	@Override
+	public Datamap createDatamap(String datamapName) throws DuplicateDatamapException {
+		for (Datamap datamap : dataMaps) {
 			if (datamap.getName() == datamapName) {
 				throw new DuplicateDatamapException("There is already a Datamap with the name " + datamapName);
 			}
 		}
-        dataMaps.add(new Datamap(datamapName));
-        return new Datamap(datamapName);
-    }
-
-    @Override
-    public boolean datamapExists(String datamapName) {
-        for (Datamap dataMap : dataMaps) {
-            if (dataMap.getName().equals(datamapName)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public int datamapCount() {
-        return dataMaps.size();
-    }
-
-    @Override
-    public void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef, DatamapType type) throws DatamapNotFoundException {
-        DatamapLine datamapLine = new DatamapLine(key, sheetName, cellRef, type);
-        Datamap datamap = getDatamap(datamapName);
-        datamap.addDatamapLine(datamapLine);
-    }
-
-    @Override
-	public void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef) throws DatamapNotFoundException {
-        DatamapLine datamapLine = new DatamapLine(key, sheetName, cellRef);
-        Datamap datamap = getDatamap(datamapName);
-        datamap.addDatamapLine(datamapLine);
-	}
-
-    @Override
-	public void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef, DatamapTypes type) throws DatamapNotFoundException {
-        DatamapLine datamapLine = new DatamapLine(key, sheetName, cellRef, type);
-        Datamap datamap = getDatamap(datamapName);
-        datamap.addDatamapLine(datamapLine);
-	}
-
-    @Override
-	public void addDataToDatamapWithCSV(String datamapName, CSVFile csvFile) throws DatamapNotFoundException {
-	    Datamap datamap = getDatamap(datamapName);
-	    datamap.readCSV(csvFile.getFile());
-	    dataMaps.add(datamap);
+		dataMaps.add(new Datamap(datamapName));
+		return new Datamap(datamapName);
 	}
 
 	@Override
-    public Datamap getDatamap(String datamapName) throws DatamapNotFoundException {
-        for (Datamap datamap : dataMaps) {
-            if (datamap.getName().equals(datamapName)) {
-                return datamap;
-            }
-        }
-        throw new DatamapNotFoundException("Datamap " + datamapName + " cannot be found.");
-    }
+	public boolean datamapExists(String datamapName) {
+		for (Datamap dataMap : dataMaps) {
+			if (dataMap.getName().equals(datamapName)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
-    @Override
-    public List<DatamapLine> getDataLinesFor(String datamapName) throws DatamapNotFoundException {
-        Datamap datamap = getDatamap(datamapName);
-        return datamap.getDatamapLines();
-    }
+	@Override
+	public int datamapCount() {
+		return dataMaps.size();
+	}
 
-    public List<DatamapLine> getDataLinesFor(Datamap datamap) {
-        return datamap.getDatamapLines();
-    }
+	@Override
+	public void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef, DatamapType type)
+			throws DatamapNotFoundException {
+		DatamapLine datamapLine = new DatamapLine(key, sheetName, cellRef, type);
+		Datamap datamap = getDatamap(datamapName);
+		datamap.addDatamapLine(datamapLine);
+	}
 
-    @Override
-	public DatamapLine getDatamapLineFrom(String datamapName, String key) throws DatamapLineNotFoundException, DatamapNotFoundException {
+	@Override
+	public void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef)
+			throws DatamapNotFoundException {
+		DatamapLine datamapLine = new DatamapLine(key, sheetName, cellRef);
+		Datamap datamap = getDatamap(datamapName);
+		datamap.addDatamapLine(datamapLine);
+	}
+
+	@Override
+	public void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef, DatamapTypes type)
+			throws DatamapNotFoundException {
+		DatamapLine datamapLine = new DatamapLine(key, sheetName, cellRef, type);
+		Datamap datamap = getDatamap(datamapName);
+		datamap.addDatamapLine(datamapLine);
+	}
+
+	@Override
+	public void addDataToDatamapWithCSV(String datamapName, CSVFile csvFile) throws DatamapNotFoundException {
+		Datamap datamap = getDatamap(datamapName);
+		datamap.readCSV(csvFile.getFile());
+		dataMaps.add(datamap);
+	}
+
+	@Override
+	public Datamap getDatamap(String datamapName) throws DatamapNotFoundException {
+		for (Datamap datamap : dataMaps) {
+			if (datamap.getName().equals(datamapName)) {
+				return datamap;
+			}
+		}
+		throw new DatamapNotFoundException("Datamap " + datamapName + " cannot be found.");
+	}
+
+	@Override
+	public List<DatamapLine> getDataLinesFor(String datamapName) throws DatamapNotFoundException {
+		Datamap datamap = getDatamap(datamapName);
+		return datamap.getDatamapLines();
+	}
+
+	public List<DatamapLine> getDataLinesFor(Datamap datamap) {
+		return datamap.getDatamapLines();
+	}
+
+	@Override
+	public DatamapLine getDatamapLineFrom(String datamapName, String key)
+			throws DatamapLineNotFoundException, DatamapNotFoundException {
 		Datamap datamap = getDatamap(datamapName);
 		for (DatamapLine datamapLine : datamap.getDatamapLines()) {
 			if (datamapLine.getKey().equals(key)) {
@@ -103,9 +107,17 @@ public class InMemoryDatamapGateway implements DatamapGateway {
 	}
 
 	@Override
-    public void deleteAllLinesIn(String datamapName) {
-        Datamap datamap = new Datamap(datamapName);
-        datamap.deleteAllLines();
-    }
+	public void deleteAllLinesIn(String datamapName) {
+		Datamap datamap = new Datamap(datamapName);
+		datamap.deleteAllLines();
+	}
 
+	@Override
+	public void deleteAllDatamaps() throws Exception {
+		try {
+			this.dataMaps.clear();
+		} catch (NullPointerException e) {
+			throw new Exception("There are no Datamaps to delete.");
+		}
+	}
 }

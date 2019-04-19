@@ -35,4 +35,6 @@ public interface DatamapGateway {
 
 	DatamapLine getDatamapLineFrom(String datamapName, String key) throws DatamapLineNotFoundException, DatamapNotFoundException;
 
+	void deleteAllDatamaps() throws Exception;
+
 }

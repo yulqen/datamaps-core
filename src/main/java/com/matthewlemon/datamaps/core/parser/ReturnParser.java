@@ -133,4 +133,12 @@ public class ReturnParser {
 	public Object getCellValueFromSheet(String sheetName, DatamapLine datamapLine) throws CellValueNotFoundException {
 		return this.returnObj.getCellValue(sheetName, datamapLine.getCellRef()).getValue();
 	}
+
+	public void reportReturnValuesToSTDOUT(Datamap datamap)
+			throws CellValueNotFoundException, IncorrectCellTypeException {
+		for (DatamapLine dml : datamap.getDatamapLines()) {
+			System.out.println(dml.getSheetName() + ": " + dml.getKey() + ": "
+					+ this.getCellValueFromSheetWithTypeChecking(dml.getSheetName(), dml));
+		}
+	}
 }
