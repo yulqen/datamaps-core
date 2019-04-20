@@ -34,6 +34,15 @@ public class InMemoryDatamapShould {
 		TestSetup.setupContext();
 	}
 
+	@Before
+	public void setUp() throws DuplicateDatamapException {
+		ClassLoader classLoader = getClass().getClassLoader();
+		testFile = new File(classLoader.getResource("files/test.csv").getFile());
+		csvFile = new CSVFile(testFile);
+		gateway = new InMemoryDatamapGateway();
+		gateway.createDatamap("Test Datamap");
+	}
+
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
 
@@ -100,14 +109,6 @@ public class InMemoryDatamapShould {
 		Datamap dm = gateway.getDatamap("Test Datamap 2");
 	}
 
-	@Before
-	public void setUp() throws DuplicateDatamapException {
-		ClassLoader classLoader = getClass().getClassLoader();
-		testFile = new File(classLoader.getResource("files/test.csv").getFile());
-		csvFile = new CSVFile(testFile);
-		gateway = new InMemoryDatamapGateway();
-		gateway.createDatamap("Test Datamap");
-	}
 
 	@Test
 	public void throwExceptionWhenDatamapDoesntExist() throws Exception {
