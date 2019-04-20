@@ -1,4 +1,4 @@
-package com.matthewlemon.datamaps.core.doubles;
+package com.matthewlemon.datamaps.core.gateways;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,36 +10,16 @@ import com.matthewlemon.datamaps.core.entities.DatamapType;
 import com.matthewlemon.datamaps.core.exceptions.DatamapLineNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.DatamapNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.DuplicateDatamapException;
-import com.matthewlemon.datamaps.core.gateways.DatamapGateway;
 
 public class InMemoryDatamapGateway implements DatamapGateway {
 
 	private List<Datamap> dataMaps = new ArrayList<>();
 
 	@Override
-	public Datamap createDatamap(String datamapName) throws DuplicateDatamapException {
-		for (Datamap datamap : dataMaps) {
-			if (datamap.getName() == datamapName) {
-				throw new DuplicateDatamapException("There is already a Datamap with the name " + datamapName);
-			}
-		}
-		dataMaps.add(new Datamap(datamapName));
-		return new Datamap(datamapName);
-	}
-
-	@Override
-	public boolean datamapExists(String datamapName) {
-		for (Datamap dataMap : dataMaps) {
-			if (dataMap.getName().equals(datamapName)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	@Override
-	public int datamapCount() {
-		return dataMaps.size();
+	public void addDataToDatamapWithCSV(String datamapName, CSVFile csvFile) throws DatamapNotFoundException {
+		Datamap datamap = getDatamap(datamapName);
+		datamap.readCSV(csvFile.getFile());
+		dataMaps.add(datamap);
 	}
 
 	@Override
@@ -59,10 +39,54 @@ public class InMemoryDatamapGateway implements DatamapGateway {
 	}
 
 	@Override
-	public void addDataToDatamapWithCSV(String datamapName, CSVFile csvFile) throws DatamapNotFoundException {
+	public Datamap createDatamap(String datamapName) throws DuplicateDatamapException {
+		for (Datamap datamap : dataMaps) {
+			if (datamap.getName() == datamapName) {
+				throw new DuplicateDatamapException("There is already a Datamap with the name " + datamapName);
+			}
+		}
+		dataMaps.add(new Datamap(datamapName));
+		return new Datamap(datamapName);
+	}
+
+	@Override
+	public int datamapCount() {
+		return dataMaps.size();
+	}
+
+	@Override
+	public boolean datamapExists(String datamapName) {
+		for (Datamap dataMap : dataMaps) {
+			if (dataMap.getName().equals(datamapName)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public void deleteAllDatamaps() throws Exception {
+		try {
+			this.dataMaps.clear();
+		} catch (NullPointerException e) {
+			throw new Exception("There are no Datamaps to delete.");
+		}
+	}
+
+	@Override
+	public void deleteAllLinesIn(String datamapName) {
+		Datamap datamap = new Datamap(datamapName);
+		datamap.deleteAllLines();
+	}
+
+	public List<DatamapLine> getDataLinesFor(Datamap datamap) {
+		return datamap.getDatamapLines();
+	}
+
+	@Override
+	public List<DatamapLine> getDataLinesFor(String datamapName) throws DatamapNotFoundException {
 		Datamap datamap = getDatamap(datamapName);
-		datamap.readCSV(csvFile.getFile());
-		dataMaps.add(datamap);
+		return datamap.getDatamapLines();
 	}
 
 	@Override
@@ -76,16 +100,6 @@ public class InMemoryDatamapGateway implements DatamapGateway {
 	}
 
 	@Override
-	public List<DatamapLine> getDataLinesFor(String datamapName) throws DatamapNotFoundException {
-		Datamap datamap = getDatamap(datamapName);
-		return datamap.getDatamapLines();
-	}
-
-	public List<DatamapLine> getDataLinesFor(Datamap datamap) {
-		return datamap.getDatamapLines();
-	}
-
-	@Override
 	public DatamapLine getDatamapLineFrom(String datamapName, String key)
 			throws DatamapLineNotFoundException, DatamapNotFoundException {
 		Datamap datamap = getDatamap(datamapName);
@@ -95,20 +109,5 @@ public class InMemoryDatamapGateway implements DatamapGateway {
 			}
 		}
 		throw new DatamapLineNotFoundException("Cannot find datamapline with key of " + key);
-	}
-
-	@Override
-	public void deleteAllLinesIn(String datamapName) {
-		Datamap datamap = new Datamap(datamapName);
-		datamap.deleteAllLines();
-	}
-
-	@Override
-	public void deleteAllDatamaps() throws Exception {
-		try {
-			this.dataMaps.clear();
-		} catch (NullPointerException e) {
-			throw new Exception("There are no Datamaps to delete.");
-		}
 	}
 }

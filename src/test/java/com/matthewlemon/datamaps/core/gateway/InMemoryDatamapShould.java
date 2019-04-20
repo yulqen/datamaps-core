@@ -14,7 +14,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import com.matthewlemon.datamaps.core.TestSetup;
-import com.matthewlemon.datamaps.core.doubles.InMemoryDatamapGateway;
 import com.matthewlemon.datamaps.core.entities.CSVFile;
 import com.matthewlemon.datamaps.core.entities.Datamap;
 import com.matthewlemon.datamaps.core.entities.DatamapLine;
@@ -22,6 +21,7 @@ import com.matthewlemon.datamaps.core.entities.DatamapType;
 import com.matthewlemon.datamaps.core.exceptions.DatamapLineNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.DatamapNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.DuplicateDatamapException;
+import com.matthewlemon.datamaps.core.gateways.InMemoryDatamapGateway;
 
 public class InMemoryDatamapShould {
 
