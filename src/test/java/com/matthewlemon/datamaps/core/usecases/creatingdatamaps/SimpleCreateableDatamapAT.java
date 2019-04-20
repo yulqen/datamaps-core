@@ -14,17 +14,18 @@ import com.matthewlemon.datamaps.core.exceptions.DuplicateDatamapException;
 import com.matthewlemon.datamaps.core.fixtures.CreateableDatamapFixture;
 
 public class SimpleCreateableDatamapAT {
-	
-	@Test
-    public void userCanCreateDatamap() throws DuplicateDatamapException, DatamapNotFoundException, DatamapLineNotFoundException {
-        CreateableDatamapFixture fixture = new CreateableDatamapFixture();
-        fixture.setUpFixture();
-        fixture.userCreatesDatamapWithName("Test Datamap");
-        fixture.userAddsSingleLineOfDataToDatamap("Test Datamap", "Test Key 1", "Sheet 1", "B1", TEXT);
-        fixture.userAddsSingleLineOfDataToDatamap("Test Datamap", "Test Key 2", "Sheet 1", "B2", TEXT);
-        assertEquals(2, fixture.canCheckCountOfLinesInDatamap("Test Datamap"));
 
-        List<DatamapLine> dmls = fixture.userCanGetListOfLinesFromDatamap("Test Datamap");
-        assertEquals("Test Key 1", dmls.get(0).getKey());
-    }
+	@Test
+	public void userCanCreateDatamap()
+			throws DuplicateDatamapException, DatamapNotFoundException, DatamapLineNotFoundException {
+		CreateableDatamapFixture fixture = new CreateableDatamapFixture();
+		fixture.setUpFixture();
+		fixture.userCreatesDatamapWithName("Test Datamap");
+		fixture.userAddsSingleLineOfDataToDatamap("Test Datamap", "Test Key 1", "Sheet 1", "B1", TEXT);
+		fixture.userAddsSingleLineOfDataToDatamap("Test Datamap", "Test Key 2", "Sheet 1", "B2", TEXT);
+		assertEquals(2, fixture.canCheckCountOfLinesInDatamap("Test Datamap"));
+
+		List<DatamapLine> dmls = fixture.userCanGetListOfLinesFromDatamap("Test Datamap");
+		assertEquals("Test Key 1", dmls.get(0).getKey());
+	}
 }

@@ -15,13 +15,17 @@ public class CreateableDatamapFixture {
 
     private CreateableDatamapUseCase useCase;
 
+    public int canCheckCountOfLinesInDatamap(String datamapName) throws DatamapNotFoundException {
+        return this.useCase.getLineCountFromDatamap(datamapName);
+    }
+
     public void setUpFixture() {
         this.useCase = new CreateableDatamapUseCase();
         TestSetup.setupContext();
     }
 
-    public void userCreatesDatamapWithName(String datamapName) throws DuplicateDatamapException {
-        useCase.createDatamap(datamapName);
+    public void userAddsDataToDatamapUsingCSV(String datamapName, CSVFile csvFile) throws DatamapNotFoundException {
+        useCase.addCSVDataToDatamap(datamapName, csvFile);
     }
 
     public void userAddsSingleLineOfDataToDatamap(String datamapName, String key, String sheetName, String cellRef, DatamapType type) throws DatamapNotFoundException {
@@ -33,11 +37,7 @@ public class CreateableDatamapFixture {
         return datamap.getDatamapLines();
     }
 
-    public int canCheckCountOfLinesInDatamap(String datamapName) throws DatamapNotFoundException {
-        return this.useCase.getLineCountFromDatamap(datamapName);
-    }
-
-    public void userAddsDataToDatamapUsingCSV(String datamapName, CSVFile csvFile) throws DatamapNotFoundException {
-        useCase.addCSVDataToDatamap(datamapName, csvFile);
+    public void userCreatesDatamapWithName(String datamapName) throws DuplicateDatamapException {
+        useCase.createDatamap(datamapName);
     }
 }

@@ -9,9 +9,8 @@ import com.matthewlemon.datamaps.core.exceptions.DuplicateDatamapException;
 
 public class CreateableDatamapUseCase {
 
-    public Datamap createDatamap(String datamapName) throws DuplicateDatamapException {
-        Datamap datamap = Context.datamapGateway.createDatamap(datamapName);
-         return datamap;
+    public void addCSVDataToDatamap(String datamapName, CSVFile csvFile) throws DatamapNotFoundException {
+        Context.datamapGateway.addDataToDatamapWithCSV(datamapName, csvFile);
     }
 
     public void addLineToDatamap(String datamapName, String key,
@@ -20,16 +19,17 @@ public class CreateableDatamapUseCase {
     }
 
 
-    public int getLineCountFromDatamap(String datamapName) throws DatamapNotFoundException {
-        Datamap datamap = Context.datamapGateway.getDatamap(datamapName);
-        return datamap.getDatamapLines().size();
+    public Datamap createDatamap(String datamapName) throws DuplicateDatamapException {
+        Datamap datamap = Context.datamapGateway.createDatamap(datamapName);
+         return datamap;
     }
 
     public Datamap getDatamap(String datamapName) throws DatamapNotFoundException {
         return Context.datamapGateway.getDatamap(datamapName);
     }
 
-    public void addCSVDataToDatamap(String datamapName, CSVFile csvFile) throws DatamapNotFoundException {
-        Context.datamapGateway.addDataToDatamapWithCSV(datamapName, csvFile);
+    public int getLineCountFromDatamap(String datamapName) throws DatamapNotFoundException {
+        Datamap datamap = Context.datamapGateway.getDatamap(datamapName);
+        return datamap.getDatamapLines().size();
     }
 }

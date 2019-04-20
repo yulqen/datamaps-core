@@ -28,6 +28,9 @@ public class ExcelParserTest {
 	private InMemoryDatamapGateway gateway;
 	private InMemoryReturn myReturn;
 
+	@Rule
+	public ExpectedException thrown = ExpectedException.none();
+
 	@Before
 	public void setUp() throws Exception {
 		ClassLoader classLoader = getClass().getClassLoader();
@@ -35,24 +38,6 @@ public class ExcelParserTest {
 		myReturn = new InMemoryReturn("Test Return");
 	}
 	
-	@Rule
-	public ExpectedException thrown = ExpectedException.none();
-
-	@Test
-	public void checkHashStructure() throws Exception {
-		DatamapValue<Boolean> value = new DatamapValue<Boolean>(true);
-		assertEquals(true, value.getValue());
-		DatamapValue<String> str = new DatamapValue<String>("Tosser");
-		assertEquals("Tosser", str.getValue());
-	}
-
-	@Test
-	public void returnInstantiation() throws Exception {
-		InMemoryReturn excelReturn = new InMemoryReturn();
-		HashMap<?, ?> data = excelReturn.getData();
-		assertNotNull(data);
-	}
-
 	@Test
 	public void canGetValuesFromCellsInParsedSpreadsheet()
 			throws EncryptedDocumentException, IOException, CellValueNotFoundException {
@@ -85,6 +70,14 @@ public class ExcelParserTest {
 	}
 
 	@Test
+	public void checkHashStructure() throws Exception {
+		DatamapValue<Boolean> value = new DatamapValue<Boolean>(true);
+		assertEquals(true, value.getValue());
+		DatamapValue<String> str = new DatamapValue<String>("Tosser");
+		assertEquals("Tosser", str.getValue());
+	}
+
+	@Test
 	public void exceptionRaisedWhenParserCannotEvenGetSheet() throws Exception {
 		ReturnParser parser = new ReturnParser(this.myReturn);
 		parser.parse(testFile);
@@ -101,7 +94,7 @@ public class ExcelParserTest {
 		thrown.expectMessage("Cannot find a value on sheet Test Sheet 2 in cell B1");
 		assertEquals("Test Value 1", parser.getCellValueFromSheet("Test Sheet 2", "B1"));
 	}
-	
+
 	@Test
 	public void exceptionRaisedWhenValueInCellIsIncorrectTypeAccordingToDatamapLine() throws Exception {
 		gateway = new InMemoryDatamapGateway();
@@ -115,7 +108,7 @@ public class ExcelParserTest {
 		thrown.expectMessage("Value at cell C10 on sheet Test Sheet 1 is not a TEXT type");
 		assertEquals(12.1, parser.getCellValueFromSheetWithTypeChecking("Test Sheet 1", dml));
 	}
-	
+
 	@Test
 	public void parseToReturnUsingDatamap() throws Exception {
 		// THIS TEST DOES NOT HAVE ASSERTS!
@@ -139,4 +132,12 @@ public class ExcelParserTest {
 		Datamap datamap = gateway.getDatamap("Test Datamap 5");
 		parser.reportReturnValuesToSTDOUT(datamap);
 	}
+	
+	@Test
+	public void returnInstantiation() throws Exception {
+		InMemoryReturn excelReturn = new InMemoryReturn();
+		HashMap<?, ?> data = excelReturn.getData();
+		assertNotNull(data);
+	}
+	
 }

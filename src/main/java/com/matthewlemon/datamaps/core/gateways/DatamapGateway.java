@@ -12,24 +12,24 @@ import com.matthewlemon.datamaps.core.exceptions.DuplicateDatamapException;
 
 public interface DatamapGateway {
 
-    Datamap createDatamap(String datamapName) throws DuplicateDatamapException;
+    void addDataToDatamapWithCSV(String datamapName, CSVFile csvFile) throws DatamapNotFoundException;
 
-    boolean datamapExists(String datamapName);
+    void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef, DatamapType text) throws DatamapNotFoundException;
+
+    Datamap createDatamap(String datamapName) throws DuplicateDatamapException;
 
     int datamapCount();
 
-    Datamap getDatamap(String test_datamap) throws DatamapNotFoundException;
+    boolean datamapExists(String datamapName);
 
-    List<DatamapLine> getDataLinesFor(String datamapName) throws DatamapNotFoundException;
-
-    void addDataToDatamapWithCSV(String datamapName, CSVFile csvFile) throws DatamapNotFoundException;
+    void deleteAllDatamaps() throws Exception;
 
     void deleteAllLinesIn(String test_datamap);
 
-	void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef, DatamapType text) throws DatamapNotFoundException;
+	List<DatamapLine> getDataLinesFor(String datamapName) throws DatamapNotFoundException;
+
+	Datamap getDatamap(String test_datamap) throws DatamapNotFoundException;
 
 	DatamapLine getDatamapLineFrom(String datamapName, String key) throws DatamapLineNotFoundException, DatamapNotFoundException;
-
-	void deleteAllDatamaps() throws Exception;
 
 }

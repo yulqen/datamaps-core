@@ -34,22 +34,16 @@ public class InMemoryDatamapShould {
 		TestSetup.setupContext();
 	}
 
-	@Before
-	public void setUp() throws DuplicateDatamapException {
-		ClassLoader classLoader = getClass().getClassLoader();
-		testFile = new File(classLoader.getResource("files/test.csv").getFile());
-		csvFile = new CSVFile(testFile);
-		gateway = new InMemoryDatamapGateway();
-		gateway.createDatamap("Test Datamap");
-	}
-
-	@After
-	public void clearDatamapLines() {
-		gateway.deleteAllLinesIn("Test Datamap");
-	}
-
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
+
+	@Test
+	public void addDataToDatamapFromCSV() throws IOException, DatamapNotFoundException {
+		Datamap datamap = gateway.getDatamap("Test Datamap");
+		datamap.readCSV(testFile);
+		assertEquals("Test Key 1", datamap.getDataKeyForLine(0));
+		assertEquals("Test Key 2", datamap.getDataKeyForLine(1));
+	}
 
 	@Test
 	public void addLineToDatamap() throws DatamapNotFoundException, DatamapLineNotFoundException {
@@ -69,29 +63,6 @@ public class InMemoryDatamapShould {
 	}
 
 	@Test
-	public void useGatewayToAddToDatamapWithCSV() throws DatamapNotFoundException {
-		DatamapLine dml = new DatamapLine("Test Key 1", "Test Sheet 1", "Test CellRef 1", TEXT);
-		gateway.addDataToDatamapWithCSV("Test Datamap", csvFile);
-		assertEquals(dml.getKey(), gateway.getDatamap("Test Datamap").getDatamapLines().get(0).getKey());
-	}
-
-	@Test
-	public void addDataToDatamapFromCSV() throws IOException, DatamapNotFoundException {
-		Datamap datamap = gateway.getDatamap("Test Datamap");
-		datamap.readCSV(testFile);
-		assertEquals("Test Key 1", datamap.getDataKeyForLine(0));
-		assertEquals("Test Key 2", datamap.getDataKeyForLine(1));
-	}
-
-	@Test(expected = DuplicateDatamapException.class)
-	public void rejectDatamapWithSameName() throws Exception {
-		@SuppressWarnings("unused")
-		Datamap datamap = gateway.createDatamap("Test Datamap");
-		@SuppressWarnings("unused")
-		Datamap datamap2 = gateway.createDatamap("Test Datamap");
-	}
-
-	@Test
 	public void canGetSingleDatamapLineByQueryingItsSheetAndKeyValues()
 			throws DuplicateDatamapException, DatamapNotFoundException, DatamapLineNotFoundException {
 		@SuppressWarnings("unused")
@@ -104,14 +75,19 @@ public class InMemoryDatamapShould {
 		assertEquals("B1", dml.getCellRef());
 	}
 
-	@Test
-	public void throwExceptionWhenDatamapDoesntExist() throws Exception {
-		thrown.expect(DatamapNotFoundException.class);
-		thrown.expectMessage("Datamap Test Datamap No Exist cannot be found.");
-		@SuppressWarnings("unused")
-		Datamap datamap = gateway.getDatamap("Test Datamap No Exist");
+	@After
+	public void clearDatamapLines() {
+		gateway.deleteAllLinesIn("Test Datamap");
 	}
-	
+
+	@Test(expected = DuplicateDatamapException.class)
+	public void rejectDatamapWithSameName() throws Exception {
+		@SuppressWarnings("unused")
+		Datamap datamap = gateway.createDatamap("Test Datamap");
+		@SuppressWarnings("unused")
+		Datamap datamap2 = gateway.createDatamap("Test Datamap");
+	}
+
 	@Test
 	public void removeAllDatamaps() throws Exception {
 		@SuppressWarnings("unused")
@@ -122,5 +98,29 @@ public class InMemoryDatamapShould {
 		thrown.expect(DatamapNotFoundException.class);
 		@SuppressWarnings("unused")
 		Datamap dm = gateway.getDatamap("Test Datamap 2");
+	}
+
+	@Before
+	public void setUp() throws DuplicateDatamapException {
+		ClassLoader classLoader = getClass().getClassLoader();
+		testFile = new File(classLoader.getResource("files/test.csv").getFile());
+		csvFile = new CSVFile(testFile);
+		gateway = new InMemoryDatamapGateway();
+		gateway.createDatamap("Test Datamap");
+	}
+
+	@Test
+	public void throwExceptionWhenDatamapDoesntExist() throws Exception {
+		thrown.expect(DatamapNotFoundException.class);
+		thrown.expectMessage("Datamap Test Datamap No Exist cannot be found.");
+		@SuppressWarnings("unused")
+		Datamap datamap = gateway.getDatamap("Test Datamap No Exist");
+	}
+	
+	@Test
+	public void useGatewayToAddToDatamapWithCSV() throws DatamapNotFoundException {
+		DatamapLine dml = new DatamapLine("Test Key 1", "Test Sheet 1", "Test CellRef 1", TEXT);
+		gateway.addDataToDatamapWithCSV("Test Datamap", csvFile);
+		assertEquals(dml.getKey(), gateway.getDatamap("Test Datamap").getDatamapLines().get(0).getKey());
 	}
 }

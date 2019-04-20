@@ -20,8 +20,15 @@ public class InMemoryReturn {
 		this.data = new HashMap<String, HashMap<String, DatamapValue<?>>>();
 	}
 
-	public HashMap<String, HashMap<String, DatamapValue<?>>> getData() {
-		return data;
+	public DatamapValue<?> getCellValue(String sheetName, DatamapLine dml) throws CellValueNotFoundException {
+		HashMap<String, HashMap<String, DatamapValue<?>>> result = data;
+		if (result.get(sheetName) == null) {
+			throw new CellValueNotFoundException("Cannot find sheet " + sheetName); 
+		}
+		if (result.get(sheetName).get(dml.getCellRef()) == null) {
+			throw new CellValueNotFoundException("Cannot find a value on sheet " + sheetName + " in cell " + dml.getCellRef()); 
+		}
+		return data.get(dml.getSheetName()).get(dml.getCellRef());
 	}
 
 	public DatamapValue<?> getCellValue(String sheetName, String cellRef) throws CellValueNotFoundException {
@@ -35,14 +42,7 @@ public class InMemoryReturn {
 		return result.get(sheetName).get(cellRef);
 	}
 
-	public DatamapValue<?> getCellValue(String sheetName, DatamapLine dml) throws CellValueNotFoundException {
-		HashMap<String, HashMap<String, DatamapValue<?>>> result = data;
-		if (result.get(sheetName) == null) {
-			throw new CellValueNotFoundException("Cannot find sheet " + sheetName); 
-		}
-		if (result.get(sheetName).get(dml.getCellRef()) == null) {
-			throw new CellValueNotFoundException("Cannot find a value on sheet " + sheetName + " in cell " + dml.getCellRef()); 
-		}
-		return data.get(dml.getSheetName()).get(dml.getCellRef());
+	public HashMap<String, HashMap<String, DatamapValue<?>>> getData() {
+		return data;
 	}
 }

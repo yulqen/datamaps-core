@@ -35,12 +35,41 @@ public class ReturnParser {
 		this.returnObj = myReturn;
 	}
 
+	public Object getCellValueFromSheet(String sheetName, DatamapLine datamapLine) throws CellValueNotFoundException {
+		return this.returnObj.getCellValue(sheetName, datamapLine.getCellRef()).getValue();
+	}
+
+	public Object getCellValueFromSheet(String sheetName, String cellRef) throws CellValueNotFoundException {
+		return this.returnObj.getCellValue(sheetName, cellRef).getValue();
+	}
+
+	public Object getCellValueFromSheetWithTypeChecking(String sheetName, DatamapLine datamapLine)
+			throws CellValueNotFoundException, IncorrectCellTypeException {
+		DatamapType enumType = datamapLine.getDatamapType();
+
+		Class<?> classDeclaredInDatamapLine = datamapLine.getDatamapType().getType();
+		Class<?> classOfCellValue = this.returnObj.getCellValue(sheetName, datamapLine).getType();
+		if (!classDeclaredInDatamapLine.equals(classOfCellValue)) {
+			throw new IncorrectCellTypeException("Value at cell " + datamapLine.getCellRef() + " on sheet " + sheetName
+					+ " is not a " + enumType.name() + " type");
+		}
+		return this.returnObj.getCellValue(sheetName, datamapLine).getValue();
+	}
+
 	public InMemoryReturn getReturn() {
 		return this.returnObj;
 	}
 
 	public void parse(File testFile) throws EncryptedDocumentException, IOException {
 		parseWorkbook(testFile);
+	}
+
+	public void reportReturnValuesToSTDOUT(Datamap datamap)
+			throws CellValueNotFoundException, IncorrectCellTypeException {
+		for (DatamapLine dml : datamap.getDatamapLines()) {
+			System.out.println(dml.getSheetName() + ": " + dml.getKey() + ": "
+					+ this.getCellValueFromSheetWithTypeChecking(dml.getSheetName(), dml));
+		}
 	}
 
 	private void parseWorkbook(File sourceFile) throws EncryptedDocumentException, IOException {
@@ -65,8 +94,6 @@ public class ReturnParser {
 						sheetData.put(cell.getAddress().formatAsString(), valStr);
 						break;
 					case NUMERIC:
-						// TODO: We are only able to handle/convert to doubles here
-						// TODO: We need to fix how dates strings are handled here
 						if (DateUtil.isCellDateFormatted(cell)) {
 							DatamapValue<?> valDateOrNumeric = new DatamapValue<String>(
 									formatter.formatCellValue(cell));
@@ -110,35 +137,6 @@ public class ReturnParser {
 				}
 			}
 			returnObj.getData().put(sheet.getSheetName(), sheetData);
-		}
-	}
-
-	public Object getCellValueFromSheetWithTypeChecking(String sheetName, DatamapLine datamapLine)
-			throws CellValueNotFoundException, IncorrectCellTypeException {
-		DatamapType enumType = datamapLine.getDatamapType();
-
-		Class<?> classDeclaredInDatamapLine = datamapLine.getDatamapType().getType();
-		Class<?> classOfCellValue = this.returnObj.getCellValue(sheetName, datamapLine).getType();
-		if (!classDeclaredInDatamapLine.equals(classOfCellValue)) {
-			throw new IncorrectCellTypeException("Value at cell " + datamapLine.getCellRef() + " on sheet " + sheetName
-					+ " is not a " + enumType.name() + " type");
-		}
-		return this.returnObj.getCellValue(sheetName, datamapLine).getValue();
-	}
-
-	public Object getCellValueFromSheet(String sheetName, String cellRef) throws CellValueNotFoundException {
-		return this.returnObj.getCellValue(sheetName, cellRef).getValue();
-	}
-
-	public Object getCellValueFromSheet(String sheetName, DatamapLine datamapLine) throws CellValueNotFoundException {
-		return this.returnObj.getCellValue(sheetName, datamapLine.getCellRef()).getValue();
-	}
-
-	public void reportReturnValuesToSTDOUT(Datamap datamap)
-			throws CellValueNotFoundException, IncorrectCellTypeException {
-		for (DatamapLine dml : datamap.getDatamapLines()) {
-			System.out.println(dml.getSheetName() + ": " + dml.getKey() + ": "
-					+ this.getCellValueFromSheetWithTypeChecking(dml.getSheetName(), dml));
 		}
 	}
 }
