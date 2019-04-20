@@ -16,7 +16,7 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 import com.matthewlemon.datamaps.core.entities.Datamap;
 import com.matthewlemon.datamaps.core.entities.DatamapLine;
-import com.matthewlemon.datamaps.core.entities.DatamapTypes;
+import com.matthewlemon.datamaps.core.entities.DatamapType;
 import com.matthewlemon.datamaps.core.entities.InMemoryReturn;
 import com.matthewlemon.datamaps.core.exceptions.CellValueNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.IncorrectCellTypeException;
@@ -115,9 +115,9 @@ public class ReturnParser {
 
 	public Object getCellValueFromSheetWithTypeChecking(String sheetName, DatamapLine datamapLine)
 			throws CellValueNotFoundException, IncorrectCellTypeException {
-		DatamapTypes enumType = datamapLine.getDatamapTypes();
+		DatamapType enumType = datamapLine.getDatamapType();
 
-		Class<?> classDeclaredInDatamapLine = datamapLine.getDatamapTypes().getType();
+		Class<?> classDeclaredInDatamapLine = datamapLine.getDatamapType().getType();
 		Class<?> classOfCellValue = this.returnObj.getCellValue(sheetName, datamapLine).getType();
 		if (!classDeclaredInDatamapLine.equals(classOfCellValue)) {
 			throw new IncorrectCellTypeException("Value at cell " + datamapLine.getCellRef() + " on sheet " + sheetName

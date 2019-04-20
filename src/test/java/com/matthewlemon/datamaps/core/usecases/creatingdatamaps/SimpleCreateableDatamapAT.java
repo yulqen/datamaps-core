@@ -11,7 +11,6 @@ import com.matthewlemon.datamaps.core.exceptions.DatamapLineNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.DatamapNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.DuplicateDatamapException;
 import com.matthewlemon.datamaps.core.fixtures.CreateableDatamapFixture;
-import com.matthewlemon.datamaps.core.parser.DatamapType;
 
 public class SimpleCreateableDatamapAT {
 	
@@ -20,8 +19,8 @@ public class SimpleCreateableDatamapAT {
         CreateableDatamapFixture fixture = new CreateableDatamapFixture();
         fixture.setUpFixture();
         fixture.userCreatesDatamapWithName("Test Datamap");
-        fixture.userAddsSingleLineOfDataToDatamap("Test Datamap", "Test Key 1", "Sheet 1", "B1", new DatamapType());
-        fixture.userAddsSingleLineOfDataToDatamap("Test Datamap", "Test Key 2", "Sheet 1", "B2", new DatamapType());
+        fixture.userAddsSingleLineOfDataToDatamap("Test Datamap", "Test Key 1", "Sheet 1", "B1");
+        fixture.userAddsSingleLineOfDataToDatamap("Test Datamap", "Test Key 2", "Sheet 1", "B2");
         assertEquals(2, fixture.canCheckCountOfLinesInDatamap("Test Datamap"));
 
         List<DatamapLine> dmls = fixture.userCanGetListOfLinesFromDatamap("Test Datamap");

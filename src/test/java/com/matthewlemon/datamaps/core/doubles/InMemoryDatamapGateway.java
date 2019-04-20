@@ -6,12 +6,11 @@ import java.util.List;
 import com.matthewlemon.datamaps.core.entities.CSVFile;
 import com.matthewlemon.datamaps.core.entities.Datamap;
 import com.matthewlemon.datamaps.core.entities.DatamapLine;
-import com.matthewlemon.datamaps.core.entities.DatamapTypes;
+import com.matthewlemon.datamaps.core.entities.DatamapType;
 import com.matthewlemon.datamaps.core.exceptions.DatamapLineNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.DatamapNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.DuplicateDatamapException;
 import com.matthewlemon.datamaps.core.gateways.DatamapGateway;
-import com.matthewlemon.datamaps.core.parser.DatamapType;
 
 public class InMemoryDatamapGateway implements DatamapGateway {
 
@@ -44,14 +43,6 @@ public class InMemoryDatamapGateway implements DatamapGateway {
 	}
 
 	@Override
-	public void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef, DatamapType type)
-			throws DatamapNotFoundException {
-		DatamapLine datamapLine = new DatamapLine(key, sheetName, cellRef, type);
-		Datamap datamap = getDatamap(datamapName);
-		datamap.addDatamapLine(datamapLine);
-	}
-
-	@Override
 	public void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef)
 			throws DatamapNotFoundException {
 		DatamapLine datamapLine = new DatamapLine(key, sheetName, cellRef);
@@ -60,7 +51,7 @@ public class InMemoryDatamapGateway implements DatamapGateway {
 	}
 
 	@Override
-	public void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef, DatamapTypes type)
+	public void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef, DatamapType type)
 			throws DatamapNotFoundException {
 		DatamapLine datamapLine = new DatamapLine(key, sheetName, cellRef, type);
 		Datamap datamap = getDatamap(datamapName);

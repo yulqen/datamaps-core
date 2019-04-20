@@ -1,15 +1,15 @@
 package com.matthewlemon.datamaps.core.parser;
 
-import static com.matthewlemon.datamaps.core.entities.DatamapTypes.NUMERIC;
-import static com.matthewlemon.datamaps.core.entities.DatamapTypes.TEXT;
-import static org.junit.Assert.*;
+import static com.matthewlemon.datamaps.core.entities.DatamapType.NUMERIC;
+import static com.matthewlemon.datamaps.core.entities.DatamapType.TEXT;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
 import org.apache.poi.EncryptedDocumentException;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

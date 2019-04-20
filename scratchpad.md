@@ -1,7 +1,8 @@
 ### Todo
 
+
+* Use enum when constructing DatamapLines, or write a wrapper method that allows for it to me omitted - what are the consequences?
 * Do not halt when exception on datamapline value type is hit - store in a report!
-* Get rid of com.matthewlemon.datamaps.core.parser.DatamapType.
 * Make DatamapValue class a value object.
 * Can we obtain integers from the parser, or must it be doubles?
 * Refactor InMemoryDatamapShould test.
@@ -15,6 +16,7 @@
 
 ### Done
 
+* Get rid of com.matthewlemon.datamaps.core.parser.DatamapType.
 * Check types returned from a parsed spreadsheet match what is in Datamap
 * Exceptions raised when parser cannot find data on a sheet/cell combination.
 * Ability to be able to get datamapline from datamp by querying the key name, rather than the index.

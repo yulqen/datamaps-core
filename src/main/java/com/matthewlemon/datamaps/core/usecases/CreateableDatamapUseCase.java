@@ -5,7 +5,6 @@ import com.matthewlemon.datamaps.core.entities.CSVFile;
 import com.matthewlemon.datamaps.core.entities.Datamap;
 import com.matthewlemon.datamaps.core.exceptions.DatamapNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.DuplicateDatamapException;
-import com.matthewlemon.datamaps.core.parser.DatamapType;
 
 public class CreateableDatamapUseCase {
 
@@ -15,8 +14,8 @@ public class CreateableDatamapUseCase {
     }
 
     public void addLineToDatamap(String datamapName, String key,
-                                 String sheetName, String cellRef, DatamapType type) throws DatamapNotFoundException {
-        Context.datamapGateway.addLineToDatamap(datamapName, key, sheetName, cellRef, type);
+                                 String sheetName, String cellRef) throws DatamapNotFoundException {
+        Context.datamapGateway.addLineToDatamap(datamapName, key, sheetName, cellRef);
     }
 
 

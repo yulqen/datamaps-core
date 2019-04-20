@@ -1,6 +1,6 @@
 package com.matthewlemon.datamaps.core.gateway;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,11 +18,10 @@ import com.matthewlemon.datamaps.core.doubles.InMemoryDatamapGateway;
 import com.matthewlemon.datamaps.core.entities.CSVFile;
 import com.matthewlemon.datamaps.core.entities.Datamap;
 import com.matthewlemon.datamaps.core.entities.DatamapLine;
-import com.matthewlemon.datamaps.core.entities.DatamapTypes;
+import com.matthewlemon.datamaps.core.entities.DatamapType;
 import com.matthewlemon.datamaps.core.exceptions.DatamapLineNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.DatamapNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.DuplicateDatamapException;
-import com.matthewlemon.datamaps.core.parser.DatamapType;
 
 public class InMemoryDatamapShould {
 
@@ -54,7 +53,7 @@ public class InMemoryDatamapShould {
 
 	@Test
 	public void addLineToDatamap() throws DatamapNotFoundException, DatamapLineNotFoundException {
-		gateway.addLineToDatamap("Test Datamap", "Test Key", "Sheet 1", "B1", new DatamapType());
+		gateway.addLineToDatamap("Test Datamap", "Test Key", "Sheet 1", "B1");
 		List<DatamapLine> datamaplines = gateway.getDataLinesFor("Test Datamap");
 		assertEquals("Test Key", datamaplines.get(0).getKey());
 		// alternative way of getting the key:
@@ -63,7 +62,7 @@ public class InMemoryDatamapShould {
 
 	@Test
 	public void addLineToDatamapWithType() throws DatamapNotFoundException, DatamapLineNotFoundException {
-		gateway.addLineToDatamap("Test Datamap", "Test Key", "Sheet 1", "B1", DatamapTypes.TEXT);
+		gateway.addLineToDatamap("Test Datamap", "Test Key", "Sheet 1", "B1", DatamapType.TEXT);
 		List<DatamapLine> datamaplines = gateway.getDataLinesFor("Test Datamap");
 		assertEquals("Test Key", datamaplines.get(0).getKey());
 		assertEquals("Test Key", gateway.getDatamapLineFrom("Test Datamap", "Test Key").getKey());
@@ -71,7 +70,7 @@ public class InMemoryDatamapShould {
 
 	@Test
 	public void useGatewayToAddToDatamapWithCSV() throws DatamapNotFoundException {
-		DatamapLine dml = new DatamapLine("Test Key 1", "Test Sheet 1", "Test CellRef 1", new DatamapType());
+		DatamapLine dml = new DatamapLine("Test Key 1", "Test Sheet 1", "Test CellRef 1");
 		gateway.addDataToDatamapWithCSV("Test Datamap", csvFile);
 		assertEquals(dml.getKey(), gateway.getDatamap("Test Datamap").getDatamapLines().get(0).getKey());
 	}
@@ -118,7 +117,7 @@ public class InMemoryDatamapShould {
 		@SuppressWarnings("unused")
 		Datamap datamap = gateway.createDatamap("Test Datamap 2");
 		// for good meaasure, we'll add a single line
-		gateway.addLineToDatamap("Test Datamap 2", "Key", "Sheet 1", "A10", DatamapTypes.TEXT);
+		gateway.addLineToDatamap("Test Datamap 2", "Key", "Sheet 1", "A10", DatamapType.TEXT);
 		gateway.deleteAllDatamaps();
 		thrown.expect(DatamapNotFoundException.class);
 		@SuppressWarnings("unused")
