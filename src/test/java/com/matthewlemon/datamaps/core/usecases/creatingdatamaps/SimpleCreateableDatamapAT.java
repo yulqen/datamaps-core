@@ -1,5 +1,6 @@
 package com.matthewlemon.datamaps.core.usecases.creatingdatamaps;
 
+import static com.matthewlemon.datamaps.core.entities.DatamapType.TEXT;
 import static org.junit.Assert.assertEquals;
 
 import java.util.List;
@@ -19,8 +20,8 @@ public class SimpleCreateableDatamapAT {
         CreateableDatamapFixture fixture = new CreateableDatamapFixture();
         fixture.setUpFixture();
         fixture.userCreatesDatamapWithName("Test Datamap");
-        fixture.userAddsSingleLineOfDataToDatamap("Test Datamap", "Test Key 1", "Sheet 1", "B1");
-        fixture.userAddsSingleLineOfDataToDatamap("Test Datamap", "Test Key 2", "Sheet 1", "B2");
+        fixture.userAddsSingleLineOfDataToDatamap("Test Datamap", "Test Key 1", "Sheet 1", "B1", TEXT);
+        fixture.userAddsSingleLineOfDataToDatamap("Test Datamap", "Test Key 2", "Sheet 1", "B2", TEXT);
         assertEquals(2, fixture.canCheckCountOfLinesInDatamap("Test Datamap"));
 
         List<DatamapLine> dmls = fixture.userCanGetListOfLinesFromDatamap("Test Datamap");

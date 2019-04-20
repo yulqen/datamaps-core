@@ -26,8 +26,6 @@ public interface DatamapGateway {
 
     void deleteAllLinesIn(String test_datamap);
 
-	void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef) throws DatamapNotFoundException;
-
 	void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef, DatamapType text) throws DatamapNotFoundException;
 
 	DatamapLine getDatamapLineFrom(String datamapName, String key) throws DatamapLineNotFoundException, DatamapNotFoundException;

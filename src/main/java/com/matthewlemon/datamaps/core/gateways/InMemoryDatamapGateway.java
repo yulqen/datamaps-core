@@ -23,14 +23,6 @@ public class InMemoryDatamapGateway implements DatamapGateway {
 	}
 
 	@Override
-	public void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef)
-			throws DatamapNotFoundException {
-		DatamapLine datamapLine = new DatamapLine(key, sheetName, cellRef);
-		Datamap datamap = getDatamap(datamapName);
-		datamap.addDatamapLine(datamapLine);
-	}
-
-	@Override
 	public void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef, DatamapType type)
 			throws DatamapNotFoundException {
 		DatamapLine datamapLine = new DatamapLine(key, sheetName, cellRef, type);
