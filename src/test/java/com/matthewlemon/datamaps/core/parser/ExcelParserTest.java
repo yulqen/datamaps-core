@@ -1,7 +1,7 @@
 package com.matthewlemon.datamaps.core.parser;
 
-import static com.matthewlemon.datamaps.core.entities.DatamapType.NUMERIC;
-import static com.matthewlemon.datamaps.core.entities.DatamapType.TEXT;
+import static com.matthewlemon.datamaps.core.parser.DatamapLineType.NUMERIC;
+import static com.matthewlemon.datamaps.core.parser.DatamapLineType.TEXT;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -71,9 +71,9 @@ public class ExcelParserTest {
 
 	@Test
 	public void checkHashStructure() throws Exception {
-		DatamapValue<Boolean> value = new DatamapValue<Boolean>(true);
+		DatamapLineValue<Boolean> value = new DatamapLineValue<Boolean>(true);
 		assertEquals(true, value.getValue());
-		DatamapValue<String> str = new DatamapValue<String>("Tosser");
+		DatamapLineValue<String> str = new DatamapLineValue<String>("Tosser");
 		assertEquals("Tosser", str.getValue());
 	}
 

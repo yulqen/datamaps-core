@@ -1,6 +1,6 @@
 package com.matthewlemon.datamaps.core.gateway;
 
-import static com.matthewlemon.datamaps.core.entities.DatamapType.TEXT;
+import static com.matthewlemon.datamaps.core.parser.DatamapLineType.TEXT;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;

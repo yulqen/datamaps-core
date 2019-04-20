@@ -1,11 +1,11 @@
 package com.matthewlemon.datamaps.core.parser;
 
-public class DatamapValue<T> {
+public class DatamapLineValue<T> {
 
 	private T value;
 	private Class<?> klazz;
 
-	public DatamapValue(T value) {
+	public DatamapLineValue(T value) {
 		this.value = value;
 		this.klazz = value.getClass();
 	}

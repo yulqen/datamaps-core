@@ -1,11 +1,13 @@
 package com.matthewlemon.datamaps.core.entities;
 
+import com.matthewlemon.datamaps.core.parser.DatamapLineType;
+
 public class DatamapLine {
 
     private String key;
     private String sheetName;
     private String cellRef;
-	private DatamapType type;
+	private DatamapLineType type;
 
 
     public DatamapLine(String key, String sheetName, String cellRef) {
@@ -14,14 +16,14 @@ public class DatamapLine {
         this.cellRef = cellRef;
 	}
 
-	public DatamapLine(String key, String sheetName, String cellRef, DatamapType type) {
+	public DatamapLine(String key, String sheetName, String cellRef, DatamapLineType type) {
         this.key = key;
         this.sheetName = sheetName;
         this.cellRef = cellRef;
         this.type = type;
 	}
 	
-	public DatamapType getDatamapType() {
+	public DatamapLineType getDatamapType() {
 		return this.type;
 	}
 

@@ -6,10 +6,10 @@ import java.util.List;
 import com.matthewlemon.datamaps.core.entities.CSVFile;
 import com.matthewlemon.datamaps.core.entities.Datamap;
 import com.matthewlemon.datamaps.core.entities.DatamapLine;
-import com.matthewlemon.datamaps.core.entities.DatamapType;
 import com.matthewlemon.datamaps.core.exceptions.DatamapLineNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.DatamapNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.DuplicateDatamapException;
+import com.matthewlemon.datamaps.core.parser.DatamapLineType;
 
 public class InMemoryDatamapGateway implements DatamapGateway {
 
@@ -23,7 +23,7 @@ public class InMemoryDatamapGateway implements DatamapGateway {
 	}
 
 	@Override
-	public void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef, DatamapType type)
+	public void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef, DatamapLineType type)
 			throws DatamapNotFoundException {
 		DatamapLine datamapLine = new DatamapLine(key, sheetName, cellRef, type);
 		Datamap datamap = getDatamap(datamapName);

@@ -1,10 +1,10 @@
 ### Todo
 
-* Refactor InMemoryDatamapShould test.
-* Do not halt when exception on datamapline value type is hit - store in a report!
 * Make DatamapValue class a value object.
+* Do not halt when exception on datamapline value type is hit - store in a report!
 * Can we obtain integers from the parser, or must it be doubles?
 * Move functionality to excel parser usecase.
+* Implement rules alongside DatamapLineType
 
 ### Long Term
 

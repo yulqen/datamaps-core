@@ -16,7 +16,6 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 import com.matthewlemon.datamaps.core.entities.Datamap;
 import com.matthewlemon.datamaps.core.entities.DatamapLine;
-import com.matthewlemon.datamaps.core.entities.DatamapType;
 import com.matthewlemon.datamaps.core.entities.InMemoryReturn;
 import com.matthewlemon.datamaps.core.exceptions.CellValueNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.IncorrectCellTypeException;
@@ -45,7 +44,7 @@ public class ReturnParser {
 
 	public Object getCellValueFromSheetWithTypeChecking(String sheetName, DatamapLine datamapLine)
 			throws CellValueNotFoundException, IncorrectCellTypeException {
-		DatamapType enumType = datamapLine.getDatamapType();
+		DatamapLineType enumType = datamapLine.getDatamapType();
 
 		Class<?> classDeclaredInDatamapLine = datamapLine.getDatamapType().getType();
 		Class<?> classOfCellValue = this.returnObj.getCellValue(sheetName, datamapLine).getType();
@@ -81,40 +80,40 @@ public class ReturnParser {
 	private void parseWorkbookToMapWithEvaluator(Workbook workbook, FormulaEvaluator evaluator) {
 		DataFormatter formatter = new DataFormatter();
 		for (Sheet sheet : workbook) {
-			HashMap<String, DatamapValue<?>> sheetData = new HashMap<>();
+			HashMap<String, DatamapLineValue<?>> sheetData = new HashMap<>();
 			for (Row row : sheet) {
 				for (Cell cell : row) {
 					switch (cell.getCellType()) {
 					case BOOLEAN:
-						DatamapValue<?> valBool = new DatamapValue<Boolean>(cell.getBooleanCellValue());
+						DatamapLineValue<?> valBool = new DatamapLineValue<Boolean>(cell.getBooleanCellValue());
 						sheetData.put(cell.getAddress().formatAsString(), valBool);
 						break;
 					case STRING:
-						DatamapValue<?> valStr = new DatamapValue<String>(cell.getStringCellValue());
+						DatamapLineValue<?> valStr = new DatamapLineValue<String>(cell.getStringCellValue());
 						sheetData.put(cell.getAddress().formatAsString(), valStr);
 						break;
 					case NUMERIC:
 						if (DateUtil.isCellDateFormatted(cell)) {
-							DatamapValue<?> valDateOrNumeric = new DatamapValue<String>(
+							DatamapLineValue<?> valDateOrNumeric = new DatamapLineValue<String>(
 									formatter.formatCellValue(cell));
 							sheetData.put(cell.getAddress().formatAsString(), valDateOrNumeric);
 						} else {
-							DatamapValue<?> valDateOrNumeric = new DatamapValue<Double>(cell.getNumericCellValue());
+							DatamapLineValue<?> valDateOrNumeric = new DatamapLineValue<Double>(cell.getNumericCellValue());
 							sheetData.put(cell.getAddress().formatAsString(), valDateOrNumeric);
 						}
 						break;
 					case FORMULA:
 						switch (evaluator.evaluateFormulaCell(cell)) {
 						case BOOLEAN:
-							DatamapValue<?> valFuncBool = new DatamapValue<Boolean>(cell.getBooleanCellValue());
+							DatamapLineValue<?> valFuncBool = new DatamapLineValue<Boolean>(cell.getBooleanCellValue());
 							sheetData.put(cell.getAddress().formatAsString(), valFuncBool);
 							break;
 						case STRING:
-							DatamapValue<?> valFuncString = new DatamapValue<String>(cell.getStringCellValue());
+							DatamapLineValue<?> valFuncString = new DatamapLineValue<String>(cell.getStringCellValue());
 							sheetData.put(cell.getAddress().formatAsString(), valFuncString);
 							break;
 						case NUMERIC:
-							DatamapValue<?> valNumericString = new DatamapValue<Double>(cell.getNumericCellValue());
+							DatamapLineValue<?> valNumericString = new DatamapLineValue<Double>(cell.getNumericCellValue());
 							sheetData.put(cell.getAddress().formatAsString(), valNumericString);
 							break;
 						case ERROR:
@@ -131,7 +130,7 @@ public class ReturnParser {
 					case BLANK:
 						break;
 					default:
-						DatamapValue<?> defaultStr = new DatamapValue<String>(cell.getStringCellValue());
+						DatamapLineValue<?> defaultStr = new DatamapLineValue<String>(cell.getStringCellValue());
 						sheetData.put(cell.getAddress().formatAsString(), defaultStr);
 					}
 				}
