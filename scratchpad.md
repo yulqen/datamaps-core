@@ -1,10 +1,10 @@
 ### Todo
 
-* Make DatamapValue class a value object.
 * Do not halt when exception on datamapline value type is hit - store in a report!
 * Can we obtain integers from the parser, or must it be doubles?
+* Implement the Date DatamapLineType enum.
 * Move functionality to excel parser usecase.
-* Implement rules alongside DatamapLineType
+* Implement rules alongside DatamapLineType.
 
 ### Long Term
 
@@ -14,6 +14,7 @@
 
 ### Done
 
+* Make DatamapValue class a value object.
 * Use enum when constructing DatamapLines, or write a wrapper method that allows for it to me omitted - what are the consequences?
 	* DECISION: type must currently be included for each DatamapLine object
 * Get rid of com.matthewlemon.datamaps.core.parser.DatamapType.
