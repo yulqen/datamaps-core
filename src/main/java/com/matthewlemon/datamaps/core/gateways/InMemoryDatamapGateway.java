@@ -10,6 +10,7 @@ import com.matthewlemon.datamaps.core.exceptions.DatamapLineNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.DatamapNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.DuplicateDatamapException;
 import com.matthewlemon.datamaps.core.parser.DatamapLineType;
+import com.matthewlemon.datamaps.core.usecases.creatingdatamaps.Ruleset;
 
 public class InMemoryDatamapGateway implements DatamapGateway {
 
@@ -28,6 +29,10 @@ public class InMemoryDatamapGateway implements DatamapGateway {
 		DatamapLine datamapLine = new DatamapLine(key, sheetName, cellRef, type);
 		Datamap datamap = getDatamap(datamapName);
 		datamap.addDatamapLine(datamapLine);
+	}
+
+	public void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef, DatamapLineType type, Ruleset ruleset) {
+		
 	}
 
 	@Override

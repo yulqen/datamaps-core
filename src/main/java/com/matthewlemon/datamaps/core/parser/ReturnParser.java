@@ -43,6 +43,8 @@ public class ReturnParser {
 		return this.returnObj.getCellValue(sheetName, cellRef).getValue();
 	}
 
+	// TODO: this might have to be refactored so that it can be run on a data HashMap, depending if it is called for
+	// by the use case. Use case's responsible to sort this out, depending on what the user asks for.
 	public Object getCellValueFromSheetWithTypeChecking(String sheetName, DatamapLine datamapLine)
 			throws CellValueNotFoundException, IncorrectCellTypeException {
 		DatamapLineType enumType = datamapLine.getDatamapType();
