@@ -23,7 +23,7 @@ import com.matthewlemon.datamaps.core.exceptions.DatamapNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.DuplicateDatamapException;
 import com.matthewlemon.datamaps.core.gateways.InMemoryDatamapGateway;
 
-public class InMemoryDatamapShould {
+public class InMemoryDatamapGatewayShould {
 
 	private static InMemoryDatamapGateway gateway;
 	private static File testFile;
