@@ -2,6 +2,7 @@ package com.matthewlemon.datamaps.core.parser;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 import org.apache.poi.EncryptedDocumentException;
@@ -94,9 +95,10 @@ public class ReturnParser {
 						break;
 					case NUMERIC:
 						if (DateUtil.isCellDateFormatted(cell)) {
-							DatamapLineValue<?> valDateOrNumeric = new DatamapLineValue<String>(
-									formatter.formatCellValue(cell));
-							sheetData.put(cell.getAddress().formatAsString(), valDateOrNumeric);
+							GregorianCalendar date = new GregorianCalendar();
+							date.setTime(cell.getDateCellValue());
+							DatamapLineValue<?> valDate = new DatamapLineValue<GregorianCalendar>(date);
+							sheetData.put(cell.getAddress().formatAsString(), valDate);
 						} else {
 							DatamapLineValue<?> valDateOrNumeric = new DatamapLineValue<Double>(cell.getNumericCellValue());
 							sheetData.put(cell.getAddress().formatAsString(), valDateOrNumeric);

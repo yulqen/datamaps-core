@@ -1,12 +1,13 @@
 package com.matthewlemon.datamaps.core.parser;
 
+import static com.matthewlemon.datamaps.core.parser.DatamapLineType.DATE;
 import static com.matthewlemon.datamaps.core.parser.DatamapLineType.NUMERIC;
 import static com.matthewlemon.datamaps.core.parser.DatamapLineType.TEXT;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 import org.apache.poi.EncryptedDocumentException;
@@ -49,8 +50,8 @@ public class ExcelParserTest {
 		assertEquals(1436.65, (Double) parser.getCellValueFromSheet("Test Sheet 1", "C13"), 0.1);
 		assertEquals("Formula Result", parser.getCellValueFromSheet("Test Sheet 1", "C15"));
 		assertEquals(234.0, parser.getCellValueFromSheet("Test Sheet 2", "D9"));
-		assertEquals("23/02/42", parser.getCellValueFromSheet("Test Sheet 2", "D10"));
-		assertEquals("1 Jan 2019", parser.getCellValueFromSheet("Test Sheet 2", "D11"));
+		assertEquals(new GregorianCalendar(2042, 1, 23), parser.getCellValueFromSheet("Test Sheet 2", "D10"));
+		assertEquals(new GregorianCalendar(2019, 0, 1), parser.getCellValueFromSheet("Test Sheet 2", "D11"));
 	}
 
 	@Test
@@ -96,17 +97,33 @@ public class ExcelParserTest {
 	}
 
 	@Test
-	public void exceptionRaisedWhenValueInCellIsIncorrectTypeAccordingToDatamapLine() throws Exception {
+	public void exceptionRaisedWhenValueInCellIsIncorrectTypeAccordingToDatamapLineText() throws Exception {
 		gateway = new InMemoryDatamapGateway();
 		gateway.createDatamap("Test Datamap 4");
 		gateway.addLineToDatamap("Test Datamap 4", "Double Entered", "Test Sheet 1", "C10", TEXT);
+		gateway.addLineToDatamap("Test Datamap 4", "Test Date", "Test Sheet 2", "D10", DATE);
 		DatamapLine dml = gateway.getDatamapLineFrom("Test Datamap 4", "Double Entered");
+		DatamapLine dmlDate = gateway.getDatamapLineFrom("Test Datamap 4", "Test Date");
 		InMemoryReturn newReturn = new InMemoryReturn("Test New Return");
 		ReturnParser parser = new ReturnParser(newReturn);
 		parser.parse(testFile);
 		thrown.expect(IncorrectCellTypeException.class);
 		thrown.expectMessage("Value at cell C10 on sheet Test Sheet 1 is not a TEXT type");
 		assertEquals(12.1, parser.getCellValueFromSheetWithTypeChecking("Test Sheet 1", dml));
+	}
+
+	@Test
+	public void exceptionRaisedWhenValueInCellIsIncorrectTypeAccordingToDatamapLineDate() throws Exception {
+		gateway = new InMemoryDatamapGateway();
+		gateway.createDatamap("Test Datamap 4");
+		gateway.addLineToDatamap("Test Datamap 4", "Random Key 2", "Test Sheet 2", "D9", DATE);
+		DatamapLine dmlDate = gateway.getDatamapLineFrom("Test Datamap 4", "Random Key 2");
+		InMemoryReturn newReturn = new InMemoryReturn("Test New Return");
+		ReturnParser parser = new ReturnParser(newReturn);
+		parser.parse(testFile);
+		thrown.expect(IncorrectCellTypeException.class);
+		thrown.expectMessage("Value at cell D9 on sheet Test Sheet 2 is not a DATE type");
+		assertEquals(12.1, parser.getCellValueFromSheetWithTypeChecking("Test Sheet 2", dmlDate));
 	}
 
 	@Test
@@ -125,12 +142,15 @@ public class ExcelParserTest {
 
 		gateway.addLineToDatamap("Test Datamap 5", "Random Value", "Test Sheet 2", "D6", TEXT);
 		gateway.addLineToDatamap("Test Datamap 5", "Random Key 2", "Test Sheet 2", "D9", NUMERIC);
+		gateway.addLineToDatamap("Test Datamap 5", "Date", "Test Sheet 2", "D10", DATE);
+		gateway.addLineToDatamap("Test Datamap 5", "Undeclared Date", "Test Sheet 2", "D11", DATE);
 
 		InMemoryReturn newReturn = new InMemoryReturn("Test New Return");
 		ReturnParser parser = new ReturnParser(newReturn);
 		parser.parse(testFile);
 		Datamap datamap = gateway.getDatamap("Test Datamap 5");
 		parser.reportReturnValuesToSTDOUT(datamap);
+		gateway.deleteAllDatamaps();
 	}
 	
 	@Test
@@ -138,6 +158,23 @@ public class ExcelParserTest {
 		InMemoryReturn excelReturn = new InMemoryReturn();
 		HashMap<?, ?> data = excelReturn.getData();
 		assertNotNull(data);
+	}
+	
+	@Test
+	public void testDatamapLineDateType() throws Exception {
+		gateway = new InMemoryDatamapGateway();
+		gateway.createDatamap("Test Datamap");
+		gateway.addLineToDatamap("Test Datamap", "Date 1", "Test Sheet 1", "E6", DATE);
+		gateway.addLineToDatamap("Test Datamap", "Date 2", "Test Sheet 1", "E7", DATE);
+		gateway.addLineToDatamap("Test Datamap", "Date 3", "Test Sheet 1", "E8", DATE);
+
+		InMemoryReturn newReturn = new InMemoryReturn("Test New Return");
+		ReturnParser parser = new ReturnParser(newReturn);
+		parser.parse(testFile);
+		Datamap datamap = gateway.getDatamap("Test Datamap");
+		// TODO- reportReturnValuesToSDOUT is presenter/view code, and it is here that formats should be dealt with
+		// SimpleDateFormat format = new SimpleDateFormat("d MMMM y");, etc
+		parser.reportReturnValuesToSTDOUT(datamap);
 	}
 	
 }
