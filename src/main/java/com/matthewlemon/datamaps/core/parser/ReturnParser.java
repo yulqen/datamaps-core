@@ -2,6 +2,7 @@ package com.matthewlemon.datamaps.core.parser;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 
@@ -26,6 +27,7 @@ public class ReturnParser {
 	private InMemoryReturn returnObj;
 	@SuppressWarnings("unused")
 	private Datamap datamap;
+	private ArrayList<String> errorList;
 
 	public ReturnParser() {
 		this.returnObj = new InMemoryReturn();
@@ -43,6 +45,10 @@ public class ReturnParser {
 		return this.returnObj.getCellValue(sheetName, cellRef).getValue();
 	}
 
+	public ArrayList<String> getErrorReport() {
+		return this.errorList;
+	}
+
 	// TODO: this might have to be refactored so that it can be run on a data HashMap, depending if it is called for
 	// by the use case. Use case's responsible to sort this out, depending on what the user asks for.
 	public Object getCellValueFromSheetWithTypeChecking(String sheetName, DatamapLine datamapLine)
@@ -55,6 +61,7 @@ public class ReturnParser {
 			throw new IncorrectCellTypeException("Value at cell " + datamapLine.getCellRef() + " on sheet " + sheetName
 					+ " is not a " + enumType.name() + " type");
 		}
+		// TODO: implement checking of rule here
 		return this.returnObj.getCellValue(sheetName, datamapLine).getValue();
 	}
 
@@ -142,4 +149,5 @@ public class ReturnParser {
 			returnObj.getData().put(sheet.getSheetName(), sheetData);
 		}
 	}
+
 }
