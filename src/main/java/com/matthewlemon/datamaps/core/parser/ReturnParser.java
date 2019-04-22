@@ -8,7 +8,6 @@ import java.util.HashMap;
 
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
@@ -88,7 +87,6 @@ public class ReturnParser {
 	}
 
 	private void parseWorkbookToMapWithEvaluator(Workbook workbook, FormulaEvaluator evaluator) {
-		DataFormatter formatter = new DataFormatter();
 		for (Sheet sheet : workbook) {
 			HashMap<String, DatamapLineValue<?>> sheetData = new HashMap<>();
 			for (Row row : sheet) {
