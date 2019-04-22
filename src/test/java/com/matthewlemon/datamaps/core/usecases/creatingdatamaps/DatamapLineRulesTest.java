@@ -1,6 +1,7 @@
 package com.matthewlemon.datamaps.core.usecases.creatingdatamaps;
 
 import static com.matthewlemon.datamaps.core.parser.DatamapLineType.NUMERIC;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.io.File;
@@ -8,7 +9,9 @@ import java.io.IOException;
 
 import org.apache.poi.EncryptedDocumentException;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import com.matthewlemon.datamaps.core.entities.InMemoryReturn;
 import com.matthewlemon.datamaps.core.exceptions.DatamapNotFoundException;
@@ -33,7 +36,8 @@ public class DatamapLineRulesTest {
 	public void rulesetContainsMultipleRules()
 			throws DuplicateDatamapException, DatamapNotFoundException, EncryptedDocumentException, IOException {
 		Ruleset ruleset = new Ruleset();
-		Rule rule1 = new Rule("D9", "Test Sheet 2", RuleOperator.EQUALS, "E9", "Test Sheet 2");
+		DatamapLineRule rule1 = new DatamapLineRule("D9", "Test Sheet 2", RuleOperator.EQUALS, "E9", "Test Sheet 2");
+		ruleset.addRule(rule1);
 
 		gateway = new InMemoryDatamapGateway();
 		gateway.createDatamap("Test Datamap");
@@ -42,7 +46,6 @@ public class DatamapLineRulesTest {
 		InMemoryReturn newReturn = new InMemoryReturn("Test New Return");
 		ReturnParser parser = new ReturnParser(newReturn);
 		parser.parse(testFile);
-		fail("NOT IMPLEMENTED");
+		assertEquals(1, parser.getErrorReport().size());
 	}
-
 }
