@@ -1,6 +1,7 @@
 package com.matthewlemon.datamaps.core.entities;
 
 import com.matthewlemon.datamaps.core.parser.DatamapLineType;
+import com.matthewlemon.datamaps.core.usecases.creatingdatamaps.RuleSet;
 
 public class DatamapLine {
 
@@ -8,6 +9,7 @@ public class DatamapLine {
     private String sheetName;
     private String cellRef;
 	private DatamapLineType type;
+	private RuleSet ruleSet;
 
 
     public DatamapLine(String key, String sheetName, String cellRef) {
@@ -21,6 +23,14 @@ public class DatamapLine {
         this.sheetName = sheetName;
         this.cellRef = cellRef;
         this.type = type;
+	}
+
+	public DatamapLine(String key, String sheetName, String cellRef, DatamapLineType type, RuleSet ruleSet) {
+        this.key = key;
+        this.sheetName = sheetName;
+        this.cellRef = cellRef;
+        this.type = type;
+        this.ruleSet = ruleSet;
 	}
 	
 	public DatamapLineType getDatamapType() {
@@ -38,4 +48,8 @@ public class DatamapLine {
     public String getKey() {
         return this.key;
     }
+
+	public RuleSet getRuleSet() {
+		return this.ruleSet;
+	}
 }

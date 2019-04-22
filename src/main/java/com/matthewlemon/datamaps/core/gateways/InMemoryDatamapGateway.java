@@ -10,7 +10,7 @@ import com.matthewlemon.datamaps.core.exceptions.DatamapLineNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.DatamapNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.DuplicateDatamapException;
 import com.matthewlemon.datamaps.core.parser.DatamapLineType;
-import com.matthewlemon.datamaps.core.usecases.creatingdatamaps.Ruleset;
+import com.matthewlemon.datamaps.core.usecases.creatingdatamaps.RuleSet;
 
 public class InMemoryDatamapGateway implements DatamapGateway {
 
@@ -31,8 +31,11 @@ public class InMemoryDatamapGateway implements DatamapGateway {
 		datamap.addDatamapLine(datamapLine);
 	}
 
-	public void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef, DatamapLineType type, Ruleset ruleset) {
-		
+	public void addLineToDatamap(String datamapName, String key, String sheetName, String cellRef, DatamapLineType type,
+			RuleSet ruleset) throws DatamapNotFoundException {
+		DatamapLine datamapLine = new DatamapLine(key, sheetName, cellRef, type, ruleset);
+		Datamap datamap = getDatamap(datamapName);
+		datamap.addDatamapLine(datamapLine);
 	}
 
 	@Override
@@ -96,6 +99,7 @@ public class InMemoryDatamapGateway implements DatamapGateway {
 		throw new DatamapNotFoundException("Datamap " + datamapName + " cannot be found.");
 	}
 
+	// TODO: this needs to include a Sheet in the parameters!
 	@Override
 	public DatamapLine getDatamapLineFrom(String datamapName, String key)
 			throws DatamapLineNotFoundException, DatamapNotFoundException {
