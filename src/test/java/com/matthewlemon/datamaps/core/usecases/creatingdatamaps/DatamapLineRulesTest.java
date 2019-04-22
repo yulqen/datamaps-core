@@ -2,16 +2,13 @@ package com.matthewlemon.datamaps.core.usecases.creatingdatamaps;
 
 import static com.matthewlemon.datamaps.core.parser.DatamapLineType.NUMERIC;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.IOException;
 
 import org.apache.poi.EncryptedDocumentException;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import com.matthewlemon.datamaps.core.entities.InMemoryReturn;
 import com.matthewlemon.datamaps.core.exceptions.DatamapNotFoundException;
