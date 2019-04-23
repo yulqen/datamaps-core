@@ -1,6 +1,8 @@
 package com.matthewlemon.datamaps.core.entities;
 
 import com.matthewlemon.datamaps.core.parser.DatamapLineType;
+import com.matthewlemon.datamaps.core.usecases.creatingdatamaps.DatamapLineRule;
+import com.matthewlemon.datamaps.core.usecases.creatingdatamaps.RuleOperator;
 import com.matthewlemon.datamaps.core.usecases.creatingdatamaps.RuleSet;
 
 public class DatamapLine {
@@ -51,5 +53,10 @@ public class DatamapLine {
 
 	public RuleSet getRuleSet() {
 		return this.ruleSet;
+	}
+
+	public void addRule(String ruleName, RuleOperator operator, DatamapLine dmlToCompareAgainst) {
+		DatamapLineRule rule = new DatamapLineRule(ruleName, operator, dmlToCompareAgainst);
+		this.ruleSet.addRule(rule);
 	}
 }

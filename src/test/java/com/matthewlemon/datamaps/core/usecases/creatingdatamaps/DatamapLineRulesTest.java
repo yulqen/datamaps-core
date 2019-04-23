@@ -40,41 +40,25 @@ public class DatamapLineRulesTest {
 		gateway.addLineToDatamap("Test Datamap", "Compare Val 1", "Test Sheet 2", "D14", NUMERIC, ruleset);
 		gateway.addLineToDatamap("Test Datamap", "Compare Val 2", "Test Sheet 2", "D15", NUMERIC, ruleset);
 	}
-	
+
 	@After
 	public void tearDown() throws Exception {
 		gateway.deleteAllDatamaps();
 	}
-	
+
 	@Test
-	public void testRule() throws Exception {
+	public void testRuleMechanics() throws Exception {
 		DatamapLine dml = gateway.getDatamapLineFrom("Test Datamap", "Compare Val 1");
 		DatamapLine dml2 = gateway.getDatamapLineFrom("Test Datamap", "Compare Val 2");
-		DatamapLineRule rule = new DatamapLineRule("D14 and D15 match", dml, RuleOperator.EQUALS, dml2, myReturn);
-		ruleset.addRule(rule);
+		dml.addRule("D14 and D15 match", RuleOperator.EQUALS, dml2);
 
 		parser.parse(testFile);
-		gateway.addLineToDatamap("Test Datamap", "Random Number", "Test Sheet 2", "E9", NUMERIC, ruleset);
 
 		RuleReport report = new RuleReport();
 		RuleChecker ruleChecker = new RuleChecker(report, dml, parser.getReturn());
 		ruleChecker.check();
 		assertEquals(1, report.getReportSize());
 		// TODO: need to catch nullpointer when we can't find this report item
-		assertFalse(report.getReport().get("D14 and D15 match"));
-	}
-
-	@Test
-	public void rulesetContainsMultipleRules()
-			throws DuplicateDatamapException, DatamapNotFoundException, EncryptedDocumentException, IOException, DatamapLineNotFoundException {
-		RuleSet ruleset = new RuleSet();
-		DatamapLine dml = gateway.getDatamapLineFrom("Test Datamap", "Compare Val 1");
-		DatamapLine dml2 = gateway.getDatamapLineFrom("Test Datamap", "Compare Val 2");
-		DatamapLineRule rule = new DatamapLineRule("D9 and E9 match", dml, RuleOperator.EQUALS, dml2, myReturn);
-		ruleset.addRule(rule);
-
-		parser.parse(testFile);
-		gateway.addLineToDatamap("Test Datamap", "Random Number", "Test Sheet 2", "E9", NUMERIC, ruleset);
-		assertEquals(1, parser.getErrorReport().size());
+		assertTrue(report.getReport().get("D14 and D15 match"));
 	}
 }

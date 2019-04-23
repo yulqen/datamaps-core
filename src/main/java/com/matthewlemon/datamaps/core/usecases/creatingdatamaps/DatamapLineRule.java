@@ -8,16 +8,12 @@ public class DatamapLineRule {
 	
 	private String ruleName;
 	private RuleOperator operator;
-	private DatamapLine dml;
-	private DatamapLine dml2;
-	private InMemoryReturn rtn;
+	private DatamapLine dmlToCompare;
 
-	public DatamapLineRule(String ruleName, DatamapLine dml, RuleOperator operator, DatamapLine dml2, InMemoryReturn rtn) {
+	public DatamapLineRule(String ruleName, RuleOperator operator, DatamapLine dmlToCompare) {
 		this.ruleName = ruleName;
 		this.operator = operator;
-		this.dml = dml;
-		this.dml2 = dml2;
-		this.rtn = rtn;
+		this.dmlToCompare = dmlToCompare;
 	}
 
 	public RuleOperator getOperator() {
@@ -28,14 +24,7 @@ public class DatamapLineRule {
 		return ruleName;
 	}
 	
-	public boolean triggerRule(DatamapLine dml) throws CellValueNotFoundException {
-		if (operator == RuleOperator.EQUALS) {
-			if (rtn.getCellValue(dml.getSheetName(), dml.getCellRef()) == rtn.getCellValue(dml2.getSheetName(), dml2.getCellRef())) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-		return false;
+	public String getRootCellRef() {
+		return this.dmlToCompare.getCellRef();
 	}
 }

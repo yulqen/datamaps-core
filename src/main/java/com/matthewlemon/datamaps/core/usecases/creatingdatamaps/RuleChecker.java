@@ -27,9 +27,9 @@ public class RuleChecker {
 			// TODO: here we need to do a switch and trigger rule based on values from the return
 			switch (rule.getOperator()) {
 				case EQUALS:
-					DatamapLineValue<?> value1 = rtn.getCellValue(dml.getSheetName(), dml);
-					DatamapLineValue<?> value2 = rtn.getCellValue(dml.getSheetName(), dml);
-					this.report.addLineToReport(rule.getRuleName(), rule.triggerRule(dml));
+					DatamapLineValue<?> dmlValue = rtn.getCellValue(dml.getSheetName(), dml);
+					DatamapLineValue<?> valueToCompare = rtn.getCellValue(dml.getSheetName(), rule.getRootCellRef());
+					if (dmlValue.getValue().equals(valueToCompare.getValue())) this.report.addLineToReport(rule.getRuleName(), true);
 					break;
 			}
 		}
