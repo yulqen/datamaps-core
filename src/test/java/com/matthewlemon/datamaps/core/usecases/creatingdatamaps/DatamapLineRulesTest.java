@@ -56,8 +56,8 @@ public class DatamapLineRulesTest {
 
 		// testing the internals, not the use case at this stage
 		InMemoryReturn rtn = parser.getReturn();
-		RuleChecker ruleChecker = new RuleChecker(dml, rtn);
-		ruleChecker.check();
+		RuleChecker ruleChecker = new RuleChecker(rtn);
+		ruleChecker.check(dml);
 		assertEquals(1, ruleChecker.getReportSize());
 		// TODO: need to catch nullpointer when we can't find this report item
 		assertTrue(ruleChecker.getReport().get("D14 and D15 match"));

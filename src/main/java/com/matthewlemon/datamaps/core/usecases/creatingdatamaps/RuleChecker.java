@@ -11,16 +11,14 @@ import com.matthewlemon.datamaps.core.parser.DatamapLineValue;
 public class RuleChecker {
 	
 	private RuleReport report;
-	private DatamapLine dml;
 	private InMemoryReturn rtn;
 	
-	public RuleChecker(DatamapLine dml, InMemoryReturn returnObj) throws CellValueNotFoundException {
+	public RuleChecker(InMemoryReturn rtn) throws CellValueNotFoundException {
 		this.report =  new RuleReport();
-		this.dml = dml;
-		this.rtn = returnObj;
+		this.rtn = rtn;
 	}
 	
-	public void check() throws CellValueNotFoundException {
+	public void check(DatamapLine dml) throws CellValueNotFoundException {
 
 		Set<DatamapLineRule> ruleSet = dml.getRuleSet().getRules();
 
