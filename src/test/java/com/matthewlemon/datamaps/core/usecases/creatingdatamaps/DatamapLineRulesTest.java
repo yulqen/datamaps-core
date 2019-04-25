@@ -48,17 +48,18 @@ public class DatamapLineRulesTest {
 
 	@Test
 	public void testRuleMechanics() throws Exception {
-		DatamapLine dml = gateway.getDatamapLineFrom("Test Datamap", "Compare Val 1");
-		DatamapLine dml2 = gateway.getDatamapLineFrom("Test Datamap", "Compare Val 2");
-		dml.addRule("D14 and D15 match", RuleOperator.EQUALS, dml2);
+		DatamapLine dml = gateway.getDatamapLineFrom("Test Datamap", "Compare Val 1"); // value is in cell D14: 230
+		DatamapLine dml2 = gateway.getDatamapLineFrom("Test Datamap", "Compare Val 2"); // value is in cell D14: 230
+		dml.addRule("D14 and D15 match", RuleOperator.EQUALS, dml2); // this should generate a "true" result
 
 		parser.parse(testFile);
 
-		RuleReport report = new RuleReport();
-		RuleChecker ruleChecker = new RuleChecker(report, dml, parser.getReturn());
+		// testing the internals, not the use case at this stage
+		InMemoryReturn rtn = parser.getReturn();
+		RuleChecker ruleChecker = new RuleChecker(dml, rtn);
 		ruleChecker.check();
-		assertEquals(1, report.getReportSize());
+		assertEquals(1, ruleChecker.getReportSize());
 		// TODO: need to catch nullpointer when we can't find this report item
-		assertTrue(report.getReport().get("D14 and D15 match"));
+		assertTrue(ruleChecker.getReport().get("D14 and D15 match"));
 	}
 }

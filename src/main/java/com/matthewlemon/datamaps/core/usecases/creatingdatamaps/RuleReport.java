@@ -3,7 +3,7 @@ package com.matthewlemon.datamaps.core.usecases.creatingdatamaps;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RuleReport {
+class RuleReport {
 	
 	private Map<String, Boolean> report;
 	

@@ -1,5 +1,6 @@
 package com.matthewlemon.datamaps.core.usecases.creatingdatamaps;
 
+import java.util.Map;
 import java.util.Set;
 
 import com.matthewlemon.datamaps.core.entities.DatamapLine;
@@ -13,8 +14,8 @@ public class RuleChecker {
 	private DatamapLine dml;
 	private InMemoryReturn rtn;
 	
-	public RuleChecker(RuleReport report, DatamapLine dml, InMemoryReturn returnObj) throws CellValueNotFoundException {
-		this.report = report;
+	public RuleChecker(DatamapLine dml, InMemoryReturn returnObj) throws CellValueNotFoundException {
+		this.report =  new RuleReport();
 		this.dml = dml;
 		this.rtn = returnObj;
 	}
@@ -33,5 +34,13 @@ public class RuleChecker {
 					break;
 			}
 		}
+	}
+
+	public int getReportSize() {
+		return this.report.getReportSize();
+	}
+
+	public Map<String, Boolean> getReport() {
+		return this.report.getReport();
 	}
 }

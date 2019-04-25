@@ -1,8 +1,8 @@
 ### Todo
 
-* Have I been unnecessarily using Double class types rather than double primatives?
 * Implement rules alongside DatamapLineType.
 	* Rule types could be in-sheet, comparing to arbitary value, date rules, string length rules, cell formatting rules, etc
+* Have I been unnecessarily using Double class types rather than double primatives?
 * Use case needs to handle requests for DatamapLine type checking, triggering rules, etc. Will require refactoring out the cell type checking code.
 * Do not halt when exception on datamapline value type is hit - store in a report!
 * Can we obtain integers from the parser, or must it be doubles?
