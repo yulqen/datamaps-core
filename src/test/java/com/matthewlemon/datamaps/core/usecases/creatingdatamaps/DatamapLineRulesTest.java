@@ -1,22 +1,17 @@
 package com.matthewlemon.datamaps.core.usecases.creatingdatamaps;
 
 import static com.matthewlemon.datamaps.core.parser.DatamapLineType.NUMERIC;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
-import java.io.IOException;
 
-import org.apache.poi.EncryptedDocumentException;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.matthewlemon.datamaps.core.entities.DatamapLine;
 import com.matthewlemon.datamaps.core.entities.InMemoryReturn;
-import com.matthewlemon.datamaps.core.exceptions.DatamapLineNotFoundException;
-import com.matthewlemon.datamaps.core.exceptions.DatamapNotFoundException;
-import com.matthewlemon.datamaps.core.exceptions.DuplicateDatamapException;
 import com.matthewlemon.datamaps.core.gateways.InMemoryDatamapGateway;
 import com.matthewlemon.datamaps.core.parser.ReturnParser;
 
