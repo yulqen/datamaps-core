@@ -1,17 +1,19 @@
 package com.matthewlemon.datamaps.core.usecases.creatingdatamaps;
 
 import static com.matthewlemon.datamaps.core.parser.DatamapLineType.NUMERIC;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.io.File;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import com.matthewlemon.datamaps.core.entities.DatamapLine;
 import com.matthewlemon.datamaps.core.entities.InMemoryReturn;
+import com.matthewlemon.datamaps.core.exceptions.RuleCheckerReportNotFoundException;
 import com.matthewlemon.datamaps.core.gateways.InMemoryDatamapGateway;
 import com.matthewlemon.datamaps.core.parser.ReturnParser;
 
@@ -22,6 +24,9 @@ public class DatamapLineRulesTest {
 	private InMemoryReturn myReturn;
 	private ReturnParser parser;
 	private RuleSet ruleset;
+	
+	@Rule
+	public ExpectedException thrown = ExpectedException.none();
 
 	@Before
 	public void setUp() throws Exception {
@@ -42,6 +47,18 @@ public class DatamapLineRulesTest {
 	}
 
 	@Test
+	public void ruleCheckerThrowsExceptionWhenReportCantBeFound() throws Exception {
+		DatamapLine dml = gateway.getDatamapLineFrom("Test Datamap", "Compare Val 1");
+		parser.parse(testFile);
+		InMemoryReturn rtn = parser.getReturn();
+		RuleChecker ruleChecker = new RuleChecker(rtn);
+		ruleChecker.check(dml);
+		thrown.expect(RuleCheckerReportNotFoundException.class);
+		thrown.expectMessage("Cannot find report for Non-existant report");
+		assertTrue(ruleChecker.getReportWithString("Non-existant report"));
+	}
+
+	@Test
 	public void testRuleMechanics() throws Exception {
 		DatamapLine dml = gateway.getDatamapLineFrom("Test Datamap", "Compare Val 1"); // value is in cell D14: 230
 		DatamapLine dml2 = gateway.getDatamapLineFrom("Test Datamap", "Compare Val 2"); // value is in cell D14: 230
@@ -54,7 +71,7 @@ public class DatamapLineRulesTest {
 		RuleChecker ruleChecker = new RuleChecker(rtn);
 		ruleChecker.check(dml);
 		assertEquals(1, ruleChecker.getReportSize());
-		// TODO: need to catch nullpointer when we can't find this report item
 		assertTrue(ruleChecker.getReport().get("D14 and D15 match"));
 	}
+	
 }
