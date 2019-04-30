@@ -1,4 +1,4 @@
-package com.matthewlemon.datamaps.core.gateway;
+package com.matthewlemon.datamaps.core.gateways;
 
 import static com.matthewlemon.datamaps.core.parser.DatamapLineType.TEXT;
 import static org.junit.Assert.assertEquals;
