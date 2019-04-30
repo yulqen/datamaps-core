@@ -4,5 +4,6 @@ import com.matthewlemon.datamaps.core.gateways.DatamapGateway;
 
 public class Context {
     public static DatamapGateway datamapGateway;
+	public static DatamapGateway fileDatamapGateway;
 
 }
