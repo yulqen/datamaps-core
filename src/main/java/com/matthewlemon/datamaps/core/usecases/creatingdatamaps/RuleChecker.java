@@ -29,6 +29,7 @@ public class RuleChecker {
 			// return
 			switch (rule.getOperator()) {
 			case EQUALS:
+				// TODO: implement Comparable here too (see below)
 				dmlValue = rtn.getCellValue(dml.getSheetName(), dml);
 				valueToCompare = rtn.getCellValue(dml.getSheetName(), rule.getRootCellRef());
 				if (dmlValue.getValue().equals(valueToCompare.getValue()))
