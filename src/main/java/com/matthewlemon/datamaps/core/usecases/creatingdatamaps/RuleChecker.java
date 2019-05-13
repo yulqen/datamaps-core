@@ -1,13 +1,12 @@
 package com.matthewlemon.datamaps.core.usecases.creatingdatamaps;
 
-import java.util.Map;
-import java.util.Set;
-
 import com.matthewlemon.datamaps.core.entities.DatamapLine;
 import com.matthewlemon.datamaps.core.entities.InMemoryReturn;
 import com.matthewlemon.datamaps.core.exceptions.CellValueNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.RuleCheckerReportNotFoundException;
 import com.matthewlemon.datamaps.core.parser.DatamapLineValue;
+import java.util.Map;
+import java.util.Set;
 
 public class RuleChecker {
 
@@ -22,16 +21,26 @@ public class RuleChecker {
 	public void check(DatamapLine dml) throws CellValueNotFoundException {
 
 		Set<DatamapLineRule> ruleSet = dml.getRuleSet().getRules();
+		DatamapLineValue<?> dmlValue;
+		DatamapLineValue<?> valueToCompare;
 
 		for (DatamapLineRule rule : ruleSet) {
 			// TODO: here we need to do a switch and trigger rule based on values from the
 			// return
 			switch (rule.getOperator()) {
 			case EQUALS:
-				DatamapLineValue<?> dmlValue = rtn.getCellValue(dml.getSheetName(), dml);
-				DatamapLineValue<?> valueToCompare = rtn.getCellValue(dml.getSheetName(), rule.getRootCellRef());
+				dmlValue = rtn.getCellValue(dml.getSheetName(), dml);
+				valueToCompare = rtn.getCellValue(dml.getSheetName(), rule.getRootCellRef());
 				if (dmlValue.getValue().equals(valueToCompare.getValue()))
-					this.report.addLineToReport(rule.getRuleName(), true);
+					this.report.addLineToReport(rule.getRuleName(), Boolean.TRUE);
+				break;
+			case GREATER:
+				dmlValue = rtn.getCellValue(dml.getSheetName(), dml);
+				valueToCompare = rtn.getCellValue(dml.getSheetName(), rule.getRootCellRef());
+				Comparable left = (Comparable)dmlValue.getValue();
+				Comparable right = (Comparable)valueToCompare.getValue();
+				if (left.compareTo(right) > 0)
+					this.report.addLineToReport(rule.getRuleName(), Boolean.TRUE);
 				break;
 			}
 		}

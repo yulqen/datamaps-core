@@ -1,6 +1,6 @@
 package com.matthewlemon.datamaps.core.parser;
 
-public class DatamapLineValue<T> {
+public class DatamapLineValue<T> implements Comparable<DatamapLineValue> {
 
 	private T value;
 	private Class<?> klazz;
@@ -46,6 +46,16 @@ public class DatamapLineValue<T> {
 	@Override
 	public String toString() {
 		return "DatamapLineValue : " + klazz + " [value " + value + "]";
+	}
+
+	@Override
+	public int compareTo(DatamapLineValue other) {
+		if (this.getValue().equals(other)) {
+			return 0;
+		}
+		if ((double)this.getValue() > (double)other.getValue())
+			return 1;
+		else return -1;
 	}
 
 }

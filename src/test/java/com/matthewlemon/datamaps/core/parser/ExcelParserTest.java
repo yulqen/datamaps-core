@@ -1,27 +1,24 @@
 package com.matthewlemon.datamaps.core.parser;
 
-import static com.matthewlemon.datamaps.core.parser.DatamapLineType.DATE;
-import static com.matthewlemon.datamaps.core.parser.DatamapLineType.NUMERIC;
-import static com.matthewlemon.datamaps.core.parser.DatamapLineType.TEXT;
-import static org.junit.Assert.assertEquals;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.GregorianCalendar;
-
-import org.apache.poi.EncryptedDocumentException;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-
 import com.matthewlemon.datamaps.core.entities.Datamap;
 import com.matthewlemon.datamaps.core.entities.DatamapLine;
 import com.matthewlemon.datamaps.core.entities.InMemoryReturn;
 import com.matthewlemon.datamaps.core.exceptions.CellValueNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.IncorrectCellTypeException;
 import com.matthewlemon.datamaps.core.gateways.InMemoryDatamapGateway;
+import static com.matthewlemon.datamaps.core.parser.DatamapLineType.DATE;
+import static com.matthewlemon.datamaps.core.parser.DatamapLineType.NUMERIC;
+import static com.matthewlemon.datamaps.core.parser.DatamapLineType.TEXT;
+import java.io.File;
+import java.io.IOException;
+import java.util.GregorianCalendar;
+import org.apache.poi.EncryptedDocumentException;
+import org.junit.After;
+import static org.junit.Assert.assertEquals;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 public class ExcelParserTest {
 
@@ -57,7 +54,7 @@ public class ExcelParserTest {
 		assertEquals(12.0, parser.getCellValueFromSheet("Test Sheet 1", "B10"));
 		assertEquals(1436.65, (Double) parser.getCellValueFromSheet("Test Sheet 1", "C13"), 0.1);
 		assertEquals("Formula Result", parser.getCellValueFromSheet("Test Sheet 1", "C15"));
-		assertEquals(234.0, parser.getCellValueFromSheet("Test Sheet 2", "D9"));
+		assertEquals(235.0, parser.getCellValueFromSheet("Test Sheet 2", "D9"));
 		assertEquals(new GregorianCalendar(2042, 1, 23), parser.getCellValueFromSheet("Test Sheet 2", "D10"));
 		assertEquals(new GregorianCalendar(2019, 0, 1), parser.getCellValueFromSheet("Test Sheet 2", "D11"));
 	}
