@@ -5,4 +5,6 @@ public enum RuleOperator {
 	EQUALS,
 	GREATER,
 	LESS,
+	EARLIER,
+	LATER,
 }
