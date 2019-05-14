@@ -38,6 +38,8 @@ public class DatamapLineRulesTest {
 		gateway.addLineToDatamap("Test Datamap", "Compare Val 2", "Test Sheet 2", "D15", NUMERIC, ruleset);
 		gateway.addLineToDatamap("Test Datamap", "Compare Val 3", "Test Sheet 2", "D9", NUMERIC, ruleset);
 		gateway.addLineToDatamap("Test Datamap", "Compare Val 4", "Test Sheet 2", "E9", NUMERIC, ruleset);
+		gateway.addLineToDatamap("Test Datamap", "Compare Val 5", "Test Sheet 2", "D17", NUMERIC, ruleset);
+		gateway.addLineToDatamap("Test Datamap", "Compare Val 6", "Test Sheet 2", "E17", NUMERIC, ruleset);
 	}
 
 	@After
@@ -87,5 +89,21 @@ public class DatamapLineRulesTest {
 		ruleChecker.check(dml);
 		assertEquals(1, ruleChecker.getReportSize());
 		assertTrue(ruleChecker.getReport().get("E9 greater than D9"));
+	}
+
+	@Test
+	public void testRuleForLessThan() throws Exception {
+		DatamapLine dml = gateway.getDatamapLineFrom("Test Datamap", "Compare Val 5"); // value is in cell D17: 200
+		DatamapLine dml2 = gateway.getDatamapLineFrom("Test Datamap", "Compare Val 6"); // value is in cell E17: 201
+		dml.addRule("D17 less than E17", RuleOperator.LESS, dml2);
+
+		parser.parse(testFile);
+
+		// testing the internals, not the use case at this stage
+		InMemoryReturn rtn = parser.getReturn();
+		RuleChecker ruleChecker = new RuleChecker(rtn);
+		ruleChecker.check(dml);
+		assertEquals(1, ruleChecker.getReportSize());
+		assertTrue(ruleChecker.getReport().get("D17 less than E17"));
 	}
 }
