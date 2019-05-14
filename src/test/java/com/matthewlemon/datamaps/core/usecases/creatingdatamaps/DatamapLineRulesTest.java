@@ -40,6 +40,8 @@ public class DatamapLineRulesTest {
 		gateway.addLineToDatamap("Test Datamap", "Compare Val 4", "Test Sheet 2", "E9", NUMERIC, ruleset);
 		gateway.addLineToDatamap("Test Datamap", "Compare Val 5", "Test Sheet 2", "D17", NUMERIC, ruleset);
 		gateway.addLineToDatamap("Test Datamap", "Compare Val 6", "Test Sheet 2", "E17", NUMERIC, ruleset);
+		gateway.addLineToDatamap("Test Datamap", "Early Date", "Test Sheet 2", "G3", NUMERIC, ruleset);
+		gateway.addLineToDatamap("Test Datamap", "Late Date", "Test Sheet 2", "G4", NUMERIC, ruleset);
 	}
 
 	@After
@@ -83,7 +85,7 @@ public class DatamapLineRulesTest {
 
 		parser.parse(testFile);
 
-		// testing the internals, not the use case at this stage
+		//TODO: testing the internals, not the use case at this stage
 		InMemoryReturn rtn = parser.getReturn();
 		RuleChecker ruleChecker = new RuleChecker(rtn);
 		ruleChecker.check(dml);
@@ -99,11 +101,44 @@ public class DatamapLineRulesTest {
 
 		parser.parse(testFile);
 
-		// testing the internals, not the use case at this stage
 		InMemoryReturn rtn = parser.getReturn();
 		RuleChecker ruleChecker = new RuleChecker(rtn);
 		ruleChecker.check(dml);
 		assertEquals(1, ruleChecker.getReportSize());
 		assertTrue(ruleChecker.getReport().get("D17 less than E17"));
+	}
+
+	// TODO: also test the other dml - that it works with it's partner. Does that make sense?
+
+	@Test
+	public void testEarlyLateDateEarlier() throws Exception {
+		DatamapLine dml = gateway.getDatamapLineFrom("Test Datamap", "Early Date"); // value is in cell G3: 21/1/19
+		DatamapLine dml2 = gateway.getDatamapLineFrom("Test Datamap", "Late Date"); // value is in cell G4: 21/10/19
+		dml.addRule("G3 earlier than G4", RuleOperator.EARLIER, dml2);
+
+		parser.parse(testFile);
+
+		InMemoryReturn rtn = parser.getReturn();
+		RuleChecker ruleChecker = new RuleChecker(rtn);
+		ruleChecker.check(dml);
+		assertEquals(1, ruleChecker.getReportSize());
+		assertTrue(ruleChecker.getReport().get("G3 earlier than G4"));
+	}
+
+	@Test
+	public void testEarlyLateDateLater() throws Exception {
+		DatamapLine dml = gateway.getDatamapLineFrom("Test Datamap", "Early Date"); // value is in cell G3: 21/1/19
+		DatamapLine dml2 = gateway.getDatamapLineFrom("Test Datamap", "Late Date"); // value is in cell G4: 21/10/19
+		// NOTICE difference here! Adding the rule to dml2
+		dml2.addRule("G4 later than G3", RuleOperator.LATER, dml);
+
+
+		parser.parse(testFile);
+
+		InMemoryReturn rtn = parser.getReturn();
+		RuleChecker ruleChecker = new RuleChecker(rtn);
+		ruleChecker.check(dml2);
+		assertEquals(1, ruleChecker.getReportSize());
+		assertTrue(ruleChecker.getReport().get("G4 later than G3"));
 	}
 }
