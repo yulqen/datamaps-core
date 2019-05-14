@@ -23,26 +23,38 @@ public class RuleChecker {
 		Set<DatamapLineRule> ruleSet = dml.getRuleSet().getRules();
 		DatamapLineValue<?> dmlValue;
 		DatamapLineValue<?> valueToCompare;
+		Comparable left;
+		Comparable right;
 
 		for (DatamapLineRule rule : ruleSet) {
 			// TODO: here we need to do a switch and trigger rule based on values from the
 			// return
 			switch (rule.getOperator()) {
 			case EQUALS:
-				// TODO: implement Comparable here too (see below)
 				dmlValue = rtn.getCellValue(dml.getSheetName(), dml);
 				valueToCompare = rtn.getCellValue(dml.getSheetName(), rule.getRootCellRef());
-				if (dmlValue.getValue().equals(valueToCompare.getValue()))
+				left = (Comparable)dmlValue.getValue();
+				right = (Comparable)valueToCompare.getValue();
+				if (left.compareTo(right) == 0)
 					this.report.addLineToReport(rule.getRuleName(), Boolean.TRUE);
 				break;
 			case GREATER:
 				dmlValue = rtn.getCellValue(dml.getSheetName(), dml);
 				valueToCompare = rtn.getCellValue(dml.getSheetName(), rule.getRootCellRef());
-				Comparable left = (Comparable)dmlValue.getValue();
-				Comparable right = (Comparable)valueToCompare.getValue();
+				left = (Comparable)dmlValue.getValue();
+				right = (Comparable)valueToCompare.getValue();
 				if (left.compareTo(right) > 0)
 					this.report.addLineToReport(rule.getRuleName(), Boolean.TRUE);
 				break;
+			case LESS:
+				dmlValue = rtn.getCellValue(dml.getSheetName(), dml);
+				valueToCompare = rtn.getCellValue(dml.getSheetName(), rule.getRootCellRef());
+				left = (Comparable)dmlValue.getValue();
+				right = (Comparable)valueToCompare.getValue();
+				if (left.compareTo(right) < 0)
+					this.report.addLineToReport(rule.getRuleName(), Boolean.TRUE);
+				break;
+
 			}
 		}
 	}
