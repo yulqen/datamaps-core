@@ -10,8 +10,8 @@ import java.util.Set;
 
 public class RuleChecker {
 
-	private RuleReport report;
-	private InMemoryReturn rtn;
+	private final RuleReport report;
+	private final InMemoryReturn rtn;
 
 	public RuleChecker(InMemoryReturn rtn) throws CellValueNotFoundException {
 		this.report = new RuleReport();
@@ -20,6 +20,7 @@ public class RuleChecker {
 
 	public void check(DatamapLine dml) throws CellValueNotFoundException {
 
+		// TODO: need to check types of values coming into this method
 		Set<DatamapLineRule> ruleSet = dml.getRuleSet().getRules();
 		DatamapLineValue<?> dmlValue;
 		DatamapLineValue<?> valueToCompare;
@@ -54,7 +55,22 @@ public class RuleChecker {
 				if (left.compareTo(right) < 0)
 					this.report.addLineToReport(rule.getRuleName(), Boolean.TRUE);
 				break;
-
+			case EARLIER:
+				dmlValue = rtn.getCellValue(dml.getSheetName(), dml);
+				valueToCompare = rtn.getCellValue(dml.getSheetName(), rule.getRootCellRef());
+				left = (Comparable)dmlValue.getValue();
+				right = (Comparable)valueToCompare.getValue();
+				if (left.compareTo(right) < 0)
+					this.report.addLineToReport(rule.getRuleName(), Boolean.TRUE);
+				break;
+			case LATER:
+				dmlValue = rtn.getCellValue(dml.getSheetName(), dml);
+				valueToCompare = rtn.getCellValue(dml.getSheetName(), rule.getRootCellRef());
+				left = (Comparable)dmlValue.getValue();
+				right = (Comparable)valueToCompare.getValue();
+				if (left.compareTo(right) > 0)
+					this.report.addLineToReport(rule.getRuleName(), Boolean.TRUE);
+				break;
 			}
 		}
 	}
