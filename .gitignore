@@ -24,4 +24,5 @@ FitNesseRoot/properties.xml
 .classpath
 .settings
 .~*
-/nbproject/
+nb-configuration.xml
+nbproject/
