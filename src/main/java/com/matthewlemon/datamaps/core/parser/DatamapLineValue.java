@@ -53,7 +53,7 @@ public class DatamapLineValue<T> implements Comparable<DatamapLineValue> {
 		if (this.getValue().equals(other)) {
 			return 0;
 		}
-		if ((double)this.getValue() > (double)other.getValue())
+		if ((Double)this.getValue() > (Double)other.getValue())
 			return 1;
 		else return -1;
 	}
