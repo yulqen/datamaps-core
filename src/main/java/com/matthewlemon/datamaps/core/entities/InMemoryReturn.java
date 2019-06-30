@@ -1,9 +1,8 @@
 package com.matthewlemon.datamaps.core.entities;
 
-import java.util.HashMap;
-
 import com.matthewlemon.datamaps.core.exceptions.CellValueNotFoundException;
 import com.matthewlemon.datamaps.core.parser.DatamapLineValue;
+import java.util.HashMap;
 
 public class InMemoryReturn {
 
@@ -44,5 +43,14 @@ public class InMemoryReturn {
 
 	public HashMap<String, HashMap<String, DatamapLineValue<?>>> getData() {
 		return data;
+	}
+
+	public int getActiveSheets() {
+		if (data.size() > 0) {
+			return data.size();
+		}
+		else {
+			return 0;
+		}
 	}
 }

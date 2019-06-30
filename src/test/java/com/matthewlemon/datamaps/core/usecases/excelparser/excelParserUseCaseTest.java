@@ -43,14 +43,14 @@ public class excelParserUseCaseTest {
 		parser = new ReturnParser(rtn);
 	}
 	
-	@Test
-	public void testCanExtractDataFromSpreadsheetUsingDatamap() throws EncryptedDocumentException, IOException, DatamapNotFoundException {
+	@Test public void testCanExtractDataFromSpreadsheetUsingDatamap() throws EncryptedDocumentException, IOException, DatamapNotFoundException {
 		returnName = "Test Return";
 		useCase = new ExtractDataFromExcelFilesUseCase();
 		gateway.addLineToDatamap("Test Datamap", "Test Key 1", "Test Sheet 1", "B1", TEXT);
 		gateway.addLineToDatamap("Test Datamap", "Test Key 2", "Test Sheet 1", "B2", TEXT);
 		testDatamap = gateway.getDatamap("Test Datamap");
 		rtn = useCase.extractDataFromFileUsingDatamap(returnName, testFile, testDatamap);
-		assertEquals("tosser", rtn.getData());	
+		assertEquals(2, rtn.getActiveSheets());
+		assertEquals(10.0, rtn.getData().get("Test Sheet 1").get("A10").getValue());
 	}
 }

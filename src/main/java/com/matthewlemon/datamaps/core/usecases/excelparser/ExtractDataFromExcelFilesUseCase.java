@@ -23,7 +23,6 @@ class ExtractDataFromExcelFilesUseCase {
 	public ExtractDataFromExcelFilesUseCase() {
 	}
 
-
 	InMemoryReturn extractDataFromFileUsingDatamap(String returnName, File testFile, Datamap testDatamap) throws EncryptedDocumentException, IOException {
 		InMemoryReturn rtn = new InMemoryReturn(returnName);
 		parser = new ReturnParser(rtn);
