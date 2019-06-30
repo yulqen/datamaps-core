@@ -2,6 +2,7 @@ package com.matthewlemon.datamaps.core.entities;
 
 import com.matthewlemon.datamaps.core.exceptions.CellValueNotFoundException;
 import com.matthewlemon.datamaps.core.parser.DatamapLineValue;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class InMemoryReturn {
@@ -52,5 +53,16 @@ public class InMemoryReturn {
 		else {
 			return 0;
 		}
+	}
+
+	public ArrayList getActiveSheetNames() {
+		if (this.data.size() > 0) {
+			ArrayList sheetNames = new ArrayList();
+			for (HashMap<String, DatamapLineValue<?>> value : data.values()) {
+				sheetNames.add(value);
+			}
+			return sheetNames;
+		}
+		else return null;
 	}
 }

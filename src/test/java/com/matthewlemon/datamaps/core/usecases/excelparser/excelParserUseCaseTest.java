@@ -14,6 +14,8 @@ import static com.matthewlemon.datamaps.core.parser.DatamapLineType.TEXT;
 import com.matthewlemon.datamaps.core.parser.ReturnParser;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.poi.EncryptedDocumentException;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
@@ -51,6 +53,10 @@ public class excelParserUseCaseTest {
 		testDatamap = gateway.getDatamap("Test Datamap");
 		rtn = useCase.extractDataFromFileUsingDatamap(returnName, testFile, testDatamap);
 		assertEquals(2, rtn.getActiveSheets());
+		List sheets = new ArrayList();
+		sheets.add("Test Sheet 1");
+		sheets.add("Test Sheet 2");
+		assertEquals(sheets, rtn.getActiveSheetNames());
 		assertEquals(10.0, rtn.getData().get("Test Sheet 1").get("A10").getValue());
 	}
 }
