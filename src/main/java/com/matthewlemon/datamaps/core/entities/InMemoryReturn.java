@@ -58,7 +58,7 @@ public class InMemoryReturn {
 	public ArrayList getActiveSheetNames() {
 		if (this.data.size() > 0) {
 			ArrayList sheetNames = new ArrayList();
-			for (HashMap<String, DatamapLineValue<?>> value : data.values()) {
+			for (String value : data.keySet()) {
 				sheetNames.add(value);
 			}
 			return sheetNames;
