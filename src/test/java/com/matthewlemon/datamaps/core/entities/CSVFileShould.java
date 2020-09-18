@@ -28,7 +28,7 @@ public class CSVFileShould {
 	
 	@Test
 	public void setsFileWhenConstructorGivenPath() {
-		csvFile = new CSVFile("/home/lemon/code/java/dbasiktest/target/test-classes/files/csv_obj.csv");
+		csvFile = new CSVFile("/home/lemon/code/java/datamaps-core/target/test-classes/files/csv_obj.csv");
 		assertEquals(csvFile.getFile(), testFile);
 	}
 }
