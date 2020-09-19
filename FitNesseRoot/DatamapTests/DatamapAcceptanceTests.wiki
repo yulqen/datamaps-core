@@ -1,6 +1,0 @@
----
-Test
----
-
-|script | datamap mechanics    |
-|can create datamap|

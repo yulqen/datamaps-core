@@ -1,9 +1,8 @@
 package com.matthewlemon.datamaps.core.parser;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 public class DatamapLineValueTest {
 
@@ -14,9 +13,9 @@ public class DatamapLineValueTest {
 		DatamapLineValue<String> value3 = new DatamapLineValue<>("Test Value 1");
 		
 		assertEquals("DatamapLineValue : class java.lang.String [value Test Value 1]", value1.toString());
-		assertTrue("DatamapLineValue with same value should be equal", value1.equals(value3));
-		assertFalse("DatamapLineValue with different values should not be equal", value1.equals(value2));
-		assertTrue("equal DatamapLineValue objects should have same hash code", value1.hashCode() == value3.hashCode());
+		assertEquals("DatamapLineValue with same value should be equal", value1, value3);
+		assertNotEquals("DatamapLineValue with different values should not be equal", value1, value2);
+		assertEquals("equal DatamapLineValue objects should have same hash code", value1.hashCode(), value3.hashCode());
 	}
 
 	@Test
@@ -26,8 +25,8 @@ public class DatamapLineValueTest {
 		DatamapLineValue<Double> value3 = new DatamapLineValue<>(20.1);
 		
 		assertEquals("DatamapLineValue : class java.lang.Double [value 20.1]", value1.toString());
-		assertTrue("DatamapLineValue with same value should be equal", value1.equals(value3));
-		assertFalse("DatamapLineValue with different values should not be equal", value1.equals(value2));
-		assertTrue("equal DatamapLineValue objects should have same hash code", value1.hashCode() == value3.hashCode());
+		assertEquals("DatamapLineValue with same value should be equal", value1, value3);
+		assertNotEquals("DatamapLineValue with different values should not be equal", value1, value2);
+		assertEquals("equal DatamapLineValue objects should have same hash code", value1.hashCode(), value3.hashCode());
 	}
 }

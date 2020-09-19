@@ -18,10 +18,8 @@ public class DatamapLineRulesTest {
 
 	private File testFile;
 	private InMemoryDatamapGateway gateway;
-	private InMemoryReturn myReturn;
 	private ReturnParser parser;
-	private RuleSet ruleset;
-	
+
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
 
@@ -29,11 +27,11 @@ public class DatamapLineRulesTest {
 	public void setUp() throws Exception {
 		ClassLoader classLoader = getClass().getClassLoader();
 		testFile = new File(classLoader.getResource("files/test_populated_template.xlsx").getFile());
-		myReturn = new InMemoryReturn("Test Return");
+		InMemoryReturn myReturn = new InMemoryReturn("Test Return");
 		gateway = new InMemoryDatamapGateway();
 		gateway.createDatamap("Test Datamap");
 		parser = new ReturnParser(myReturn);
-		ruleset = new RuleSet();
+		RuleSet ruleset = new RuleSet();
 		gateway.addLineToDatamap("Test Datamap", "Compare Val 1", "Test Sheet 2", "D14", NUMERIC, ruleset);
 		gateway.addLineToDatamap("Test Datamap", "Compare Val 2", "Test Sheet 2", "D15", NUMERIC, ruleset);
 		gateway.addLineToDatamap("Test Datamap", "Compare Val 3", "Test Sheet 2", "D9", NUMERIC, ruleset);

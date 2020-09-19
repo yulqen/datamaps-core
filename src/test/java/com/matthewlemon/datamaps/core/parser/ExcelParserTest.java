@@ -22,9 +22,7 @@ import org.junit.rules.ExpectedException;
 
 public class ExcelParserTest {
 
-	private File testFile;
 	private InMemoryDatamapGateway gateway;
-	private InMemoryReturn myReturn;
 	private ReturnParser parser;
 
 	@Rule
@@ -33,10 +31,10 @@ public class ExcelParserTest {
 	@Before
 	public void setUp() throws Exception {
 		ClassLoader classLoader = getClass().getClassLoader();
-		testFile = new File(classLoader.getResource("files/test_populated_template.xlsx").getFile());
-		myReturn = new InMemoryReturn("Test Return");
+		File testFile = new File(classLoader.getResource("files/test_populated_template.xlsx").getFile());
+		InMemoryReturn myReturn = new InMemoryReturn("Test Return");
 		gateway = new InMemoryDatamapGateway();
-		parser = new ReturnParser(this.myReturn);
+		parser = new ReturnParser(myReturn);
 		gateway.createDatamap("Test Datamap");
 		parser.parse(testFile);
 	}

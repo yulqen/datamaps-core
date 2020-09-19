@@ -17,7 +17,7 @@ public class SimpleCreateableDatamapAT {
 
 	@Test
 	public void userCanCreateDatamap()
-			throws DuplicateDatamapException, DatamapNotFoundException, DatamapLineNotFoundException {
+			throws DuplicateDatamapException, DatamapNotFoundException {
 		CreateableDatamapFixture fixture = new CreateableDatamapFixture();
 		fixture.setUpFixture();
 		fixture.userCreatesDatamapWithName("Test Datamap");

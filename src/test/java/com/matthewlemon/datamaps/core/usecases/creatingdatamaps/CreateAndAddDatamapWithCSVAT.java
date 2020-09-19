@@ -12,13 +12,12 @@ import com.matthewlemon.datamaps.core.fixtures.CreateableDatamapFixture;
 
 public class CreateAndAddDatamapWithCSVAT {
 
-	private static File testFile;
 	private CSVFile csvFile;
 
 	@Before
 	public void setUp() {
 		ClassLoader classLoader = getClass().getClassLoader();
-		testFile = new File(classLoader.getResource("files/test.csv").getFile());
+		File testFile = new File(classLoader.getResource("files/test.csv").getFile());
 		csvFile = new CSVFile(testFile);
 	}
 
