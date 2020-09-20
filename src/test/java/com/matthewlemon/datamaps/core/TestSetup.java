@@ -1,13 +1,12 @@
 package com.matthewlemon.datamaps.core;
 
-import com.matthewlemon.datamaps.core.Context;
-import com.matthewlemon.datamaps.core.gateways.InMemoryDatamapGateway;
-import com.matthewlemon.datamaps.core.gateways.FileDatamapGateway;
+import com.matthewlemon.datamaps.core.repositories.InMemoryDatamapRepository;
+import com.matthewlemon.datamaps.core.repositories.FileDatamapRepository;
 
 public class TestSetup {
 	public static void setupContext() {
-		Context.datamapGateway = new InMemoryDatamapGateway();
-		Context.fileDatamapGateway = new FileDatamapGateway();
+		Context.datamapRepository = new InMemoryDatamapRepository();
+		Context.fileDatamapRepository = new FileDatamapRepository();
 	}
 
 	public static void setUpSampleData() {

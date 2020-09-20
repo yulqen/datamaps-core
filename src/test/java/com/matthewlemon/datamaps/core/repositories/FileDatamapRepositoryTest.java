@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.matthewlemon.datamaps.core.gateways;
+package com.matthewlemon.datamaps.core.repositories;
 
 import com.matthewlemon.datamaps.core.TestSetup;
-import com.matthewlemon.datamaps.core.Context;
 import com.matthewlemon.datamaps.core.entities.Datamap;
 import com.matthewlemon.datamaps.core.exceptions.DuplicateDatamapException;
 import org.junit.After;
@@ -21,11 +20,11 @@ import org.junit.Ignore;
  *
  * @author lemon
  */
-public class FileDatamapGatewayTest {
+public class FileDatamapRepositoryTest {
 
-	private static FileDatamapGateway gateway;
+	private static FileDatamapRepository gateway;
 
-	public FileDatamapGatewayTest() {
+	public FileDatamapRepositoryTest() {
 	}
 	
 	@BeforeClass
@@ -39,7 +38,7 @@ public class FileDatamapGatewayTest {
 	
 	@Before
 	public void setUp() {
-		gateway =  new FileDatamapGateway();
+		gateway =  new FileDatamapRepository();
 	}
 	
 	@After

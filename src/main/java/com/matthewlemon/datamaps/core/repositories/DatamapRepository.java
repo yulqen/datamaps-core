@@ -1,4 +1,4 @@
-package com.matthewlemon.datamaps.core.gateways;
+package com.matthewlemon.datamaps.core.repositories;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import com.matthewlemon.datamaps.core.exceptions.DatamapNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.DuplicateDatamapException;
 import com.matthewlemon.datamaps.core.parser.DatamapLineType;
 
-public interface DatamapGateway {
+public interface DatamapRepository {
 
     void addDataToDatamapWithCSV(String datamapName, CSVFile csvFile) throws DatamapNotFoundException;
 

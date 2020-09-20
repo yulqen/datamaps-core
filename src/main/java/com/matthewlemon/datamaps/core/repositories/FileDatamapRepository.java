@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.matthewlemon.datamaps.core.gateways;
+package com.matthewlemon.datamaps.core.repositories;
 
 import com.matthewlemon.datamaps.core.entities.CSVFile;
 import com.matthewlemon.datamaps.core.entities.Datamap;
@@ -18,7 +18,7 @@ import java.util.List;
  *
  * @author lemon
  */
-public class FileDatamapGateway implements DatamapGateway {
+public class FileDatamapRepository implements DatamapRepository {
 
 	@Override
 	public void addDataToDatamapWithCSV(String datamapName, CSVFile csvFile) throws DatamapNotFoundException {

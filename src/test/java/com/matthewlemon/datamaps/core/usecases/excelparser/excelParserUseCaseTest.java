@@ -9,7 +9,7 @@ import com.matthewlemon.datamaps.core.entities.Datamap;
 import com.matthewlemon.datamaps.core.entities.InMemoryReturn;
 import com.matthewlemon.datamaps.core.exceptions.DatamapNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.DuplicateDatamapException;
-import com.matthewlemon.datamaps.core.gateways.InMemoryDatamapGateway;
+import com.matthewlemon.datamaps.core.repositories.InMemoryDatamapRepository;
 import static com.matthewlemon.datamaps.core.parser.DatamapLineType.TEXT;
 import java.io.File;
 import java.io.IOException;
@@ -27,7 +27,7 @@ import org.junit.Test;
 public class excelParserUseCaseTest {
 
 	private File testFile;
-	private InMemoryDatamapGateway gateway;
+	private InMemoryDatamapRepository gateway;
 	private InMemoryReturn rtn;
 
 	@Before
@@ -35,7 +35,7 @@ public class excelParserUseCaseTest {
 		ClassLoader classLoader = getClass().getClassLoader();
 		rtn = new InMemoryReturn();
 		testFile = new File(classLoader.getResource("files/test_populated_template.xlsx").getFile());
-		gateway = new InMemoryDatamapGateway();
+		gateway = new InMemoryDatamapRepository();
 		gateway.createDatamap("Test Datamap");
 	}
 	

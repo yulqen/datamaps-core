@@ -1,4 +1,4 @@
-package com.matthewlemon.datamaps.core.gateways;
+package com.matthewlemon.datamaps.core.repositories;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import com.matthewlemon.datamaps.core.exceptions.DuplicateDatamapException;
 import com.matthewlemon.datamaps.core.parser.DatamapLineType;
 import com.matthewlemon.datamaps.core.usecases.creatingdatamaps.RuleSet;
 
-public class InMemoryDatamapGateway implements DatamapGateway {
+public class InMemoryDatamapRepository implements DatamapRepository {
 
 	private List<Datamap> dataMaps = new ArrayList<>();
 

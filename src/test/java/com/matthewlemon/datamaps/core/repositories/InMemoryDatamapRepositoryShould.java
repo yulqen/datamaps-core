@@ -1,4 +1,4 @@
-package com.matthewlemon.datamaps.core.gateways;
+package com.matthewlemon.datamaps.core.repositories;
 
 import static com.matthewlemon.datamaps.core.parser.DatamapLineType.TEXT;
 import static org.junit.Assert.assertEquals;
@@ -21,11 +21,10 @@ import com.matthewlemon.datamaps.core.entities.DatamapLine;
 import com.matthewlemon.datamaps.core.exceptions.DatamapLineNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.DatamapNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.DuplicateDatamapException;
-import com.matthewlemon.datamaps.core.gateways.InMemoryDatamapGateway;
 
-public class InMemoryDatamapGatewayShould {
+public class InMemoryDatamapRepositoryShould {
 
-	private static InMemoryDatamapGateway gateway;
+	private static InMemoryDatamapRepository gateway;
 	private static File testFile;
 	private static CSVFile csvFile;
 
@@ -39,7 +38,7 @@ public class InMemoryDatamapGatewayShould {
 		ClassLoader classLoader = getClass().getClassLoader();
 		testFile = new File(classLoader.getResource("files/test.csv").getFile());
 		csvFile = new CSVFile(testFile);
-		gateway = new InMemoryDatamapGateway();
+		gateway = new InMemoryDatamapRepository();
 		gateway.createDatamap("Test Datamap");
 	}
 

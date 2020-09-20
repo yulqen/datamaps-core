@@ -5,7 +5,7 @@ import com.matthewlemon.datamaps.core.entities.DatamapLine;
 import com.matthewlemon.datamaps.core.entities.InMemoryReturn;
 import com.matthewlemon.datamaps.core.exceptions.CellValueNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.IncorrectCellTypeException;
-import com.matthewlemon.datamaps.core.gateways.InMemoryDatamapGateway;
+import com.matthewlemon.datamaps.core.repositories.InMemoryDatamapRepository;
 import static com.matthewlemon.datamaps.core.parser.DatamapLineType.DATE;
 import static com.matthewlemon.datamaps.core.parser.DatamapLineType.NUMERIC;
 import static com.matthewlemon.datamaps.core.parser.DatamapLineType.TEXT;
@@ -22,7 +22,7 @@ import org.junit.rules.ExpectedException;
 
 public class ExcelParserTest {
 
-	private InMemoryDatamapGateway gateway;
+	private InMemoryDatamapRepository gateway;
 	private ReturnParser parser;
 
 	@Rule
@@ -33,7 +33,7 @@ public class ExcelParserTest {
 		ClassLoader classLoader = getClass().getClassLoader();
 		File testFile = new File(classLoader.getResource("files/test_populated_template.xlsx").getFile());
 		InMemoryReturn myReturn = new InMemoryReturn("Test Return");
-		gateway = new InMemoryDatamapGateway();
+		gateway = new InMemoryDatamapRepository();
 		parser = new ReturnParser(myReturn);
 		gateway.createDatamap("Test Datamap");
 		parser.parse(testFile);

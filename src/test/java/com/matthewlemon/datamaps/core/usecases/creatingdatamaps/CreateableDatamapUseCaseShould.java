@@ -44,7 +44,7 @@ public class CreateableDatamapUseCaseShould {
 	@Test
 	public void findDatamapWithName() throws DuplicateDatamapException, DatamapNotFoundException {
 		testDatamap = useCase.createDatamap(TITLE);
-		Datamap returnedDatamap = Context.datamapGateway.getDatamap("Test Datamap");
+		Datamap returnedDatamap = Context.datamapRepository.getDatamap("Test Datamap");
 		assertThat(returnedDatamap.getName(), is(TITLE));
 	}
 }

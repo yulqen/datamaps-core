@@ -1,9 +1,9 @@
 package com.matthewlemon.datamaps.core;
 
-import com.matthewlemon.datamaps.core.gateways.DatamapGateway;
+import com.matthewlemon.datamaps.core.repositories.DatamapRepository;
 
 public class Context {
-    public static DatamapGateway datamapGateway;
-	public static DatamapGateway fileDatamapGateway;
+    public static DatamapRepository datamapRepository;
+	public static DatamapRepository fileDatamapRepository;
 
 }
