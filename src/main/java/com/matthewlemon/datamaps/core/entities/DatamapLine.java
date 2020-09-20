@@ -7,9 +7,9 @@ import com.matthewlemon.datamaps.core.usecases.creatingdatamaps.RuleSet;
 
 public class DatamapLine {
 
-    private String key;
-    private String sheetName;
-    private String cellRef;
+    private final String key;
+    private final String sheetName;
+    private final String cellRef;
 	private DatamapLineType type;
 	private RuleSet ruleSet;
 
