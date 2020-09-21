@@ -9,8 +9,9 @@ import com.matthewlemon.datamaps.core.exceptions.DatamapLineNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.DatamapNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.DuplicateDatamapException;
 import com.matthewlemon.datamaps.core.parser.DatamapLineType;
+import org.springframework.data.repository.CrudRepository;
 
-public interface DatamapRepository {
+public interface DatamapRepository extends CrudRepository<Datamap, Integer> {
 
     void addDataToDatamapWithCSV(String datamapName, CSVFile csvFile) throws DatamapNotFoundException;
 

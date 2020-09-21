@@ -13,6 +13,7 @@ import com.matthewlemon.datamaps.core.exceptions.DatamapNotFoundException;
 import com.matthewlemon.datamaps.core.exceptions.DuplicateDatamapException;
 import com.matthewlemon.datamaps.core.parser.DatamapLineType;
 import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -68,5 +69,60 @@ public class FileDatamapRepository implements DatamapRepository {
 	@Override
 	public DatamapLine getDatamapLineFrom(String datamapName, String key) throws DatamapLineNotFoundException, DatamapNotFoundException {
 		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
+	@Override
+	public Object save(Object entity) {
+		return null;
+	}
+
+	@Override
+	public Iterable saveAll(Iterable entities) {
+		return null;
+	}
+
+	@Override
+	public Optional findById(Object o) {
+		return Optional.empty();
+	}
+
+	@Override
+	public boolean existsById(Object o) {
+		return false;
+	}
+
+	@Override
+	public Iterable findAll() {
+		return null;
+	}
+
+	@Override
+	public Iterable findAllById(Iterable iterable) {
+		return null;
+	}
+
+	@Override
+	public long count() {
+		return 0;
+	}
+
+	@Override
+	public void deleteById(Object o) {
+
+	}
+
+	@Override
+	public void delete(Object entity) {
+
+	}
+
+	@Override
+	public void deleteAll(Iterable entities) {
+
+	}
+
+	@Override
+	public void deleteAll() {
+
 	}
 }

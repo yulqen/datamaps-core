@@ -1,15 +1,25 @@
 package com.matthewlemon.datamaps.core.entities;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Datamap {
 
     private String datamapName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private final String COMMA_DELIMITER = ",";
+
+    protected Datamap() {}
 
     public Datamap(String datamapName) {
         this.datamapName = datamapName;
